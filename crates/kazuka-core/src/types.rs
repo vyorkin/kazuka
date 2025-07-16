@@ -86,21 +86,23 @@ where
 /// available. Strategies produce actions.
 #[async_trait]
 pub trait Strategy<E, A>: Send + Sync {
-    /// Sync the initial state of the strategy if needed, usually by fetching
-    /// onchain data.
-    async fn sync_state(&mut self) -> Result<(), KazukaError>;
+    /// Syncs the initial state of the strategy if needed,
+    /// usually by fetching onchain data.
+    async fn sync_state(&mut self) -> Result<(), KazukaError> {
+        Ok(())
+    }
 
-    /// Process an event, and return an action if needed.
+    /// Processes an event, and return an action if needed.
     async fn process_event(&mut self, event: E) -> Vec<A>;
 }
 
-#[derive(PartialEq, Debug)]
+#[derive(PartialEq, Clone, Debug)]
 pub enum Event {
     NewBlock,
     Transaction,
 }
 
-#[derive(PartialEq, Debug)]
+#[derive(PartialEq, Clone, Debug)]
 pub enum Action {
     SubmitTxToMempool,
 }
@@ -152,22 +154,23 @@ mod tests {
     // ExecutorMap
 
     struct MockExecutor {
-        incoming: Arc<Mutex<Vec<Action>>>,
+        actions: Arc<Mutex<Vec<Action>>>,
     }
 
     #[async_trait]
     impl Executor<Action> for MockExecutor {
         async fn execute(&self, action: Action) -> Result<(), KazukaError> {
-            self.incoming.lock().unwrap().push(action);
+            self.actions.lock().unwrap().push(action);
             Ok(())
         }
     }
 
     #[tokio::test]
     async fn test_executor_map() {
-        let incoming = Arc::new(Mutex::new(vec![]));
+        let actions = Arc::new(Mutex::new(vec![]));
+
         let executor: Box<dyn Executor<Action>> = Box::new(MockExecutor {
-            incoming: Arc::clone(&incoming),
+            actions: Arc::clone(&actions),
         });
         let map = ExecutorMap::new(executor, |s: &str| match s {
             "tx1" => Some(Action::SubmitTxToMempool),
@@ -177,7 +180,7 @@ mod tests {
         map.execute("tx1").await.unwrap(); // should pass through
         map.execute("tx2").await.unwrap(); // should be ignored
 
-        let result = incoming.lock().unwrap();
+        let result = actions.lock().unwrap();
         assert_eq!(result.len(), 1);
         assert_eq!(result[0], Action::SubmitTxToMempool);
     }

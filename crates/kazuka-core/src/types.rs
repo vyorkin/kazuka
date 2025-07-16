@@ -94,22 +94,26 @@ pub trait Strategy<E, A>: Send + Sync {
     async fn process_event(&mut self, event: E) -> Vec<A>;
 }
 
-#[derive(Debug)]
+#[derive(PartialEq, Debug)]
 pub enum Event {
     NewBlock,
     Transaction,
 }
 
-#[derive(Debug)]
+#[derive(PartialEq, Debug)]
 pub enum Action {
     SubmitTxToMempool,
 }
 
 #[cfg(test)]
 mod tests {
+    use std::sync::{Arc, Mutex};
+
     use futures::stream;
 
     use super::*;
+
+    // EventSourceMap
 
     struct MockEventSource;
 
@@ -143,5 +147,38 @@ mod tests {
             events,
             vec!["block".to_string(), "transaction".to_string()]
         )
+    }
+
+    // ExecutorMap
+
+    struct MockExecutor {
+        incoming: Arc<Mutex<Vec<Action>>>,
+    }
+
+    #[async_trait]
+    impl Executor<Action> for MockExecutor {
+        async fn execute(&self, action: Action) -> Result<(), KazukaError> {
+            self.incoming.lock().unwrap().push(action);
+            Ok(())
+        }
+    }
+
+    #[tokio::test]
+    async fn test_executor_map() {
+        let incoming = Arc::new(Mutex::new(vec![]));
+        let executor: Box<dyn Executor<Action>> = Box::new(MockExecutor {
+            incoming: Arc::clone(&incoming),
+        });
+        let map = ExecutorMap::new(executor, |s: &str| match s {
+            "tx1" => Some(Action::SubmitTxToMempool),
+            _ => None,
+        });
+
+        map.execute("tx1").await.unwrap(); // should pass through
+        map.execute("tx2").await.unwrap(); // should be ignored
+
+        let result = incoming.lock().unwrap();
+        assert_eq!(result.len(), 1);
+        assert_eq!(result[0], Action::SubmitTxToMempool);
     }
 }

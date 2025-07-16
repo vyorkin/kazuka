@@ -1,16 +1,37 @@
 [workspace]
 resolver = "2"
-members = ["crates/kazuka-core"]
+members = ["bin/kazuka", "crates/kazuka-core"]
 
 [workspace.dependencies]
-thiserror = "2.0"
+## core
 tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["fmt", "env-filter"] }
+
+## error
+thiserror = "2.0"
 anyhow = "1.0"
 
-[workspace.dependencies.criterion]
-version = "0.6"
-features = ["html_reports"]
+## benchmarking
+divan = "0.1"
+criterion = { version = "0.6", features = ["html_reports"] }
 
-[workspace.dependencies.tracing-subscriber]
-version = "0.3"
-features = ["fmt", "env-filter"]
+## async
+async-trait = "0.1"
+tokio = { version = "1.46", features = ["full"] }
+tokio-stream = { version = "0.1", features = ["sync"] }
+futures = "0.3"
+
+## alloy
+alloy = { version = "1.0", features = ["full", "providers", "rpc"] }
+alloy-node-bindings = { version = "1.0" }
+
+## rpc
+reqwest = { version = "0.12", default-features = false, features = [
+  "rustls-tls",
+] }
+
+[profile.release]
+panic = 'abort'
+
+[profile.dev]
+panic = 'abort'

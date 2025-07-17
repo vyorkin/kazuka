@@ -27,7 +27,7 @@ impl MempoolExecutor {
 #[derive(Clone, Debug)]
 pub struct GasBidInfo {
     /// Expected total profit from the opportunity (in wei).
-    pub total_profit: U128,
+    pub expected_profit: U128,
     /// Fraction of profit you want to give to the miner, as a percentage
     /// (e.g., 50 means 50%).
     pub bid_percentage: U128,
@@ -47,7 +47,7 @@ impl Executor<SubmitTxToMempool> for MempoolExecutor {
         action: SubmitTxToMempool,
     ) -> Result<(), KazukaError> {
         let mut tx = action.tx.clone();
-        // Expected actual gas usage for the transaction
+        // Expected actual gas usage for the transaction.
         let gas_usage = self.provider.estimate_gas(action.tx).await?;
 
         let bid_gas_price: U128;
@@ -56,7 +56,7 @@ impl Executor<SubmitTxToMempool> for MempoolExecutor {
             // to validator (your entire profit will be spent on gas).
             // This is the maximum gas price you can set without going negative.
             let breakeven_gas_price: U128 =
-                gas_bid_info.total_profit / U128::from(gas_usage);
+                gas_bid_info.expected_profit / U128::from(gas_usage);
             // Calculate the actual bid gas price as a fraction of the profit.
             bid_gas_price = breakeven_gas_price
                 .mul(U128::from(gas_bid_info.bid_percentage))
@@ -64,11 +64,11 @@ impl Executor<SubmitTxToMempool> for MempoolExecutor {
 
             // Example:
             //
-            // total_profit = 0.02 ETH = 20_000_000_000_000_000 wei
-            // gas_usage = 200_000 gas units
+            // expected_profit = 0.02 ETH = 20_000_000_000_000_000 wei
+            // gas_usage = estimate_gas(tx) = 200_000 gas units
             // bid_percentage = 40
             //
-            // breakeven_gas_price = total_profit / gas_usage =
+            // breakeven_gas_price = expected_profit / gas_usage =
             // 20_000_000_000_000_000 / 200_000 = 100_000_000_000 wei
             //
             // bid_gas_price = (breakeven_gas_price / 100) * bid_percentage =
@@ -76,11 +76,12 @@ impl Executor<SubmitTxToMempool> for MempoolExecutor {
             // 100_000_000_000 * 40 / 100 =
             // 40_000_000_000 wei
             //
-            // If you set the gas price at 100 gwei, you give the entire profit
-            // to the miner (you keep zero).
             // If you set the gas price at 40 gwei, you give 40% of your profit
-            // to the miner and keep 60% yourself.
+            // to the validator and keep 60% yourself.
+            // If you set the gas price at 100 gwei, you give the entire profit
+            // to the validator (you keep zero).
         } else {
+            // Otherwise use market gas price.
             bid_gas_price = U128::from(self.provider.get_gas_price().await?);
         }
 

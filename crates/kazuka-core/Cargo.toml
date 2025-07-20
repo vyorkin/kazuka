@@ -12,6 +12,8 @@ futures.workspace = true
 async-trait.workspace = true
 alloy.workspace = true
 alloy-node-bindings.workspace = true
+mev-share.workspace = true
+reqwest.workspace = true
 
 [dev-dependencies]
 divan.workspace = true

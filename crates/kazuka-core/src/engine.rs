@@ -61,7 +61,7 @@ where
     }
 
     /// The core run loop of the engine.
-    /// This function will spawn a thread for each collector, strategy, and
+    /// This function will spawn a thread for each event source, strategy, and
     /// executor. It will then orchestrate the data flow between them.
     pub async fn run(self) -> Result<JoinSet<()>, KazukaError> {
         let (event_sender, _): (Sender<E>, _) =

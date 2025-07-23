@@ -1,36 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.30;
 
-interface IUniswapV3Pool {
-  /// @notice Swaps token0 for token1, or vise versa
-  /// @param recipient Recipient address
-  /// @param zeroForOne Swap direction, true if token0 -> token1, false for token1 -> token0
-  /// @param amountSpecified Swap amount, with sign:
-  ///                        - positive: You specify how much token you send
-  ///                        - negative: You specify how much token you want to receive
-  /// @param sqrtPriceLimitX96 Q64.96 sqrt price limit that the swap cannot exceed (see below).
-  //                           Can be used for slippage protection
-  /// @param data Arbitrary data that will be passed to the callback function
-  ///
-  /// @return amount0 The change (delta) in token0 balance of the pool as a result of the swap:
-  ///                 - positive: pool received token0
-  ///                 - negative: pool sent token0
-  /// @return amount1 The change (delta) in token1 balance of the pool as a result of the swap:
-  ///                 - positive: pool received token1
-  ///                 - negative: pool sent token1
-  function swap(
-    address recipient,
-    bool zeroForOne,
-    int256 amountSpecified,
-    uint160 sqrtPriceLimitX96,
-    bytes calldata data
-  ) external returns (int256 amount0, int256 amount1);
-  //                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  // These return values allow determining exactly
-  // how much of each token the pool received and paid out during the swap.
-}
-
-interface ISwapRouter02 {
+/// @title Router token swapping functionality
+/// @notice Functions for swapping tokens via Uniswap V3
+interface ISwapRouter {
   struct ExactInputSingleParams {
     /// Address of the ERC20 token to swap from (token to send).
     address tokenIn;
@@ -55,6 +28,9 @@ interface ISwapRouter02 {
     uint160 sqrtPriceLimitX96;
   }
 
+  /// @notice Swaps `amountIn` of one token for as much as possible of another token
+  /// @param params The parameters necessary for the swap, encoded as `ExactInputSingleParams` in calldata
+  /// @return amountOut The amount of the received token
   function exactInputSingle(ExactInputSingleParams calldata params)
     external payable returns (uint256 amountOut);
 }

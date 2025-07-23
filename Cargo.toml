@@ -1,6 +1,10 @@
 [workspace]
 resolver = "2"
-members = ["bin/kazuka", "crates/kazuka-core"]
+members = [
+  "bin/kazuka",
+  "crates/kazuka-core",
+  "crates/strategies/kazuka-mev-share",
+]
 
 [workspace.dependencies]
 ## core

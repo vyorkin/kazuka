@@ -1,0 +1,3 @@
+[submodule "crates/strategies/kazuka-mev-share/contracts/lib/solmate"]
+	path = crates/strategies/kazuka-mev-share/contracts/lib/solmate
+	url = https://github.com/transmissions11/solmate

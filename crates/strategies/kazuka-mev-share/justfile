@@ -1,0 +1,13 @@
+set dotenv-load
+
+# deploy:
+#   TODO
+
+bindings:
+  forge bind \
+    --bindings-path ./bindings \
+    --root ./contracts \
+    --crate-name kazuka-mev-share-bindings \
+    --crate-description "MEV-share bindings for kazuka" \
+    --alloy-version "1.0" \
+    --overwrite

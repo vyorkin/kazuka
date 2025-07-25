@@ -4,3 +4,13 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+tracing.workspace = true
+tokio.workspace = true
+async-trait.workspace = true
+alloy.workspace = true
+mev-share = "0.1"
+serde = { version = "1", features = ["derive"] }
+csv = "1.3"
+
+kazuka-core = { path = "../../kazuka-core" }
+# kazuka-mev-share-bindings = { path = "./bindings" }

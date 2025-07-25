@@ -25,7 +25,9 @@ contract BlindArbTest is Test {
   // WETH/PLU pool on UniswapV2
   IUniswapV2Pair internal constant uniV2Pair = IUniswapV2Pair(0x87C9524237a19338be7DbCAc01D6D208fF31136F);
 
+  // Amount of PLU required to create arbitrage opportunity
   uint256 internal constant PLU_SWAP_AMOUNT = 5000 ether;
+  // Amount of WETH to run arbitrage with
   uint256 internal constant WETH_ARB_AMOUNT = 1 ether;
 
   uint24 internal constant FEE = 3000;
@@ -61,23 +63,25 @@ contract BlindArbTest is Test {
 
     console.log("\n! simulate user swap to create arbitrage opportunity !\n");
 
-    // Swap: PLU -> WETH
     console.log("swap PLU -> WETH:");
     console.log("  tokenIn: %s (PLU)", address(plu));
     console.log("  tokenOut: %s (WETH)", address(weth));
     console.log("  amountIn: %s wei (PLU)", PLU_SWAP_AMOUNT);
     console.log("  fee: %s", FEE);
 
+    // Prepare swap PLU -> WETH paramters
     ISwapRouter.ExactInputSingleParams memory params = ISwapRouter.ExactInputSingleParams({
       tokenIn: address(plu),
       tokenOut: address(weth),
-      fee: FEE,
+      fee: FEE, // 0.3%
       recipient: address(this),
       deadline: block.timestamp + 1000,
       amountIn: PLU_SWAP_AMOUNT,
-      amountOutMinimum: 0,
-      sqrtPriceLimitX96: 0
+      amountOutMinimum: 0, // Doesn't matter
+      sqrtPriceLimitX96: 0 // No price limit
     });
+
+    // Swap: PLU -> WETH
     uint256 wethAmountOut = uniV3Router.exactInputSingle(params);
     console.log("wethAmountOut = wei (WETH)", wethAmountOut);
 
@@ -103,6 +107,8 @@ contract BlindArbTest is Test {
     int256 profit = int256(blindArbBalanceFinal) - int256(blindArbBalanceInitial);
     console.log("\nblindArb WETH balance after arbitrage = %s wei (WETH)", blindArbBalanceFinal);
     console.log("  profit: %s wei (WETH)", profit);
+
+    // ~= 0.128 WETH ~= $464
 
     assertGt(profit, 0, "profit = 0, you suck");
   }

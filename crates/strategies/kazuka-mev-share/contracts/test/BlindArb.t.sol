@@ -49,7 +49,7 @@ contract BlindArbTest is Test {
     deal(address(plu), address(this), PLU_SWAP_AMOUNT);
   }
 
-  function test_BlindArb() public {
+  function test_arbitrage_weth_token0() public {
     vm.selectFork(mainnetFork);
 
     uint256 blindArbBalanceInitial = weth.balanceOf(address(blindArb));
@@ -96,7 +96,7 @@ contract BlindArbTest is Test {
 
     console.log("\n! run blind arbitrage WETH -> PLU -> WETH !\n");
 
-    blindArb.execute(
+    blindArb.execute_weth_token0(
       address(uniV2Pair), // v2Pool
       address(uniV3Pool), // v3Pool
       WETH_ARB_AMOUNT,    // amountIn

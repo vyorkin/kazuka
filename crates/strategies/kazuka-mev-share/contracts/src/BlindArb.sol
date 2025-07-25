@@ -23,11 +23,74 @@ contract BlindArb is Owned, IUniswapV3SwapCallback {
 
   constructor() Owned(msg.sender) {}
 
-  // @notice Executes arbitrage: WETH -> PLU -> WETH
+  // @notice Executes arbitrage WETH -> PLU -> WETH, where
+  //         token0 = PLU
+  //         token1 = WETH
+  function execute_weth_token1(
+    address v2Pool,
+    address v3Pool,
+    uint256 amountIn,
+    uint256 percentageToPayToCoinbase
+  ) public onlyOwner {
+    uint256 wethBalanceBefore = weth.balanceOf(address(this));
+
+    uint160 sqrtPriceLimitX96 = MAX_SQRT_RATIO - 1;
+    address beneficiary = msg.sender;
+    bytes memory callbackData = abi.encode(
+      beneficiary,   // msg.sender
+      v2Pool,        // WETH/PLU
+      v3Pool,        // WETH/PLU
+      address(weth), // tokenIn = WETH
+      address(plu),  // tokenOut = PLU
+      amountIn,      // 1 ether (WETH)
+      false          // zerForOne = false (token0 <- token1 = PLU <- WETH)
+    );
+    (int256 pluAmountDelta, int256 _wethAmountDelta) = IUniswapV3Pool(v3Pool).swap(
+      v2Pool,             // recipient (UniswapV2 Pool)
+      false,              // zeroForOne (trading direction: token0 <- token1 = PLU <- WETH)
+      int256(amountIn),   // amountSpecified (amount paid to UniswapV3 pool)
+      sqrtPriceLimitX96,  // sqrtPriceLimitX96
+      callbackData        // data forwarded to uniswapV3SwapCallback
+    );
+
+    uint256 pluAmountIn = uint256(-pluAmountDelta);
+
+    (uint256 pluReserveV2, uint256 wethReserveV2, ) = IUniswapV2Pair(v2Pool).getReserves();
+    //        ^^ token0             ^^ token1
+
+    // Calculate the WETH amount we'll get after second swap PLU -> WETH on UniswapV2 pool
+    uint256 wethAmountOut = uniswapV2CalculateAmountOut(
+      pluAmountIn,  // amountIn
+      pluReserveV2, // reserveIn
+      wethReserveV2 // reserveOut
+    );
+
+    IUniswapV2Pair(v2Pool).swap(
+      0,             // amount0Out (token0 = PLU)
+      wethAmountOut, // amount1Out (token1 = WETH)
+      address(this), // receiver
+      ""             // data
+    );
+
+    uint256 wethBalanceAfter = weth.balanceOf(address(this));
+
+    int256 profit = int256(wethBalanceAfter) - int256(wethBalanceBefore);
+    require(profit > 0, "no profit");
+
+    uint256 profitToCoinbase = uint256(profit) *  percentageToPayToCoinbase / 100;
+
+    weth.withdraw(profitToCoinbase);
+    block.coinbase.transfer(profitToCoinbase);
+    require(wethBalanceAfter - profitToCoinbase > wethBalanceBefore, "arbitrage failed");
+  }
+
+  // @notice Executes arbitrage WETH -> PLU -> WETH, where
+  //         token0 = WETH
+  //         token1 = PLU
   // @param v2Pool UniswapV2 pool address
   // @param v3Pool UniswapV3 pool address
   // @param amountIn Amount of WETH to run arbitrage with
-  function execute(
+  function execute_weth_token0(
     address v2Pool,
     address v3Pool,
     uint256 amountIn,
@@ -74,7 +137,7 @@ contract BlindArb is Owned, IUniswapV3SwapCallback {
       address(weth), // tokenIn = WETH
       address(plu),  // tokenOut = PLU
       amountIn,      // 1 ether (WETH)
-      true           // true (WETH -> PLU)
+      true           // zeroForOne = true (token0 -> token1 = WETH -> PLU)
     );
 
     console.log("IUniswapV3Pool(v3Pool).swap [WETH -> PLU]:");
@@ -103,6 +166,8 @@ contract BlindArb is Owned, IUniswapV3SwapCallback {
     // Get WETH, PLU reserves in UniswapV2 pool to caculate the PLU amount we can get
     (uint256 wethReserveV2, uint256 pluReserveV2, ) = IUniswapV2Pair(v2Pool).getReserves(); 
     //       ^-- WETH (reserve0)    ^-- PLU (reserve1)
+    //             ^                     ^
+    //          token0                 token1
 
     console.log("IUniswapV2Pair(v2Pool).getReserves()");
     console.log("  wethReserveV2 = %s wei (WETH)", wethReserveV2);
@@ -128,8 +193,8 @@ contract BlindArb is Owned, IUniswapV3SwapCallback {
     // The swap() function takes two output amounts, one for each token
     // These are the amounts that caller wants to get in exchange for their tokens
     IUniswapV2Pair(v2Pool).swap(
-      wethAmountOut, // amount0Out (WETH)
-      0,             // amount1Out (PLU)
+      wethAmountOut, // amount0Out (token0 = WETH)
+      0,             // amount1Out (token1 = PLU)
       address(this), // receiver
       ""             // data
     );

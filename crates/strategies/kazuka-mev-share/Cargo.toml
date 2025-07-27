@@ -8,7 +8,7 @@ tracing.workspace = true
 tokio.workspace = true
 async-trait.workspace = true
 alloy.workspace = true
-mev-share = "0.1"
+alloy-mev.workspace = true
 serde = { version = "1", features = ["derive"] }
 jsonrpsee = { version = "0.25", features = ["client", "async-client"] }
 tower = "0.5"

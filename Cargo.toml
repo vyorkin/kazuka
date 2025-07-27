@@ -17,7 +17,7 @@ anyhow = "1.0"
 
 ## benchmarking
 divan = "0.1"
-criterion = { version = "0.6", features = ["html_reports"] }
+criterion = { version = "0.7", features = ["html_reports"] }
 
 ## async
 async-trait = "0.1"
@@ -36,6 +36,7 @@ reqwest = { version = "0.12", default-features = false, features = [
 
 ## mev
 mev-share = "0.1.4"
+alloy-mev = "0.5"
 
 [profile.release]
 panic = 'abort'

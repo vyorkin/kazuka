@@ -10,6 +10,8 @@ async-trait.workspace = true
 alloy.workspace = true
 mev-share = "0.1"
 serde = { version = "1", features = ["derive"] }
+jsonrpsee = { version = "0.25", features = ["client", "async-client"] }
+tower = "0.5"
 csv = "1.3"
 
 kazuka-core = { path = "../../kazuka-core" }

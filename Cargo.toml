@@ -3,11 +3,16 @@ resolver = "2"
 members = [
   "bin/kazuka",
   "crates/kazuka-core",
-  "crates/strategies/kazuka-mev-share",
+  "crates/kazuka-mev-share",
+  "crates/kazuka-mev-share-backend",
+  "crates/kazuka-mev-share-rpc-api",
+  "crates/kazuka-mev-share-sse",
+  "crates/strategies/kazuka-mev-share-arbitrage",
 ]
 
 [workspace.dependencies]
 ## core
+bytes = "1.10"
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["fmt", "env-filter"] }
 
@@ -21,9 +26,24 @@ criterion = { version = "0.7", features = ["html_reports"] }
 
 ## async
 async-trait = "0.1"
-tokio = { version = "1.46", features = ["full"] }
+tokio = { version = "1.47", features = ["full"] }
 tokio-stream = { version = "0.1", features = ["sync"] }
 futures = "0.3"
+futures-util = "0.3"
+
+# network
+jsonrpsee = { version = "0.26", features = ["client", "async-client"] }
+hyper = "1.6"
+tower = "0.5"
+tower-http = "0.6"
+http = "1.3"
+http-body = "1.0"
+http-body-util = "0.1"
+
+# serialization, fs
+serde = { version = "1", features = ["derive"] }
+serde_json = "1.0"
+csv = "1.3"
 
 ## alloy
 alloy = { version = "1.0", features = ["full", "providers", "rpc"] }
@@ -36,7 +56,10 @@ reqwest = { version = "0.12", default-features = false, features = [
 
 ## mev
 mev-share = "0.1.4"
-alloy-mev = "0.5"
+# alloy-mev = "0.5"
+
+# testing
+tower-test = "0.4"
 
 [profile.release]
 panic = 'abort'

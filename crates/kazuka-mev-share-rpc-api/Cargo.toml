@@ -1,0 +1,30 @@
+[package]
+name = "kazuka-mev-share-rpc-api"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+bytes.workspace = true
+hyper.workspace = true
+tower = { workspace = true, features = ["util"] }
+tokio.workspace = true
+async-trait.workspace = true
+http.workspace = true
+http-body = { workspace = true }
+http-body-util.workspace = true
+futures-util.workspace = true
+jsonrpsee = { workspace = true, features = ["macros", "http-client", "server"] }
+
+serde.workspace = true
+serde_json.workspace = true
+
+alloy.workspace = true
+
+[dev-dependencies]
+tower-test.workspace = true
+anyhow.workspace = true
+
+[features]
+default = ["client", "server"]
+client = ["jsonrpsee/client"]
+server = ["jsonrpsee/server"]

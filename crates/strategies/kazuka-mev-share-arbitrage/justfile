@@ -7,7 +7,7 @@ bindings:
   forge bind \
     --bindings-path ./bindings \
     --root ./contracts \
-    --crate-name kazuka-mev-share-bindings \
-    --crate-description "MEV-share bindings for kazuka" \
+    --crate-name kazuka-mev-share-arbitrage-bindings \
+    --crate-description "MEV-share arbitrage bindings for kazuka" \
     --alloy-version "1.0" \
     --overwrite

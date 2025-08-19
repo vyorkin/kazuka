@@ -33,3 +33,5 @@ bench-criterion crate:
 bench-all:
   cargo bench -q > benchmarks.txt
 
+who-depends-on dep:
+  cargo tree -e normal -i {{dep}}

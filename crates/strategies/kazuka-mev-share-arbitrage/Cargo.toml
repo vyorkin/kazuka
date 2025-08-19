@@ -1,5 +1,5 @@
 [package]
-name = "kazuka-mev-share"
+name = "kazuka-mev-share-arbitrage"
 version = "0.1.0"
 edition = "2024"
 
@@ -8,11 +8,12 @@ tracing.workspace = true
 tokio.workspace = true
 async-trait.workspace = true
 alloy.workspace = true
-alloy-mev.workspace = true
-serde = { version = "1", features = ["derive"] }
-jsonrpsee = { version = "0.25", features = ["client", "async-client"] }
-tower = "0.5"
-csv = "1.3"
+# alloy-mev.workspace = true
+serde.workspace = true
+jsonrpsee.workspace = true
+tower.workspace = true
+csv.workspace = true
 
 kazuka-core = { path = "../../kazuka-core" }
+kazuka-mev-share = { path = "../../kazuka-mev-share" }
 # kazuka-mev-share-bindings = { path = "./bindings" }

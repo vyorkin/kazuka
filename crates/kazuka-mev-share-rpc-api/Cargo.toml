@@ -7,6 +7,7 @@ edition = "2024"
 bytes.workspace = true
 hyper.workspace = true
 tower = { workspace = true, features = ["util"] }
+tower-http = { workspace = true, features = ["set-header"] }
 tokio.workspace = true
 async-trait.workspace = true
 http.workspace = true

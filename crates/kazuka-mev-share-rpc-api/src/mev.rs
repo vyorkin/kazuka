@@ -1,8 +1,19 @@
-use jsonrpsee::{proc_macros::rpc, types::ErrorObjectOwned};
+#[cfg(feature = "client")]
+use async_trait::async_trait;
+use jsonrpsee::{core::ClientError, proc_macros::rpc};
 
-use crate::{SendBundleRequest, SendBundleResponse};
+use crate::{
+    SendBundleRequest, SendBundleResponse, SimBundleOverrides,
+    SimBundleResponse,
+};
 
+/// jsonrpsee generated code.
+///
+/// This hides the generated client trait which is replaced by the
+/// `MevApiClient` trait.
 mod rpc {
+    use jsonrpsee::core::RpcResult;
+
     use super::*;
 
     #[cfg_attr(not(feature = "server"), rpc(client, namespace = "mev"))]
@@ -19,7 +30,63 @@ mod rpc {
         async fn send_bundle(
             &self,
             request: SendBundleRequest,
-        ) -> Result<SendBundleResponse, ErrorObjectOwned>;
+        ) -> RpcResult<SendBundleResponse>;
+
+        /// Similar to `mev_sendBundle` but instead of
+        /// submitting a bundle to the relay, it returns a simulation result.
+        /// Only fully matched bundles can be simulated.
+        #[method(name = "simBundle")]
+        async fn sim_bundle(
+            &self,
+            bundle: SendBundleRequest,
+            sim_overrides: SimBundleOverrides,
+        ) -> RpcResult<SimBundleResponse>;
+    }
+}
+
+/// An dyn-trait compatible version of the `MevApiClient` trait.
+///
+/// Basically this trait allows doing this:
+/// `let client = Box::new(client) as Box<dyn MevApiClient>`;
+#[cfg(feature = "client")]
+#[async_trait]
+pub trait MevApiClient {
+    /// Submitting bundles to the relay. It takes in a bundle and provides a
+    /// bundle hash as a return value.
+    async fn send_bundle(
+        &self,
+        request: SendBundleRequest,
+    ) -> Result<SendBundleResponse, ClientError>;
+
+    /// Similar to `mev_sendBundle` but instead of submitting a bundle to the
+    /// relay, it returns a simulation result. Only fully matched bundles
+    /// can be simulated.
+    async fn sim_bundle(
+        &self,
+        bundle: SendBundleRequest,
+        sim_overrides: SimBundleOverrides,
+    ) -> Result<SimBundleResponse, ClientError>;
+}
+
+#[cfg(feature = "client")]
+#[async_trait]
+impl<T> MevApiClient for T
+where
+    T: rpc::MevApiClient + Sync,
+{
+    async fn send_bundle(
+        &self,
+        request: SendBundleRequest,
+    ) -> Result<SendBundleResponse, ClientError> {
+        rpc::MevApiClient::send_bundle(self, request).await
+    }
+
+    async fn sim_bundle(
+        &self,
+        bundle: SendBundleRequest,
+        sim_overrides: SimBundleOverrides,
+    ) -> Result<SimBundleResponse, ClientError> {
+        rpc::MevApiClient::sim_bundle(self, bundle, sim_overrides).await
     }
 }
 
@@ -33,68 +100,101 @@ mod tests {
     };
     use async_trait::async_trait;
     use jsonrpsee::{
+        core::RpcResult,
         http_client::HttpClientBuilder,
         server::{Server, middleware::http::HostFilterLayer},
     };
     use tower::ServiceBuilder;
 
     use super::*;
-    use crate::{
-        mev::rpc::{MevApiClient, MevApiServer},
-        middleware::auth3::AuthLayer,
-    };
+    use crate::{mev::rpc::MevApiServer, middleware::auth::AuthLayer};
 
-    struct MockMevApiServer;
+    #[rpc(server, namespace = "mev")]
+    #[async_trait]
+    trait MevApiMock {
+        #[method(name = "sendBundle")]
+        async fn send_bundle(
+            &self,
+            request: SendBundleRequest,
+        ) -> RpcResult<SendBundleResponse>;
+
+        #[method(name = "simBundle")]
+        async fn sim_bundle(
+            &self,
+            bundle: SendBundleRequest,
+            sim_overrides: SimBundleOverrides,
+        ) -> RpcResult<SimBundleResponse>;
+    }
+
+    struct MevApiMockServerImpl;
 
     #[async_trait]
-    impl MevApiServer for MockMevApiServer {
+    impl MevApiMockServer for MevApiMockServerImpl {
         async fn send_bundle(
             &self,
             _request: SendBundleRequest,
-        ) -> Result<SendBundleResponse, ErrorObjectOwned> {
-            let bundle_hash = b256!(
-                "0xda7f09ac9b43acb4eb7d7c74dd5de20906ddd33fd4d82d8cb96997694b2d8e79"
-            );
-            Ok(SendBundleResponse { bundle_hash })
+        ) -> RpcResult<SendBundleResponse> {
+            Ok(SendBundleResponse {
+                bundle_hash: b256!(
+                    "0x0000000000000000000000000000000000000000000000000000000000000000"
+                ),
+            })
+        }
+
+        async fn sim_bundle(
+            &self,
+            _bundle: SendBundleRequest,
+            _sim_overrides: SimBundleOverrides,
+        ) -> RpcResult<SimBundleResponse> {
+            Ok(SimBundleResponse {
+                success: true,
+                ..Default::default()
+            })
         }
     }
 
-    async fn run_server() -> anyhow::Result<SocketAddr> {
+    async fn start_mock_server() -> anyhow::Result<SocketAddr> {
         let server = Server::builder().build("127.0.0.1:3000").await?;
         let addr = server.local_addr()?;
-        let handle = server.start(MockMevApiServer.into_rpc());
+
+        let handle = server.start(MevApiMockServerImpl.into_rpc());
         tokio::spawn(handle.stopped());
+
         Ok(addr)
     }
 
     #[tokio::test]
-    #[ignore = "todo"]
-    async fn test_send_bundle_client() {
+    async fn test_send_bundle() -> anyhow::Result<()> {
+        let server_addr = start_mock_server().await?;
         let signer = PrivateKeySigner::random();
+        let http_middleware =
+            ServiceBuilder::new().layer(AuthLayer::new(signer));
 
-        let auth_layer = AuthLayer::new(signer);
-        let auth_middleware = ServiceBuilder::new().layer(auth_layer);
+        let client = HttpClientBuilder::default()
+            .set_http_middleware(http_middleware)
+            .build(format!("http://{server_addr}"))?;
+        let client = Box::new(client) as Box<dyn MevApiClient>;
 
-        let host_filter_middleware = ServiceBuilder::new()
-            .layer(HostFilterLayer::new(["example.com"]).unwrap());
+        let request = SendBundleRequest {
+            protocol_version: Default::default(),
+            inclusion: Default::default(),
+            bundle_body: vec![],
+            validity: None,
+            privacy: None,
+        };
+        let response = client.send_bundle(request).await;
 
-        let http_client = HttpClientBuilder::default()
-            .set_http_middleware(auth_middleware)
-            // .set_http_middleware(host_filter_middleware)
-            .build("http://localhost:3000")
-            .unwrap();
+        assert!(response.is_ok());
+        let response = response.unwrap();
 
-        let result = MevApiClient::send_bundle(
-            &http_client,
-            SendBundleRequest {
-                protocol_version: Default::default(),
-                inclusion: Default::default(),
-                bundle_body: vec![],
-                validity: None,
-                privacy: None,
-            },
-        )
-        .await
-        .unwrap();
+        let expected_bundle_hash = b256!(
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
+        );
+        assert_eq!(
+            response.bundle_hash,
+            expected_bundle_hash
+        );
+
+        Ok(())
     }
 }

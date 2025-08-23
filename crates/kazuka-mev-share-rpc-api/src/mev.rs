@@ -1,10 +1,7 @@
 use async_trait::async_trait;
 use jsonrpsee::{core::ClientError, proc_macros::rpc};
 
-use crate::{
-    SendBundleRequest, SendBundleResponse, SimBundleOverrides,
-    SimBundleResponse,
-};
+use crate::types::*;
 
 /// jsonrpsee generated code.
 ///
@@ -28,8 +25,8 @@ mod rpc {
         #[method(name = "sendBundle")]
         async fn send_bundle(
             &self,
-            request: SendBundleRequest,
-        ) -> RpcResult<SendBundleResponse>;
+            request: mev::SendBundleRequest,
+        ) -> RpcResult<mev::SendBundleResponse>;
 
         /// Similar to `mev_sendBundle` but instead of
         /// submitting a bundle to the relay, it returns a simulation result.
@@ -37,9 +34,9 @@ mod rpc {
         #[method(name = "simBundle")]
         async fn sim_bundle(
             &self,
-            bundle: SendBundleRequest,
-            sim_overrides: SimBundleOverrides,
-        ) -> RpcResult<SimBundleResponse>;
+            bundle: mev::SendBundleRequest,
+            sim_overrides: mev::SimBundleOverrides,
+        ) -> RpcResult<mev::SimBundleResponse>;
     }
 }
 
@@ -55,17 +52,17 @@ pub trait MevApiClient {
     /// bundle hash as a return value.
     async fn send_bundle(
         &self,
-        request: SendBundleRequest,
-    ) -> Result<SendBundleResponse, ClientError>;
+        request: mev::SendBundleRequest,
+    ) -> Result<mev::SendBundleResponse, ClientError>;
 
     /// Similar to `mev_sendBundle` but instead of submitting a bundle to the
     /// relay, it returns a simulation result. Only fully matched bundles
     /// can be simulated.
     async fn sim_bundle(
         &self,
-        bundle: SendBundleRequest,
-        sim_overrides: SimBundleOverrides,
-    ) -> Result<SimBundleResponse, ClientError>;
+        bundle: mev::SendBundleRequest,
+        sim_overrides: mev::SimBundleOverrides,
+    ) -> Result<mev::SimBundleResponse, ClientError>;
 }
 
 #[cfg(feature = "client")]
@@ -76,38 +73,33 @@ where
 {
     async fn send_bundle(
         &self,
-        request: SendBundleRequest,
-    ) -> Result<SendBundleResponse, ClientError> {
+        request: mev::SendBundleRequest,
+    ) -> Result<mev::SendBundleResponse, ClientError> {
         rpc::MevApiClient::send_bundle(self, request).await
     }
 
     async fn sim_bundle(
         &self,
-        bundle: SendBundleRequest,
-        sim_overrides: SimBundleOverrides,
-    ) -> Result<SimBundleResponse, ClientError> {
+        bundle: mev::SendBundleRequest,
+        sim_overrides: mev::SimBundleOverrides,
+    ) -> Result<mev::SimBundleResponse, ClientError> {
         rpc::MevApiClient::sim_bundle(self, bundle, sim_overrides).await
     }
 }
 
 #[cfg(all(test, feature = "client"))]
 mod tests {
-    use std::{net::SocketAddr, str::FromStr};
+    use std::net::SocketAddr;
 
-    use alloy::{
-        primitives::{B256, b256},
-        signers::local::PrivateKeySigner,
-    };
+    use alloy::{primitives::b256, signers::local::PrivateKeySigner};
     use async_trait::async_trait;
     use jsonrpsee::{
-        core::RpcResult,
-        http_client::HttpClientBuilder,
-        server::{Server, middleware::http::HostFilterLayer},
+        core::RpcResult, http_client::HttpClientBuilder, server::Server,
     };
     use tower::ServiceBuilder;
 
     use super::*;
-    use crate::{mev::rpc::MevApiServer, middleware::auth::AuthLayer};
+    use crate::middleware::auth::AuthLayer;
 
     #[rpc(server, namespace = "mev")]
     #[async_trait]
@@ -115,15 +107,15 @@ mod tests {
         #[method(name = "sendBundle")]
         async fn send_bundle(
             &self,
-            request: SendBundleRequest,
-        ) -> RpcResult<SendBundleResponse>;
+            request: mev::SendBundleRequest,
+        ) -> RpcResult<mev::SendBundleResponse>;
 
         #[method(name = "simBundle")]
         async fn sim_bundle(
             &self,
-            bundle: SendBundleRequest,
-            sim_overrides: SimBundleOverrides,
-        ) -> RpcResult<SimBundleResponse>;
+            bundle: mev::SendBundleRequest,
+            sim_overrides: mev::SimBundleOverrides,
+        ) -> RpcResult<mev::SimBundleResponse>;
     }
 
     struct MevApiMockServerImpl;
@@ -132,9 +124,9 @@ mod tests {
     impl MevApiMockServer for MevApiMockServerImpl {
         async fn send_bundle(
             &self,
-            _request: SendBundleRequest,
-        ) -> RpcResult<SendBundleResponse> {
-            Ok(SendBundleResponse {
+            _request: mev::SendBundleRequest,
+        ) -> RpcResult<mev::SendBundleResponse> {
+            Ok(mev::SendBundleResponse {
                 bundle_hash: b256!(
                     "0x0000000000000000000000000000000000000000000000000000000000000000"
                 ),
@@ -143,10 +135,10 @@ mod tests {
 
         async fn sim_bundle(
             &self,
-            _bundle: SendBundleRequest,
-            _sim_overrides: SimBundleOverrides,
-        ) -> RpcResult<SimBundleResponse> {
-            Ok(SimBundleResponse {
+            _bundle: mev::SendBundleRequest,
+            _sim_overrides: mev::SimBundleOverrides,
+        ) -> RpcResult<mev::SimBundleResponse> {
+            Ok(mev::SimBundleResponse {
                 success: true,
                 ..Default::default()
             })
@@ -175,7 +167,7 @@ mod tests {
             .build(format!("http://{server_addr}"))?;
         let client = Box::new(client) as Box<dyn MevApiClient>;
 
-        let request = SendBundleRequest {
+        let request = mev::SendBundleRequest {
             protocol_version: Default::default(),
             inclusion: Default::default(),
             bundle_body: vec![],

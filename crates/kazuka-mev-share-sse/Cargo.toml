@@ -18,7 +18,7 @@ reqwest = { workspace = true, default-features = false, features = [
 ## async
 tokio = { workspace = true, features = ["time"] }
 tower = { workspace = true, optional = true }
-hyper = { workspace = true, features = ["stream"], optional = true }
+hyper = { workspace = true, optional = true }
 tokio-util = { workspace = true, features = ["compat"], optional = true }
 tokio-stream = { workspace = true, features = ["sync"], optional = true }
 
@@ -28,7 +28,7 @@ serde_json.workspace = true
 
 # misc
 bytes.workspace = true
-pin-project-lite = "0.2"
+pin-project-lite.workspace = true
 thiserror.workspace = true
 tracing.workspace = true
 
@@ -40,7 +40,7 @@ server = ["hyper", "http", "tokio-stream", "tokio-util", "tower"]
 
 [dev-dependencies]
 tokio = { workspace = true, features = ["macros", "rt", "rt-multi-thread"] }
-tracing-subscriber = { version = "0.3", default-features = false, features = [
+tracing-subscriber = { workspace = true, default-features = false, features = [
   "env-filter",
   "fmt",
 ] }

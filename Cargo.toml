@@ -15,7 +15,10 @@ members = [
 bytes = "1.10"
 pin-project-lite = "0.2"
 tracing = "0.1"
-tracing-subscriber = { version = "0.3", features = ["fmt", "env-filter"] }
+tracing-subscriber = { version = "0.3", default-features = false, features = [
+  "fmt",
+  "env-filter",
+] }
 
 ## error
 thiserror = "2.0"
@@ -35,7 +38,7 @@ futures-util = "0.3"
 
 # network
 jsonrpsee = { version = "0.26", features = ["client", "async-client"] }
-hyper = "1.6"
+hyper = "1.7"
 tower = "0.5"
 tower-http = "0.6"
 http = "1.3"

@@ -4,3 +4,12 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+pin-project-lite.workspace = true
+tokio = { workspace = true, features = ["sync"] }
+futures-util.workspace = true
+thiserror.workspace = true
+tracing.workspace = true
+
+kazuka-mev-share-rpc-api = { path = "../kazuka-mev-share-rpc-api", features = [
+  "client",
+] }

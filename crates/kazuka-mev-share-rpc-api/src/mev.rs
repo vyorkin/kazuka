@@ -40,6 +40,10 @@ mod rpc {
     }
 }
 
+// Re-export the rpc server trait.
+#[cfg(feature = "server")]
+pub use rpc::MevApiServer;
+
 /// An dyn-trait compatible (vtable compatible) version of the `MevApiClient`
 /// trait.
 ///

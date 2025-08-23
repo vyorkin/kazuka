@@ -82,6 +82,10 @@ mod rpc {
     }
 }
 
+// Re-export the rpc server trait.
+#[cfg(feature = "server")]
+pub use rpc::EthBundleApiServer;
+
 /// An dyn-trait compatible (vtable compatible) version of the `EthBundleApi`
 /// trait.
 #[cfg(feature = "client")]

@@ -1,10 +1,4 @@
-use alloy::{
-    eips::BlockId,
-    primitives::{
-        Address, B256, BlockNumber, Bytes, Log, TxHash, U64, U256, address,
-        b256, bytes,
-    },
-};
+use alloy::primitives::Address;
 use serde::{
     Deserialize, Deserializer, Serialize, Serializer, ser::SerializeSeq,
 };

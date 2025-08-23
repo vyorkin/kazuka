@@ -2,7 +2,10 @@
 
 use alloy::{
     eips::BlockId,
-    primitives::{Address, B256, Bytes, Log, TxHash, U64},
+    primitives::{
+        Address, B256, BlockNumber, Bytes, Log, TxHash, U64, U256, address,
+        b256, bytes,
+    },
 };
 use serde::{
     Deserialize, Deserializer, Serialize, Serializer, ser::SerializeSeq,
@@ -113,7 +116,7 @@ pub struct SimBundleResponse {
 }
 
 /// Logs returned by mev_simBundle.
-#[derive(Deserialize, Debug, Serialize, Clone, PartialEq, Eq)]
+#[derive(Deserialize, Debug, Default, Serialize, Clone, PartialEq, Eq)]
 #[serde(rename_all = "camelCase")]
 pub struct SimBundleLogs {
     /// Logs for transactions in bundle.
@@ -371,10 +374,93 @@ impl Inclusion {
     }
 }
 
+/// Bundle of transactions for `eth_sendBundle`
+///
+/// Note: this is for `eth_sendBundle` and not `mev_sendBundle`
+///
+/// <https://docs.flashbots.net/flashbots-auction/searchers/advanced/rpc-endpoint#eth_sendbundle>
+#[derive(Default, Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct EthSendBundle {
+    /// A list of hex-encoded signed transactions.
+    pub txs: Vec<Bytes>,
+    /// Hex-encoded block number for which this bundle is valid.
+    pub block_number: U64,
+    /// Unix timestamp when this bundle becomes active.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub min_timestamp: Option<u64>,
+    /// Unix timestamp how long this bundle stays valid.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub max_timestamp: Option<u64>,
+    /// List of hashes of possibly reverting txs.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub reverting_tx_hashes: Vec<B256>,
+    /// UUID that can be used to cancel/replace this bundle.
+    #[serde(
+        rename = "replacementUuid",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub replacement_uuid: Option<String>,
+}
+
+/// Response from the matchmaker after sending a bundle.
+#[derive(Deserialize, Debug, Serialize, Clone, PartialEq, Eq)]
+#[serde(rename_all = "camelCase")]
+pub struct EthBundleHash {
+    /// Hash of the bundle bodies.
+    pub bundle_hash: B256,
+}
+
+/// Bundle of transactions for `eth_callBundle`
+///
+/// <https://docs.flashbots.net/flashbots-auction/searchers/advanced/rpc-endpoint#eth_callBundle>
+#[derive(Default, Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct EthCallBundle {
+    /// A list of hex-encoded signed transactions.
+    pub txs: Vec<Bytes>,
+    /// Hex encoded block number for which this bundle is valid on.
+    pub block_number: U64,
+    /// Either a hex encoded number or a block tag for which state to base this
+    /// simulation on.
+    pub state_block_number: BlockNumber,
+    /// The timestamp to use for this bundle simulation, in seconds since the
+    /// unix epoch.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub timestamp: Option<u64>,
+}
+
+/// Response for `eth_callBundle`
+#[derive(Default, Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "camelCase")]
+pub struct EthCallBundleResponse {
+    pub bundle_gas_price: U256,
+    pub bundle_hash: B256,
+    pub coinbase_diff: U256,
+    pub eth_sent_to_coinbase: U256,
+    pub gas_fees: U256,
+    pub results: Vec<EthCallBundleTransactionResult>,
+    pub state_block_number: u64,
+    pub total_gas_used: u64,
+}
+
+/// Result of a single transaction in a bundle for `eth_callBundle`
+#[derive(Default, Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct EthCallBundleTransactionResult {
+    pub coinbase_diff: U256,
+    pub eth_sent_to_coinbase: U256,
+    pub from_address: Address,
+    pub gas_fees: U256,
+    pub gas_price: U256,
+    pub gas_used: u64,
+    pub to_address: Address,
+    pub tx_hash: B256,
+    pub value: Bytes,
+}
+
 #[cfg(test)]
 mod tests {
-    use std::str::FromStr;
-
     use super::*;
 
     #[test]
@@ -459,7 +545,9 @@ mod tests {
         "#;
 
         let bundle_body = vec![BundleItem::Tx {
-            tx: Bytes::from_str("0x02f86b0180843b9aca00852ecc889a0082520894c87037874aed04e51c29f582394217a0a2b89d808080c080a0a463985c616dd8ee17d7ef9112af4e6e06a27b071525b42182fe7b0b5c8b4925a00af5ca177ffef2ff28449292505d41be578bebb77110dfc09361d2fb56998260").unwrap(),
+            tx: bytes!(
+                "0x02f86b0180843b9aca00852ecc889a0082520894c87037874aed04e51c29f582394217a0a2b89d808080c080a0a463985c616dd8ee17d7ef9112af4e6e06a27b071525b42182fe7b0b5c8b4925a00af5ca177ffef2ff28449292505d41be578bebb77110dfc09361d2fb56998260"
+            ),
             can_revert: false,
         }];
 
@@ -526,6 +614,126 @@ mod tests {
         };
         let actual_str = r#"["calldata","logs","hash"]"#;
         let actual: PrivacyHint = serde_json::from_str(actual_str).unwrap();
+        assert_eq!(actual, expected);
+    }
+
+    #[test]
+    fn test_deserialize_sim_bundle_response() {
+        let expected = SimBundleResponse {
+            success: true,
+            error: None,
+            state_block: U64::from(0x8b8da8u64),
+            mev_gas_price: U64::from(0x74c7906005u64),
+            profit: U64::from(0x4bc800904fc000u64),
+            refundable_value: U64::from(0x4bc800904fc000u64),
+            gas_used: U64::from(0xa620),
+            logs: Some(vec![
+                Default::default(),
+                Default::default(),
+            ]),
+        };
+        let actual_str = r#"
+        {
+            "success": true,
+            "stateBlock": "0x8b8da8",
+            "mevGasPrice": "0x74c7906005",
+            "profit": "0x4bc800904fc000",
+            "refundableValue": "0x4bc800904fc000",
+            "gasUsed": "0xa620",
+            "logs": [{},{}]
+          }
+        "#;
+        let actual: SimBundleResponse =
+            serde_json::from_str(actual_str).unwrap();
+        assert_eq!(actual, expected);
+    }
+
+    #[test]
+    fn test_deserialize_eth_call_response() {
+        let expected = EthCallBundleResponse {
+            bundle_gas_price: U256::from(476190476193u64),
+            bundle_hash: b256!(
+                "0x73b1e258c7a42fd0230b2fd05529c5d4b6fcb66c227783f8bece8aeacdd1db2e"
+            ),
+            coinbase_diff: U256::from(20000000000126000u64),
+            eth_sent_to_coinbase: U256::from(20000000000000000u64),
+            gas_fees: U256::from(126000u64),
+            results: vec![
+                EthCallBundleTransactionResult {
+                    coinbase_diff: U256::from(10000000000063000u64),
+                    eth_sent_to_coinbase: U256::from(10000000000000000u64),
+                    from_address: address!(
+                        "0x02A727155aeF8609c9f7F2179b2a1f560B39F5A0"
+                    ),
+                    gas_fees: U256::from(63000u64),
+                    gas_price: U256::from(476190476193u64),
+                    gas_used: 21000u64,
+                    to_address: address!(
+                        "0x73625f59CAdc5009Cb458B751b3E7b6b48C06f2C"
+                    ),
+                    tx_hash: b256!(
+                        "0x669b4704a7d993a946cdd6e2f95233f308ce0c4649d2e04944e8299efcaa098a"
+                    ),
+                    value: bytes!("0x"),
+                },
+                EthCallBundleTransactionResult {
+                    coinbase_diff: U256::from(10000000000063000u64),
+                    eth_sent_to_coinbase: U256::from(10000000000000000u64),
+                    from_address: address!(
+                        "0x02A727155aeF8609c9f7F2179b2a1f560B39F5A0"
+                    ),
+                    gas_fees: U256::from(63000u64),
+                    gas_price: U256::from(476190476193u64),
+                    gas_used: 21000,
+                    to_address: address!(
+                        "0x73625f59CAdc5009Cb458B751b3E7b6b48C06f2C"
+                    ),
+                    tx_hash: b256!(
+                        "0xa839ee83465657cac01adc1d50d96c1b586ed498120a84a64749c0034b4f19fa"
+                    ),
+                    value: bytes!("0x"),
+                },
+            ],
+            state_block_number: 5221585,
+            total_gas_used: 42000,
+        };
+        let actual_str = r#"{
+            "bundleGasPrice": "476190476193",
+            "bundleHash": "0x73b1e258c7a42fd0230b2fd05529c5d4b6fcb66c227783f8bece8aeacdd1db2e",
+            "coinbaseDiff": "20000000000126000",
+            "ethSentToCoinbase": "20000000000000000",
+            "gasFees": "126000",
+            "results": [
+            {
+                "coinbaseDiff": "10000000000063000",
+                "ethSentToCoinbase": "10000000000000000",
+                "fromAddress": "0x02A727155aeF8609c9f7F2179b2a1f560B39F5A0",
+                "gasFees": "63000",
+                "gasPrice": "476190476193",
+                "gasUsed": 21000,
+                "toAddress": "0x73625f59CAdc5009Cb458B751b3E7b6b48C06f2C",
+                "txHash": "0x669b4704a7d993a946cdd6e2f95233f308ce0c4649d2e04944e8299efcaa098a",
+                "value": "0x"
+            },
+            {
+                "coinbaseDiff": "10000000000063000",
+                "ethSentToCoinbase": "10000000000000000",
+                "fromAddress": "0x02A727155aeF8609c9f7F2179b2a1f560B39F5A0",
+                "gasFees": "63000",
+                "gasPrice": "476190476193",
+                "gasUsed": 21000,
+                "toAddress": "0x73625f59CAdc5009Cb458B751b3E7b6b48C06f2C",
+                "txHash": "0xa839ee83465657cac01adc1d50d96c1b586ed498120a84a64749c0034b4f19fa",
+                "value": "0x"
+            }
+            ],
+            "stateBlockNumber": 5221585,
+            "totalGasUsed": 42000
+        }"#;
+
+        let actual =
+            serde_json::from_str::<EthCallBundleResponse>(actual_str).unwrap();
+
         assert_eq!(actual, expected);
     }
 }

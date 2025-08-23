@@ -1,4 +1,3 @@
-#[cfg(feature = "client")]
 use async_trait::async_trait;
 use jsonrpsee::{core::ClientError, proc_macros::rpc};
 
@@ -44,7 +43,8 @@ mod rpc {
     }
 }
 
-/// An dyn-trait compatible version of the `MevApiClient` trait.
+/// An dyn-trait compatible (vtable compatible) version of the `MevApiClient`
+/// trait.
 ///
 /// Basically this trait allows doing this:
 /// `let client = Box::new(client) as Box<dyn MevApiClient>`;

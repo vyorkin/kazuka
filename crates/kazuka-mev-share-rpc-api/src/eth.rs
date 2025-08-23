@@ -194,15 +194,14 @@ where
 mod tests {
     use std::net::SocketAddr;
 
-    use alloy::{primitives::b256, signers::local::PrivateKeySigner};
+    use alloy::primitives::{U64, U256, address, b256, bytes};
     use async_trait::async_trait;
     use jsonrpsee::{
         core::RpcResult, http_client::HttpClientBuilder, server::Server,
     };
-    use tower::ServiceBuilder;
 
     use super::*;
-    use crate::middleware::auth::AuthLayer;
+    use crate::types::eth::{BundleHash, CallBundleTransactionResult};
 
     struct Client {
         inner: Box<dyn EthBundleApiClient>,
@@ -258,49 +257,69 @@ mod tests {
         ) -> RpcResult<eth::BundleHash> {
             Ok(eth::BundleHash {
                 bundle_hash: b256!(
-                    "0x0000000000000000000000000000000000000000000000000000000000000000"
+                    "0xbeefbeefbeef0000000000000000000000000000000000000000000000000000"
                 ),
             })
         }
 
         async fn call_bundle(
             &self,
-            request: eth::CallBundleRequest,
+            _request: eth::CallBundleRequest,
         ) -> RpcResult<eth::CallBundleTransactionResult> {
-            todo!()
+            Ok(CallBundleTransactionResult {
+                coinbase_diff: U256::from(10000000000063000u64),
+                eth_sent_to_coinbase: U256::from(10000000000000000u64),
+                from_address: address!(
+                    "0x02A727155aeF8609c9f7F2179b2a1f560B39F5A0"
+                ),
+                gas_fees: U256::from(63000u64),
+                gas_price: U256::from(476190476193u64),
+                gas_used: 21000u64,
+                to_address: address!(
+                    "0x73625f59CAdc5009Cb458B751b3E7b6b48C06f2C"
+                ),
+                tx_hash: b256!(
+                    "0x669b4704a7d993a946cdd6e2f95233f308ce0c4649d2e04944e8299efcaa098a"
+                ),
+                value: bytes!("0x"),
+            })
         }
 
         async fn cancel_bundle(
             &self,
-            request: eth::CancelBundleRequest,
+            _request: eth::CancelBundleRequest,
         ) -> RpcResult<()> {
-            todo!()
+            Ok(())
         }
 
         async fn send_private_transaction(
             &self,
-            request: eth::PrivateTransactionRequest,
+            _request: eth::PrivateTransactionRequest,
         ) -> RpcResult<B256> {
-            todo!()
+            Ok(b256!(
+                "0x1111111111111111111111111111111111111111111111111111111111111111"
+            ))
         }
 
         async fn send_private_raw_transaction(
             &self,
-            bytes: Bytes,
+            _bytes: Bytes,
         ) -> RpcResult<B256> {
-            todo!()
+            Ok(b256!(
+                "0x2222222222222222222222222222222222222222222222222222222222222222"
+            ))
         }
 
         async fn cancel_private_transaction(
             &self,
-            request: eth::CancelPrivateTransactionRequest,
+            _request: eth::CancelPrivateTransactionRequest,
         ) -> RpcResult<bool> {
-            todo!()
+            Ok(true)
         }
     }
 
     async fn start_mock_server() -> anyhow::Result<SocketAddr> {
-        let server = Server::builder().build("127.0.0.1:3000").await?;
+        let server = Server::builder().build("127.0.0.1:3001").await?;
         let addr = server.local_addr()?;
 
         let handle = server.start(EthBundleApiMockServiceImpl.into_rpc());
@@ -312,7 +331,6 @@ mod tests {
     #[tokio::test]
     async fn test_send_bundle() -> anyhow::Result<()> {
         let server_addr = start_mock_server().await?;
-        let signer = PrivateKeySigner::random();
 
         let client = HttpClientBuilder::default()
             .build(format!("http://{server_addr}"))?;
@@ -321,7 +339,36 @@ mod tests {
             inner: Box::new(client),
         };
 
-        // client.inner.send_bundle(request)
+        let request = eth::SendBundleRequest {
+            txs: vec![bytes!(
+                "0x02f86b0180843b9aca00852ecc889a0082520894c87037874aed04e51c29f582394217a0a2b89d808080c080a0a463985c616dd8ee17d7ef9112af4e6e06a27b071525b42182fe7b0b5c8b4925a00af5ca177ffef2ff28449292505d41be578bebb77110dfc09361d2fb56998260"
+            )],
+            block_number: U64::from(0x1),
+            min_timestamp: None,
+            max_timestamp: None,
+            reverting_tx_hashes: vec![
+                b256!(
+                    "0x669b4704a7d993a946cdd6e2f95233f308ce0c4649d2e04944e8299efcaa098a"
+                ),
+                b256!(
+                    "0xa839ee83465657cac01adc1d50d96c1b586ed498120a84a64749c0034b4f19fa"
+                ),
+            ],
+            replacement_uuid: None,
+        };
+
+        let response = client.inner.send_bundle(request).await;
+        assert!(response.is_ok());
+        let response = response.unwrap();
+
+        assert_eq!(
+            response,
+            BundleHash {
+                bundle_hash: b256!(
+                    "0xbeefbeefbeef0000000000000000000000000000000000000000000000000000"
+                ),
+            }
+        );
 
         Ok(())
     }

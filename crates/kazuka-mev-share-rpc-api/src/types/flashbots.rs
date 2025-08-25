@@ -1,5 +1,6 @@
 use alloy::primitives::{B256, U64, U256};
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde_json::json;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -67,7 +68,7 @@ impl Serialize for BundleStats {
     ) -> Result<S::Ok, S::Error> {
         match self {
             BundleStats::Unknown => {
-                serde_json::json!({"isSimulated": false}).serialize(serializer)
+                json!({"isSimulated": false}).serialize(serializer)
             }
             BundleStats::Seen(stats) => stats.serialize(serializer),
             BundleStats::Simulated(stats) => stats.serialize(serializer),

@@ -1,3 +1,4 @@
+use core::fmt;
 use std::{
     pin::Pin,
     task::{Context, Poll},
@@ -5,7 +6,7 @@ use std::{
 };
 
 use alloy::rpc::types::mev::mevshare::{
-    Event as MevShareEvent, EventHistory, EventHistoryInfo, EventHistoryParams,
+    EventHistory, EventHistoryInfo, EventHistoryParams,
 };
 use async_sse::Decoder;
 use bytes::Bytes;
@@ -18,7 +19,9 @@ use futures_util::{
 use http::{HeaderValue, header};
 use pin_project_lite::pin_project;
 use serde::{Serialize, de::DeserializeOwned};
-use tracing::trace;
+use tracing::{instrument, trace};
+
+use crate::Event;
 
 /// The client for SSE.
 ///
@@ -72,7 +75,8 @@ impl EventClient {
     ///
     /// See [EventClient::events] for a more convenient way to subscribe to
     /// [Event] streams.
-    pub async fn subscribe<T: DeserializeOwned>(
+    #[instrument(name = "MEV-share SSE subscribing", skip(self))]
+    pub async fn subscribe<T: DeserializeOwned + fmt::Debug>(
         &self,
         endpoint: &str,
     ) -> reqwest::Result<EventStream<T>> {
@@ -95,12 +99,18 @@ impl EventClient {
     }
 
     /// Subscribe to the MEV-share SSE endpoint with additional query params.
-    ///
     /// This connects to the endpoint and returns a stream of `T` items.
     ///
     /// See [EventClient::events] for a more convenient way to subscribe to
     /// [Event] streams.
-    pub async fn subscribe_with_query<T: DeserializeOwned, S: Serialize>(
+    #[instrument(
+        name = "MEV-share SSE subscribing with query",
+        skip(self, query)
+    )]
+    pub async fn subscribe_with_query<
+        T: DeserializeOwned + fmt::Debug,
+        S: Serialize,
+    >(
         &self,
         endpoint: &str,
         query: S,
@@ -129,7 +139,7 @@ impl EventClient {
     pub async fn events(
         &self,
         endpoint: &str,
-    ) -> reqwest::Result<EventStream<MevShareEvent>> {
+    ) -> reqwest::Result<EventStream<Event>> {
         self.subscribe(endpoint).await
     }
 
@@ -163,12 +173,12 @@ impl EventClient {
 
 /// A stream of SSE items.
 #[must_use = "streams do nothing unless polled"]
-pub struct EventStream<T> {
+pub struct EventStream<T: fmt::Debug> {
     inner: EventStreamInner,
     state: Option<State<T>>,
 }
 
-impl<T> EventStream<T> {
+impl<T: fmt::Debug> EventStream<T> {
     /// The endpoint this stream is connected to.
     pub fn endpoint(&self) -> &str {
         &self.inner.endpoint
@@ -180,8 +190,9 @@ impl<T> EventStream<T> {
     }
 }
 
-impl<T: DeserializeOwned> EventStream<T> {
+impl<T: DeserializeOwned + fmt::Debug> EventStream<T> {
     /// Retries the stream by establishing a new connection.
+    #[instrument(name = "MEV-share SSE retring", skip(self))]
     pub async fn retry(&mut self) -> Result<(), SseError> {
         let stream = self.inner.retry().await?;
         self.state = Some(State::Active(Box::pin(stream)));
@@ -190,6 +201,10 @@ impl<T: DeserializeOwned> EventStream<T> {
 
     /// Retries the stream by establishing a new connection using the given
     /// endpoint.
+    #[instrument(
+        name = "MEV-share SSE retrying with new endpoint",
+        skip(self, endpoint)
+    )]
     pub async fn retry_with(
         &mut self,
         endpoint: impl Into<String>,
@@ -201,8 +216,8 @@ impl<T: DeserializeOwned> EventStream<T> {
     }
 }
 
-impl<T> std::fmt::Debug for EventStream<T> {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+impl<T: fmt::Debug> fmt::Debug for EventStream<T> {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("EventStream")
             .field("endpoint", &self.inner.endpoint)
             .field("num_retries", &self.inner.num_retries)
@@ -214,7 +229,7 @@ impl<T> std::fmt::Debug for EventStream<T> {
     }
 }
 
-impl<T: DeserializeOwned> Stream for EventStream<T> {
+impl<T: DeserializeOwned + fmt::Debug> Stream for EventStream<T> {
     type Item = Result<T, SseError>;
 
     fn poll_next(
@@ -232,45 +247,59 @@ impl<T: DeserializeOwned> Stream for EventStream<T> {
 
             match state {
                 // Stream has finished.
-                State::End => return Poll::Ready(None),
+                State::End => {
+                    tracing::debug!("state = end");
+                    return Poll::Ready(None);
+                }
                 // Currently retrying, poll the future, which might resolve to a
                 // new ActiveEventStream or an SseError.
-                State::Retry(mut future) => match future.as_mut().poll(cx) {
-                    Poll::Ready(Ok(stream)) => {
-                        // Successfully retried, reconnected, got a new stream.
-                        this.state = Some(State::Active(Box::pin(stream)));
-                        // Continue polling.
-                        continue;
+                State::Retry(mut future) => {
+                    tracing::debug!("state = retry");
+                    match future.as_mut().poll(cx) {
+                        Poll::Ready(Ok(stream)) => {
+                            tracing::debug!(
+                                "successfully retried, reconnected, got a new stream"
+                            );
+                            this.state = Some(State::Active(Box::pin(stream)));
+                            tracing::debug!("continue polling");
+                            continue;
+                        }
+                        Poll::Ready(Err(err)) => {
+                            tracing::debug!(
+                                "failed to retry, stopping, returning error"
+                            );
+                            this.state = Some(State::End);
+                            return Poll::Ready(Some(Err(err)));
+                        }
+                        Poll::Pending => {
+                            tracing::debug!("still pending retry");
+                            this.state = Some(State::Retry(future));
+                            return Poll::Pending;
+                        }
                     }
-                    Poll::Ready(Err(err)) => {
-                        // Failed to retry, end the stream, return the error.
-                        this.state = Some(State::End);
-                        return Poll::Ready(Some(Err(err)));
-                    }
-                    Poll::Pending => {
-                        // Still pending retry, put the future back.
-                        this.state = Some(State::Retry(future));
-                        return Poll::Pending;
-                    }
-                },
+                }
                 // Already connected, poll the currently active stream.
                 State::Active(mut stream) => {
+                    tracing::debug!("state = active");
                     match stream.as_mut().poll_next(cx) {
                         Poll::Ready(None) => {
-                            // Stream finished, end the stream.
+                            tracing::debug!("active stream finished, stopping");
                             this.state = Some(State::End);
-                            tracing::debug!("stream finished");
                             return Poll::Ready(None);
                         }
                         Poll::Ready(Some(Ok(event_or_retry))) => {
+                            tracing::debug!("active stream ready");
+
                             match event_or_retry {
                                 // Got an event - return it.
                                 EventOrRetry::Event(event) => {
+                                    tracing::debug!(?event, "got event");
                                     result = Poll::Ready(Some(Ok(event)));
                                 }
                                 // Got a retry -
                                 // start retrying after the duration.
                                 EventOrRetry::Retry(duration) => {
+                                    tracing::debug!("got retry");
                                     let mut client = this.inner.clone();
                                     let future = Box::pin(async move {
                                         tokio::time::sleep(duration).await;
@@ -286,7 +315,9 @@ impl<T: DeserializeOwned> Stream for EventStream<T> {
                             tracing::warn!(?err, "active stream error");
                             result = Poll::Ready(Some(Err(err)));
                         }
-                        Poll::Pending => {}
+                        Poll::Pending => {
+                            tracing::debug!("active stream pending");
+                        }
                     }
                     this.state = Some(State::Active(stream));
                     break;
@@ -299,7 +330,7 @@ impl<T: DeserializeOwned> Stream for EventStream<T> {
 }
 
 /// State machine for [EventStream].
-enum State<T> {
+enum State<T: fmt::Debug> {
     /// Stream has finished.
     End,
     /// Waiting for retry future to resolve.
@@ -323,7 +354,8 @@ pub struct EventStreamInner {
 
 impl EventStreamInner {
     /// Retries the stream by creating a new subscription stream.
-    async fn retry<T: DeserializeOwned>(
+    #[instrument(name = "MEV-share SSE retrying", skip(self))]
+    async fn retry<T: DeserializeOwned + fmt::Debug>(
         &mut self,
     ) -> Result<ActiveEventStream<T>, SseError> {
         self.num_retries += 1;
@@ -360,19 +392,19 @@ type SseDecoderStream<T> = MapOk<
     ToEventOrRetry<T>,
 >;
 
-enum EventOrRetry<T> {
+enum EventOrRetry<T: fmt::Debug> {
     Retry(Duration),
     Event(T),
 }
 
 pin_project! {
-    struct ActiveEventStream<T> {
+    struct ActiveEventStream<T: fmt::Debug> {
         #[pin]
         stream: SseDecoderStream<T>,
     }
 }
 
-impl<T: DeserializeOwned> Stream for ActiveEventStream<T> {
+impl<T: DeserializeOwned + fmt::Debug> Stream for ActiveEventStream<T> {
     type Item = Result<EventOrRetry<T>, SseError>;
 
     fn poll_next(
@@ -397,9 +429,10 @@ impl<T: DeserializeOwned> Stream for ActiveEventStream<T> {
 
 impl<T> ActiveEventStream<T>
 where
-    T: DeserializeOwned,
+    T: DeserializeOwned + fmt::Debug,
 {
     /// Connects to the SSE endpoint and returns a new [ActiveEventStream].
+    #[instrument(name = "MEV-share SSE connecting", skip(client, query))]
     async fn connect<S: Serialize>(
         client: &reqwest::Client,
         endpoint: &str,
@@ -433,6 +466,7 @@ where
                     .map(EventOrRetry::Event)
             }
             async_sse::Event::Retry(duration) => {
+                trace!(?duration, "receive retry");
                 Ok(EventOrRetry::Retry(duration))
             }
         };

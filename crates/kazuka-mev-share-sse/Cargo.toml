@@ -28,6 +28,7 @@ serde.workspace = true
 serde_json.workspace = true
 
 # misc
+num-traits.workspace = true
 bytes.workspace = true
 pin-project-lite.workspace = true
 thiserror.workspace = true

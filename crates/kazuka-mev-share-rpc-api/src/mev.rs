@@ -100,6 +100,8 @@ mod tests {
     use jsonrpsee::{
         core::RpcResult, http_client::HttpClientBuilder, server::Server,
     };
+    #[cfg(test)]
+    use pretty_assertions::assert_eq;
     use tower::ServiceBuilder;
 
     use super::*;

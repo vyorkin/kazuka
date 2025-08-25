@@ -203,6 +203,8 @@ mod tests {
     use jsonrpsee::{
         core::RpcResult, http_client::HttpClientBuilder, server::Server,
     };
+    #[cfg(test)]
+    use pretty_assertions::assert_eq;
 
     use super::*;
     use crate::types::eth::{BundleHash, CallBundleTransactionResult};

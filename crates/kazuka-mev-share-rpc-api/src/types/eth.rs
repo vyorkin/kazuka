@@ -143,6 +143,8 @@ pub struct CancelPrivateTransactionRequest {
 #[cfg(test)]
 mod tests {
     use alloy::primitives::{address, b256};
+    #[cfg(test)]
+    use pretty_assertions::assert_eq;
 
     use super::*;
 

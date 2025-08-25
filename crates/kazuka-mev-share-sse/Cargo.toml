@@ -4,12 +4,12 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-alloy = { workspace = true, features = ["default"] }
+alloy = { workspace = true, features = ["rpc", "rpc-types", "rpc-types-mev"] }
 
 # network
 async-sse = { git = "https://github.com/vyorkin/async-sse.git", branch = "feature/upgrade-dependencies" }
 http-types.workspace = true
-http = { workspace = true, optional = true }
+http.workspace = true
 reqwest = { workspace = true, default-features = false, features = [
   "stream",
   "json",
@@ -21,6 +21,7 @@ tower = { workspace = true, optional = true }
 hyper = { workspace = true, optional = true }
 tokio-util = { workspace = true, features = ["compat"], optional = true }
 tokio-stream = { workspace = true, features = ["sync"], optional = true }
+futures-util = { workspace = true, features = ["io"] }
 
 # serde
 serde.workspace = true
@@ -36,7 +37,7 @@ tracing.workspace = true
 default = ["rustls"]
 rustls = ["reqwest/rustls-tls"]
 native-tls = ["reqwest/native-tls"]
-server = ["hyper", "http", "tokio-stream", "tokio-util", "tower"]
+server = ["hyper", "tokio-stream", "tokio-util", "tower"]
 
 [dev-dependencies]
 tokio = { workspace = true, features = ["macros", "rt", "rt-multi-thread"] }
@@ -44,3 +45,4 @@ tracing-subscriber = { workspace = true, default-features = false, features = [
   "env-filter",
   "fmt",
 ] }
+pretty_assertions.workspace = true

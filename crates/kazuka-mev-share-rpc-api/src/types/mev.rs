@@ -188,6 +188,9 @@ impl Inclusion {
 
 #[cfg(test)]
 mod tests {
+    #[cfg(test)]
+    use pretty_assertions::assert_eq;
+
     use super::*;
     use crate::types::core::{PrivacyHint, RefundConfig};
 

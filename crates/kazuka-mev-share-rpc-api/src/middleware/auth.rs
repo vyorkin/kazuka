@@ -143,6 +143,8 @@ impl<Signer: Clone, S> Layer<S> for AuthLayer<Signer> {
 #[cfg(test)]
 mod tests {
     use alloy::signers::local::PrivateKeySigner;
+    #[cfg(test)]
+    use pretty_assertions::assert_eq;
     use tower::service_fn;
 
     use super::*;

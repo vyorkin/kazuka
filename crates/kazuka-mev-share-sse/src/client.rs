@@ -461,12 +461,3 @@ pub enum SseError {
     #[error("Exceeded all retries: {0}")]
     MaxRetriesExceeded(u64),
 }
-
-#[cfg(test)]
-mod tests {
-    #[cfg(test)]
-    use pretty_assertions::assert_eq;
-    use tracing_subscriber::{EnvFilter, fmt, prelude::*};
-
-    use super::*;
-}

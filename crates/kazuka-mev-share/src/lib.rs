@@ -1,14 +1,8 @@
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
-}
+//! Client library for MEV-Share.
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
-}
+#[doc(inline)]
+pub use kazuka_mev_share_backend as backend;
+#[doc(inline)]
+pub use kazuka_mev_share_rpc_api as rpc;
+#[doc(inline)]
+pub use kazuka_mev_share_sse as sse;

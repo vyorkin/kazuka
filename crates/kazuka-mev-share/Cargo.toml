@@ -4,3 +4,6 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+kazuka-mev-share-rpc-api.workspace = true
+kazuka-mev-share-sse.workspace = true
+kazuka-mev-share-backend.workspace = true

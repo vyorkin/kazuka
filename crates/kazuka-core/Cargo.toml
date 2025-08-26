@@ -6,16 +6,16 @@ edition = "2024"
 [dependencies]
 thiserror.workspace = true
 tracing.workspace = true
+
 tokio.workspace = true
 tokio-stream.workspace = true
 futures.workspace = true
 async-trait.workspace = true
-alloy.workspace = true
-alloy-node-bindings.workspace = true
-mev-share.workspace = true
+
 reqwest.workspace = true
 jsonrpsee.workspace = true
 
-[dev-dependencies]
-divan.workspace = true
-criterion.workspace = true
+alloy.workspace = true
+alloy-node-bindings.workspace = true
+
+kazuka-mev-share.workspace = true

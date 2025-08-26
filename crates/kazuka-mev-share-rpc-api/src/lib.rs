@@ -1,12 +1,11 @@
 //! MEV-Share RPC interface definitions.
 
-mod types;
-pub use types::*;
+pub mod types;
 
-pub mod eth;
-pub mod flashbots;
-pub mod mev;
-pub mod middleware;
+mod eth;
+mod flashbots;
+mod mev;
+mod middleware;
 
 #[cfg(feature = "client")]
 pub use clients::*;

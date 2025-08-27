@@ -5,7 +5,7 @@ pub mod types;
 mod eth;
 mod flashbots;
 mod mev;
-mod middleware;
+pub mod middleware;
 
 #[cfg(feature = "client")]
 pub use clients::*;

@@ -1,7 +1,8 @@
-use alloy::primitives::{Address, B256, BlockNumber, Bytes, U64, U256, bytes};
+use alloy::{
+    primitives::{Address, B256, BlockNumber, Bytes, U64, U256, bytes},
+    rpc::types::mev::{Privacy, Validity},
+};
 use serde::{Deserialize, Serialize};
-
-use crate::types::core::{Privacy, Validity};
 
 /// Bundle of transactions for `eth_sendBundle`
 ///

@@ -1,10 +1,9 @@
 use alloy::{
     eips::BlockId,
     primitives::{Address, B256, Bytes, Log, TxHash, U64, bytes},
+    rpc::types::mev::{Inclusion, Privacy, Validity},
 };
 use serde::{Deserialize, Serialize};
-
-use crate::types::core::{Privacy, Validity};
 
 /// A bundle of transactions to send to the matchmaker.
 ///
@@ -32,8 +31,8 @@ pub struct SendBundleRequest {
 
 impl SendBundleRequest {
     pub fn new(
-        block_num: U64,
-        max_block: Option<U64>,
+        block_num: u64,
+        max_block: Option<u64>,
         protocol_version: ProtocolVersion,
         bundle_body: Vec<BundleItem>,
     ) -> Self {
@@ -152,47 +151,13 @@ pub enum ProtocolVersion {
     V0_1,
 }
 
-/// Data used by block builders to check if
-/// the bundle should be considered for inclusion.
-#[derive(Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct Inclusion {
-    /// The first block the bundle is valid for.
-    pub block: U64,
-    /// The last block the bundle is valid for.
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub max_block: Option<U64>,
-}
-
-impl Inclusion {
-    /// Creates a new inclusion with the given min block.
-    pub fn at_block(block: u64) -> Self {
-        Self {
-            block: U64::from(block),
-            max_block: None,
-        }
-    }
-
-    /// Returns the block number of the first block the bundle is valid for.
-    #[inline]
-    pub fn block_number(&self) -> u64 {
-        self.block.to::<u64>()
-    }
-
-    /// Returns the block number of the last block the bundle is valid for.
-    #[inline]
-    pub fn max_block_number(&self) -> Option<u64> {
-        self.max_block.as_ref().map(|b| b.to::<u64>())
-    }
-}
-
 #[cfg(test)]
 mod tests {
+    use alloy::rpc::types::mev::{Inclusion, PrivacyHint, RefundConfig};
     #[cfg(test)]
     use pretty_assertions::assert_eq;
 
     use super::*;
-    use crate::types::core::{PrivacyHint, RefundConfig};
 
     #[test]
     fn test_deserialize_simple() {
@@ -303,7 +268,7 @@ mod tests {
         let bundle = SendBundleRequest {
             protocol_version: ProtocolVersion::V0_1,
             inclusion: Inclusion {
-                block: U64::from(1),
+                block: 1,
                 max_block: None,
             },
             bundle_body,

@@ -11,6 +11,7 @@ use alloy::{
     serde::WithOtherFields,
 };
 use async_trait::async_trait;
+use tracing::instrument;
 
 use crate::{error::KazukaError, types::Executor};
 
@@ -42,6 +43,7 @@ pub struct SubmitTxToMempool {
 #[async_trait]
 impl Executor<SubmitTxToMempool> for MempoolExecutor {
     /// Send a transaction to the mempool.
+    #[instrument(skip(self))]
     async fn execute(
         &self,
         action: SubmitTxToMempool,

@@ -12,6 +12,7 @@ use jsonrpsee::http_client::{
     HttpBody, HttpRequest, transport::Error as TransportError,
 };
 use tower::{Layer, Service};
+use tracing::instrument;
 
 // To authenticate your request, Flashbots endpoints require you to
 // sign the payload and include the signed payload in the X-Flashbots-Signature
@@ -46,6 +47,7 @@ where
         self.service.poll_ready(cx).map_err(Into::into)
     }
 
+    #[instrument(skip(self, request))]
     fn call(&mut self, request: HttpRequest) -> Self::Future {
         use http_body_util::BodyExt;
 
@@ -67,12 +69,19 @@ where
         let has_flashbots_header =
             parts.headers.contains_key(FLASHBOTS_HEADER.clone());
 
+        tracing::debug!(
+            ?is_json,
+            ?has_flashbots_header,
+            method = ?parts.method,
+        );
+
         // If content-type is not JSON,
         // or flashbots header already exists, just pass through the request.
         if !is_json
             || has_flashbots_header
             || parts.method != http::Method::POST
         {
+            tracing::debug!("pass through");
             return async move {
                 let request = Request::from_parts(parts, body);
                 service.call(request).await.map_err(|e| e.into())
@@ -93,7 +102,7 @@ where
                 "0x{:x}",
                 B256::from(keccak256(body_bytes.as_ref()))
             );
-            let message_bytes = message.into_bytes();
+            let message_bytes = message.clone().into_bytes();
             let signature = signer
                 .sign_message(&message_bytes)
                 .await
@@ -101,6 +110,15 @@ where
             let header_str = format!("{:?}:0x{}", signer.address(), signature);
             let header_val = HeaderValue::from_str(&header_str)
                 .expect("Flashbots header contains invalid characters");
+
+            tracing::debug!(
+                message,
+                ?message_bytes,
+                signature = ?signature,
+                header_str,
+                header_val = ?header_val,
+                "inserting flashbots header"
+            );
 
             parts.headers.insert(FLASHBOTS_HEADER.clone(), header_val);
 
@@ -146,11 +164,28 @@ mod tests {
     #[cfg(test)]
     use pretty_assertions::assert_eq;
     use tower::service_fn;
+    use tracing_subscriber::{
+        EnvFilter, fmt, layer::SubscriberExt, util::SubscriberInitExt,
+    };
 
     use super::*;
 
+    const DEFAULT_FILTER_LEVEL: &str = "trace";
+
+    fn init_tracing() {
+        let env_filter = EnvFilter::try_from_default_env()
+            .unwrap_or_else(|_| EnvFilter::new(DEFAULT_FILTER_LEVEL));
+
+        let _ = tracing_subscriber::registry()
+            .with(fmt::layer())
+            .with(env_filter)
+            .try_init();
+    }
+
     #[tokio::test]
     async fn test_auth_service_adds_header_for_post_request() {
+        init_tracing();
+
         let service = service_fn(|request: HttpRequest| async move {
             assert!(request.headers().contains_key(FLASHBOTS_HEADER.clone()));
             Ok::<_, TransportError>(())
@@ -172,6 +207,8 @@ mod tests {
 
     #[tokio::test]
     async fn test_auth_service_passes_through_non_post_request() {
+        init_tracing();
+
         let service = service_fn(|request: HttpRequest| async move {
             assert_eq!(request.method(), http::Method::GET);
             assert!(!request.headers().contains_key(FLASHBOTS_HEADER.clone()));
@@ -194,6 +231,8 @@ mod tests {
 
     #[tokio::test]
     async fn test_auth_service_passes_through_non_json_request() {
+        init_tracing();
+
         let service = service_fn(|request: HttpRequest| async move {
             assert_eq!(
                 request.headers().get("content-type").unwrap(),
@@ -219,6 +258,8 @@ mod tests {
 
     #[tokio::test]
     async fn test_auth_service_passes_through_existing_header() {
+        init_tracing();
+
         let service = service_fn(|request: HttpRequest| async move {
             assert!(request.headers().contains_key(FLASHBOTS_HEADER.clone()));
             Ok::<_, TransportError>(())

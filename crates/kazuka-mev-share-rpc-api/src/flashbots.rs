@@ -1,8 +1,9 @@
 use alloy::primitives::{B256, U64};
 use async_trait::async_trait;
 use jsonrpsee::{core::ClientError, proc_macros::rpc};
+use tracing::instrument;
 
-use crate::types::*;
+pub use crate::types::flashbots::*;
 
 /// Generates a client using jsonrpsee proc macros.
 ///
@@ -28,15 +29,15 @@ mod rpc {
         #[method(name = "getUserStatsV2")]
         async fn get_user_stats(
             &self,
-            request: flashbots::GetUserStatsRequest,
-        ) -> RpcResult<flashbots::UserStats>;
+            request: GetUserStatsRequest,
+        ) -> RpcResult<UserStats>;
 
         /// See [`super::FlashbotsApiClient::get_user_stats`]
         #[method(name = "getBundleStatsV2")]
         async fn get_bundle_stats(
             &self,
-            request: flashbots::GetBundleStatsRequest,
-        ) -> RpcResult<flashbots::BundleStats>;
+            request: GetBundleStatsRequest,
+        ) -> RpcResult<BundleStats>;
     }
 }
 
@@ -61,7 +62,7 @@ pub trait FlashbotsApiClient {
     async fn get_user_stats(
         &self,
         block_number: U64,
-    ) -> Result<flashbots::UserStats, ClientError>;
+    ) -> Result<UserStats, ClientError>;
 
     /// Returns stats for a single bundle.
     ///
@@ -78,7 +79,7 @@ pub trait FlashbotsApiClient {
         &self,
         bundle_hash: B256,
         block_number: U64,
-    ) -> Result<flashbots::BundleStats, ClientError>;
+    ) -> Result<BundleStats, ClientError>;
 }
 
 #[cfg(feature = "client")]
@@ -88,21 +89,23 @@ where
     T: rpc::FlashbotsApiClient + Sync,
 {
     /// See [`FlashbotsApiClient::get_user_stats`]
+    #[instrument(skip(self))]
     async fn get_user_stats(
         &self,
         block_number: U64,
-    ) -> Result<flashbots::UserStats, ClientError> {
-        self.get_user_stats(flashbots::GetUserStatsRequest { block_number })
+    ) -> Result<UserStats, ClientError> {
+        self.get_user_stats(GetUserStatsRequest { block_number })
             .await
     }
 
     /// See [`FlashbotsApiClient::get_user_stats`]
+    #[instrument(skip(self))]
     async fn get_bundle_stats(
         &self,
         bundle_hash: B256,
         block_number: U64,
-    ) -> Result<flashbots::BundleStats, ClientError> {
-        self.get_bundle_stats(flashbots::GetBundleStatsRequest {
+    ) -> Result<BundleStats, ClientError> {
+        self.get_bundle_stats(GetBundleStatsRequest {
             bundle_hash,
             block_number,
         })

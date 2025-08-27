@@ -14,6 +14,6 @@ jsonrpsee.workspace = true
 tower.workspace = true
 csv.workspace = true
 
-kazuka-core = { path = "../../kazuka-core" }
-kazuka-mev-share = { path = "../../kazuka-mev-share" }
+kazuka-core.workspace = true
+kazuka-mev-share.workspace = true
 # kazuka-mev-share-bindings = { path = "./bindings" }

@@ -33,7 +33,7 @@ impl MevShareExecutor {
 impl Executor<SendBundleRequest> for MevShareExecutor {
     async fn execute(
         &self,
-        action: mev::SendBundleRequest,
+        action: SendBundleRequest,
     ) -> Result<(), KazukaError> {
         todo!()
     }

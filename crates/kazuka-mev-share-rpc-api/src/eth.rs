@@ -1,4 +1,14 @@
-use alloy::primitives::{B256, Bytes};
+#[cfg(feature = "client")]
+use alloy::rpc::types::mev::{
+    EthCallBundle, EthCallBundleTransactionResult, EthCancelBundle,
+    EthSendBundle,
+};
+use alloy::{
+    primitives::{B256, Bytes},
+    rpc::types::mev::{
+        CancelPrivateTransactionRequest, PrivateTransactionRequest,
+    },
+};
 use async_trait::async_trait;
 use jsonrpsee::{core::ClientError, proc_macros::rpc};
 #[cfg(feature = "client")]
@@ -11,6 +21,10 @@ pub use crate::types::eth::*;
 /// This hides the generated client trait which is
 /// replaced by the `EthBundleApiClient` trait.
 mod rpc {
+    use alloy::rpc::types::mev::{
+        EthCallBundle, EthCallBundleTransactionResult, EthCancelBundle,
+        EthSendBundle,
+    };
     use jsonrpsee::core::RpcResult;
 
     use super::*;
@@ -27,7 +41,7 @@ mod rpc {
         #[method(name = "sendBundle")]
         async fn send_bundle(
             &self,
-            request: SendBundleRequest,
+            request: EthSendBundle,
         ) -> RpcResult<BundleHash>;
 
         /// The `eth_callBundle` is used to simulate a bundle against a specific
@@ -35,8 +49,8 @@ mod rpc {
         #[method(name = "callBundle")]
         async fn call_bundle(
             &self,
-            request: CallBundleRequest,
-        ) -> RpcResult<CallBundleTransactionResult>;
+            request: EthCallBundle,
+        ) -> RpcResult<EthCallBundleTransactionResult>;
 
         /// The `eth_cancelBundle` is used to prevent a submitted bundle from
         /// being included on-chain.
@@ -45,7 +59,7 @@ mod rpc {
         #[method(name = "cancelBundle")]
         async fn cancel_bundle(
             &self,
-            request: CancelBundleRequest,
+            request: EthCancelBundle,
         ) -> RpcResult<()>;
 
         /// The `eth_sendPrivateTransaction` is used to send a single
@@ -96,15 +110,15 @@ pub trait EthBundleApiClient {
     /// The `eth_sendBundle` is used to send your bundles to the builder.
     async fn send_bundle(
         &self,
-        request: SendBundleRequest,
+        request: EthSendBundle,
     ) -> Result<BundleHash, ClientError>;
 
     /// The `eth_callBundle` is used to simulate a bundle against a specific
     /// block, including simulating a bundle at the top of the next block.
     async fn call_bundle(
         &self,
-        request: CallBundleRequest,
-    ) -> Result<CallBundleTransactionResult, ClientError>;
+        request: EthCallBundle,
+    ) -> Result<EthCallBundleTransactionResult, ClientError>;
 
     /// The `eth_cancelBundle` is used to prevent a submitted bundle from
     /// being included on-chain.
@@ -112,7 +126,7 @@ pub trait EthBundleApiClient {
     /// See [bundle cancellations](https://docs.flashbots.net/flashbots-auction/searchers/advanced/bundle-cancellations) for more information.
     async fn cancel_bundle(
         &self,
-        request: CancelBundleRequest,
+        request: EthCancelBundle,
     ) -> Result<(), ClientError>;
 
     /// The `eth_sendPrivateTransaction` is used to send a single
@@ -156,7 +170,7 @@ where
     #[instrument(skip(self))]
     async fn send_bundle(
         &self,
-        request: SendBundleRequest,
+        request: EthSendBundle,
     ) -> Result<BundleHash, ClientError> {
         rpc::EthBundleApiClient::send_bundle(self, request).await
     }
@@ -164,15 +178,15 @@ where
     #[instrument(skip(self))]
     async fn call_bundle(
         &self,
-        request: CallBundleRequest,
-    ) -> Result<CallBundleTransactionResult, ClientError> {
+        request: EthCallBundle,
+    ) -> Result<EthCallBundleTransactionResult, ClientError> {
         rpc::EthBundleApiClient::call_bundle(self, request).await
     }
 
     #[instrument(skip(self))]
     async fn cancel_bundle(
         &self,
-        request: CancelBundleRequest,
+        request: EthCancelBundle,
     ) -> Result<(), ClientError> {
         rpc::EthBundleApiClient::cancel_bundle(self, request).await
     }
@@ -206,7 +220,13 @@ where
 mod tests {
     use std::net::SocketAddr;
 
-    use alloy::primitives::{U64, U256, address, b256, bytes};
+    use alloy::{
+        primitives::{U256, address, b256, bytes},
+        rpc::types::mev::{
+            EthCallBundle, EthCallBundleTransactionResult, EthCancelBundle,
+            EthSendBundle,
+        },
+    };
     use async_trait::async_trait;
     use jsonrpsee::{
         core::RpcResult, http_client::HttpClientBuilder, server::Server,
@@ -241,19 +261,19 @@ mod tests {
         #[method(name = "sendBundle")]
         async fn send_bundle(
             &self,
-            request: SendBundleRequest,
+            request: EthSendBundle,
         ) -> RpcResult<BundleHash>;
 
         #[method(name = "callBundle")]
         async fn call_bundle(
             &self,
-            request: CallBundleRequest,
-        ) -> RpcResult<CallBundleTransactionResult>;
+            request: EthCallBundle,
+        ) -> RpcResult<EthCallBundleTransactionResult>;
 
         #[method(name = "cancelBundle")]
         async fn cancel_bundle(
             &self,
-            request: CancelBundleRequest,
+            request: EthCancelBundle,
         ) -> RpcResult<()>;
 
         #[method(name = "sendPrivateTransaction")]
@@ -281,7 +301,7 @@ mod tests {
     impl EthBundleApiMockServer for EthBundleApiMockServiceImpl {
         async fn send_bundle(
             &self,
-            _request: SendBundleRequest,
+            _request: EthSendBundle,
         ) -> RpcResult<BundleHash> {
             Ok(BundleHash {
                 bundle_hash: b256!(
@@ -292,9 +312,9 @@ mod tests {
 
         async fn call_bundle(
             &self,
-            _request: CallBundleRequest,
-        ) -> RpcResult<CallBundleTransactionResult> {
-            Ok(CallBundleTransactionResult {
+            _request: EthCallBundle,
+        ) -> RpcResult<EthCallBundleTransactionResult> {
+            Ok(EthCallBundleTransactionResult {
                 coinbase_diff: U256::from(10000000000063000u64),
                 eth_sent_to_coinbase: U256::from(10000000000000000u64),
                 from_address: address!(
@@ -303,19 +323,20 @@ mod tests {
                 gas_fees: U256::from(63000u64),
                 gas_price: U256::from(476190476193u64),
                 gas_used: 21000u64,
-                to_address: address!(
+                to_address: Some(address!(
                     "0x73625f59CAdc5009Cb458B751b3E7b6b48C06f2C"
-                ),
+                )),
                 tx_hash: b256!(
                     "0x669b4704a7d993a946cdd6e2f95233f308ce0c4649d2e04944e8299efcaa098a"
                 ),
-                value: bytes!("0x"),
+                value: Some(bytes!("0x")),
+                revert: None,
             })
         }
 
         async fn cancel_bundle(
             &self,
-            _request: CancelBundleRequest,
+            _request: EthCancelBundle,
         ) -> RpcResult<()> {
             Ok(())
         }
@@ -369,11 +390,11 @@ mod tests {
             inner: Box::new(client),
         };
 
-        let request = SendBundleRequest {
+        let request = EthSendBundle {
             txs: vec![bytes!(
                 "0x02f86b0180843b9aca00852ecc889a0082520894c87037874aed04e51c29f582394217a0a2b89d808080c080a0a463985c616dd8ee17d7ef9112af4e6e06a27b071525b42182fe7b0b5c8b4925a00af5ca177ffef2ff28449292505d41be578bebb77110dfc09361d2fb56998260"
             )],
-            block_number: U64::from(0x1),
+            block_number: 0x1,
             min_timestamp: None,
             max_timestamp: None,
             reverting_tx_hashes: vec![
@@ -384,7 +405,7 @@ mod tests {
                     "0xa839ee83465657cac01adc1d50d96c1b586ed498120a84a64749c0034b4f19fa"
                 ),
             ],
-            replacement_uuid: None,
+            ..Default::default()
         };
 
         let response = client.inner.send_bundle(request).await;

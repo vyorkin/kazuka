@@ -1,4 +1,7 @@
-use alloy::primitives::{B256, U64};
+use alloy::{
+    primitives::{B256, U64},
+    rpc::types::mev::{BundleStats, UserStats},
+};
 use async_trait::async_trait;
 use jsonrpsee::{core::ClientError, proc_macros::rpc};
 use tracing::instrument;

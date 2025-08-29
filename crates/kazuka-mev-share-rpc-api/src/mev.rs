@@ -1,3 +1,6 @@
+use alloy::rpc::types::mev::{
+    SendBundleRequest, SimBundleOverrides, SimBundleResponse,
+};
 use async_trait::async_trait;
 use jsonrpsee::{core::ClientError, proc_macros::rpc};
 use tracing::instrument;
@@ -98,7 +101,13 @@ where
 mod tests {
     use std::net::SocketAddr;
 
-    use alloy::{primitives::b256, signers::local::PrivateKeySigner};
+    use alloy::{
+        primitives::{U256, b256},
+        rpc::types::mev::{
+            SendBundleRequest, SimBundleOverrides, SimBundleResponse,
+        },
+        signers::local::PrivateKeySigner,
+    };
     use async_trait::async_trait;
     use jsonrpsee::{
         core::RpcResult, http_client::HttpClientBuilder, server::Server,
@@ -164,7 +173,15 @@ mod tests {
         ) -> RpcResult<SimBundleResponse> {
             Ok(SimBundleResponse {
                 success: true,
-                ..Default::default()
+                error: None,
+                state_block: 0x1,
+                mev_gas_price: U256::from(476190476193u64),
+                profit: U256::from(1000000),
+                refundable_value: U256::from(5000),
+                gas_used: 1000,
+                logs: None,
+                exec_error: None,
+                revert: None,
             })
         }
     }

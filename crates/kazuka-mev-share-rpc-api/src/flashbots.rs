@@ -6,7 +6,7 @@ use async_trait::async_trait;
 use jsonrpsee::{core::ClientError, proc_macros::rpc};
 use tracing::instrument;
 
-pub use crate::types::flashbots::*;
+use crate::types::{GetBundleStatsRequest, GetUserStatsRequest};
 
 /// Generates a client using jsonrpsee proc macros.
 ///

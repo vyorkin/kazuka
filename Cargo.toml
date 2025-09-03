@@ -2,6 +2,7 @@
 resolver = "2"
 members = [
   "bin/kazuka",
+  "bin/kazuka-simple-arbitrage",
   "crates/kazuka-core",
   "crates/kazuka-mev-share",
   "crates/kazuka-mev-share-backend",

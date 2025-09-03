@@ -5,7 +5,7 @@ use async_trait::async_trait;
 use jsonrpsee::{core::ClientError, proc_macros::rpc};
 use tracing::instrument;
 
-pub use crate::types::mev::*;
+use crate::types::SendBundleResponse;
 
 /// jsonrpsee generated code.
 ///

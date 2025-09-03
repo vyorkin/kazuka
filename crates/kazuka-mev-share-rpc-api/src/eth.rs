@@ -14,7 +14,7 @@ use jsonrpsee::{core::ClientError, proc_macros::rpc};
 #[cfg(feature = "client")]
 use tracing::instrument;
 
-pub use crate::types::eth::*;
+use crate::types::BundleHash;
 
 /// jsonrpsee generated code.
 ///

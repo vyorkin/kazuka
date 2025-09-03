@@ -1,7 +1,0 @@
-[submodule "crates/strategies/kazuka-mev-share/contracts/lib/forge-std"]
-	path = crates/strategies/kazuka-mev-share/contracts/lib/forge-std
-	url = https://github.com/foundry-rs/forge-std
-
-[submodule "crates/strategies/kazuka-mev-share/contracts/lib/solmate"]
-	path = crates/strategies/kazuka-mev-share/contracts/lib/solmate
-	url = https://github.com/transmissions11/solmate

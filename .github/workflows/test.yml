@@ -25,7 +25,7 @@ jobs:
           forge --version
 
       - name: Install deps
-        run: forge install
+        run: forge install --root ./crates/strategies/kazuka-mev-share-arbitrage/contracts
 
       - name: Run Forge fmt
         run: |

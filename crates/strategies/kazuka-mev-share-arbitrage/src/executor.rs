@@ -1,4 +1,4 @@
-use alloy::{rpc::types::mev::SendBundleRequest, signers::Signer};
+use alloy::{rpc::types::mev::MevSendBundle, signers::Signer};
 use async_trait::async_trait;
 use jsonrpsee::http_client::HttpClientBuilder;
 use kazuka_core::{error::KazukaError, types::Executor};
@@ -30,11 +30,8 @@ impl MevShareExecutor {
 }
 //
 #[async_trait]
-impl Executor<SendBundleRequest> for MevShareExecutor {
-    async fn execute(
-        &self,
-        action: SendBundleRequest,
-    ) -> Result<(), KazukaError> {
+impl Executor<MevSendBundle> for MevShareExecutor {
+    async fn execute(&self, action: MevSendBundle) -> Result<(), KazukaError> {
         todo!()
     }
 }

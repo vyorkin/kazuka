@@ -7,4 +7,3 @@ description = "MEV-share arbitrage bindings for kazuka"
 [dependencies]
 alloy = { version = "1.0", features = ["sol-types", "contract"] }
 serde = { version = "1.0", features = ["derive"] }
-

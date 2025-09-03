@@ -1,0 +1,10 @@
+[package]
+name = "kazuka-mev-share-arbitrage-bindings"
+version = "0.1.0"
+edition = "2021"
+description = "MEV-share arbitrage bindings for kazuka"
+
+[dependencies]
+alloy = { version = "1.0", features = ["sol-types", "contract"] }
+serde = { version = "1.0", features = ["derive"] }
+

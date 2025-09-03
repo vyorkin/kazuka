@@ -21,7 +21,7 @@ impl MevShareExecutor {
         let client = HttpClientBuilder::default()
             .set_http_middleware(http_middleware)
             .build(url)
-            .expect("failed to build HTTP client");
+            .expect("Failed to build HTTP client");
 
         Self {
             mev_share_client: Box::new(client),

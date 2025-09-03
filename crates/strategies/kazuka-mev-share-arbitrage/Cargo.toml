@@ -8,12 +8,13 @@ tracing.workspace = true
 tokio.workspace = true
 async-trait.workspace = true
 alloy.workspace = true
-# alloy-mev.workspace = true
 serde.workspace = true
 jsonrpsee.workspace = true
 tower.workspace = true
 csv.workspace = true
 
+# alloy-mev.workspace = true
+
 kazuka-core.workspace = true
 kazuka-mev-share.workspace = true
-# kazuka-mev-share-bindings = { path = "./bindings" }
+kazuka-mev-share-arbitrage-bindings = { path = "./bindings" }

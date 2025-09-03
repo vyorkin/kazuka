@@ -1,15 +1,15 @@
-use alloy::primitives::Address;
-// use kazuka_mev_share::{rpc::SendBundleRequest, sse};
+use alloy::{primitives::Address, rpc::types::mev::MevSendBundle};
+use kazuka_mev_share::sse;
 
 #[derive(Clone, Debug)]
 pub enum Event {
-    // MevShareEvent(sse::Event),
+    MevShareEvent(sse::Event),
 }
 
 #[derive(Clone, Debug)]
 pub enum Action {
     // Submit a bundle of transactions to the matchmaker.
-    // SubmitBundle(SendBundleRequest),
+    SubmitBundle(MevSendBundle),
 }
 
 #[derive(Debug, serde::Deserialize)]

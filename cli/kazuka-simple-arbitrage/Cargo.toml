@@ -1,0 +1,26 @@
+[package]
+name = "kazuka-simple-arbitrage"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+# core
+tracing.workspace = true
+tracing-subscriber.workspace = true
+
+# async
+tokio = { workspace = true, features = ["full"] }
+futures.workspace = true
+async-trait.workspace = true
+
+# error
+anyhow.workspace = true
+
+# cli
+clap = { workspace = true, features = ["derive"] }
+
+alloy.workspace = true
+
+# kazuka
+kazuka-core.workspace = true
+kazuka-mev-share-arbitrage.workspace = true

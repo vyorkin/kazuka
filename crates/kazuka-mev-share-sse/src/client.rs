@@ -116,7 +116,7 @@ impl EventClient {
         query: S,
     ) -> reqwest::Result<EventStream<T>> {
         let query =
-            Some(serde_json::to_value(query).expect("serialization failed"));
+            Some(serde_json::to_value(query).expect("Serialization failed"));
         let stream = ActiveEventStream::<T>::connect(
             &self.reqwest_client,
             endpoint,

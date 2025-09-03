@@ -1,8 +1,7 @@
 [workspace]
 resolver = "2"
 members = [
-  "bin/kazuka",
-  "bin/kazuka-simple-arbitrage",
+  "cli/kazuka-simple-arbitrage",
   "crates/kazuka-core",
   "crates/kazuka-mev-share",
   "crates/kazuka-mev-share-backend",
@@ -10,6 +9,8 @@ members = [
   "crates/kazuka-mev-share-sse",
   "crates/strategies/kazuka-mev-share-arbitrage",
 ]
+
+default-members = ["cli/kazuka-simple-arbitrage"]
 
 [workspace.dependencies]
 # kazuka
@@ -76,6 +77,9 @@ alloy-node-bindings = { version = "1.0" }
 
 # mev
 # alloy-mev = "0.5"
+
+# cli
+clap = { version = "4.5", features = ["derive"] }
 
 # testing
 tower-test = "0.4"

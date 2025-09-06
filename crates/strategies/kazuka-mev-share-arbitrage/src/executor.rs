@@ -5,9 +5,9 @@ use kazuka_core::{error::KazukaError, types::Executor};
 use kazuka_mev_share::rpc::{MevApiClient, middleware::AuthLayer};
 use tower::ServiceBuilder;
 
+/// An executor that sends bundles to the MEV-share matchmaker.
 pub struct MevShareExecutor {
     mev_share_client: Box<dyn MevApiClient + Send + Sync>,
-    // provider: Arc<DynProvider<AnyNetwork>>,
 }
 
 impl MevShareExecutor {
@@ -28,10 +28,15 @@ impl MevShareExecutor {
         }
     }
 }
-//
+
 #[async_trait]
 impl Executor<MevSendBundle> for MevShareExecutor {
     async fn execute(&self, action: MevSendBundle) -> Result<(), KazukaError> {
-        todo!()
+        let body = self.mev_share_client.send_bundle(action).await;
+        match body {
+            Ok(body) => tracing::info!("Bundle response: {:?}", body),
+            Err(err) => tracing::error!("Bundle error: {:?}", err),
+        };
+        Ok(())
     }
 }

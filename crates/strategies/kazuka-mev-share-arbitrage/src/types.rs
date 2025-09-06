@@ -26,3 +26,11 @@ pub struct V2V3PoolRecord {
     pub v3_pool: Address,
     pub is_weth_token0: bool,
 }
+
+#[derive(Clone, Debug)]
+pub struct UniswapV2PoolInfo {
+    /// Address of the Uniswap V2 pool.
+    pub v2_pool: Address,
+    /// Whether the pool has weth as token0.
+    pub is_weth_token0: bool,
+}

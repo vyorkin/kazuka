@@ -1,58 +1,48 @@
-use std::{collections::HashMap, path::PathBuf, sync::Arc};
+use std::{collections::HashMap, ops::Add, path::PathBuf, sync::Arc};
 
 use alloy::{
-    network::AnyNetwork,
     primitives::{Address, B256, U256},
-    providers::{DynProvider, Provider},
-    rpc::types::mev::MevSendBundle,
-    signers::local::PrivateKeySigner,
-    sol,
+    providers::Provider,
+    rpc::types::mev::{BundleItem, Inclusion, MevSendBundle, ProtocolVersion},
 };
 use async_trait::async_trait;
 use kazuka_core::{error::KazukaError, types::Strategy};
+use kazuka_mev_share_arbitrage_bindings::blind_arb::BlindArb::BlindArbInstance;
 
-use crate::types::{Action, Event, V2V3PoolRecord};
+use crate::{
+    contracts::ArbitrageContract,
+    types::{Action, Event, UniswapV2PoolInfo, V2V3PoolRecord},
+};
 
-sol!(
-    BlindArb,
-    "./contracts/out/BlindArb.sol/BlindArb.json"
-);
-
-#[derive(Clone, Debug)]
-pub struct UniswapV2PoolInfo {
-    /// Address of the Uniswap V2 pool.
-    pub v2_pool: Address,
-    /// Whether the pool has weth as token0.
-    pub is_weth_token0: bool,
-}
-
-#[derive(Clone, Debug)]
-pub struct MevShareUniswapV2V3Arbitrage {
+pub struct MevShareUniswapV2V3Arbitrage<P: Provider> {
     /// Exposes Ethereum JSON-RPC methods.
-    provider: Arc<DynProvider<AnyNetwork>>,
-    /// Signer for transactions.
-    signer: PrivateKeySigner,
+    provider: Arc<P>,
     /// Maps Uniswap V3 pool address to Uniswap V2 pool info.
     v3_address_to_v2_pool_info: HashMap<Address, UniswapV2PoolInfo>,
+    /// Arbitrage contract.
+    contract: ArbitrageContract<Arc<P>>,
 }
 
-impl MevShareUniswapV2V3Arbitrage {
-    pub fn new(
-        provider: Arc<DynProvider<AnyNetwork>>,
-        signer: PrivateKeySigner,
-    ) -> Self {
+impl<P: Provider> MevShareUniswapV2V3Arbitrage<P> {
+    pub fn new(provider: Arc<P>, arbitrage_contract_address: Address) -> Self {
+        let instance = BlindArbInstance::new(
+            arbitrage_contract_address,
+            provider.clone(),
+        );
+        let contract = ArbitrageContract::new(provider.clone(), instance);
         Self {
             provider: provider.clone(),
-            signer,
             v3_address_to_v2_pool_info: HashMap::new(),
+            contract,
         }
     }
 
+    /// Generates bundles of varying sizes to submit to the matchmaker.
     pub async fn generate_bundles(
         &self,
         v3_address: Address,
         tx_hash: B256,
-    ) -> Vec<MevSendBundle> {
+    ) -> Result<Vec<MevSendBundle>, KazukaError> {
         let mut bundles = Vec::new();
 
         // The sizes of the backruns we want to submit.
@@ -79,27 +69,46 @@ impl MevShareUniswapV2V3Arbitrage {
             .get(&v3_address)
             .expect("Failed to get V3 pool info");
 
-        // Set parameters for backruns
-        let payment_percentage = U256::from(0);
-        let bid_gas_price = self
-            .provider
-            .get_gas_price()
-            .await
-            .expect("Failed to get gas price");
-        let block_num = self
-            .provider
-            .get_block_number()
-            .await
-            .expect("Failed to get the last block number");
+        let block_num = self.provider.get_block_number().await?;
 
-        for size in sizes {}
+        for size in sizes {
+            let tx_bytes = self
+                .contract
+                .generate_arbitrage_tx(v3_address, v2_pool_info, size)
+                .await?;
 
-        bundles
+            let bundle_body = vec![
+                BundleItem::Hash { hash: tx_hash },
+                BundleItem::Tx {
+                    tx: tx_bytes,
+                    can_revert: false,
+                },
+            ];
+
+            let bundle = MevSendBundle {
+                protocol_version: ProtocolVersion::V0_1,
+                inclusion: Inclusion {
+                    block: block_num.add(1),
+                    // Set a large validity window to ensure builder gets a
+                    // chance to include bundle.
+                    max_block: Some(block_num.add(30)),
+                },
+                bundle_body,
+                validity: None,
+                privacy: None,
+            };
+
+            tracing::info!("Constructed bundle: {:?}", bundle);
+
+            bundles.push(bundle);
+        }
+
+        Ok(bundles)
     }
 }
 
 #[async_trait]
-impl Strategy<Event, Action> for MevShareUniswapV2V3Arbitrage {
+impl<P: Provider> Strategy<Event, Action> for MevShareUniswapV2V3Arbitrage<P> {
     /// Syncs the initial state of the strategy.
     /// This is called once at startup, and loads pool information into memory.
     async fn sync_state(&mut self) -> Result<(), KazukaError> {
@@ -126,6 +135,34 @@ impl Strategy<Event, Action> for MevShareUniswapV2V3Arbitrage {
 
     /// Processes a MEV-share event, and return an action if needed.
     async fn process_event(&mut self, event: Event) -> Vec<Action> {
-        todo!()
+        match event {
+            Event::MevShareEvent(event) => {
+                tracing::info!("Received MEV-share event: {:?}", event);
+                // Skip if event has no logs.
+                if event.logs.is_empty() {
+                    return vec![];
+                }
+                let v3_address = event.logs[0].address;
+                // Skip if address is not a V3 pool.
+                if !self.v3_address_to_v2_pool_info.contains_key(&v3_address) {
+                    return vec![];
+                }
+
+                tracing::info!(
+                    "Found a V3 pool match at address {:?}, generating bundles",
+                    v3_address
+                );
+
+                match self.generate_bundles(v3_address, event.hash).await {
+                    Ok(bundles) => {
+                        bundles.into_iter().map(Action::SubmitBundle).collect()
+                    }
+                    Err(e) => {
+                        tracing::error!("Error generating bundles: {:?}", e);
+                        vec![]
+                    }
+                }
+            }
+        }
     }
 }

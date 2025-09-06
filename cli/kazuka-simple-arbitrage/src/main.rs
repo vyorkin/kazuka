@@ -1,14 +1,19 @@
+use std::sync::Arc;
+
 use alloy::{
+    primitives::Address,
     providers::{ProviderBuilder, WsConnect},
     signers::local::PrivateKeySigner,
 };
 use anyhow::Result;
 use clap::Parser;
 use kazuka_core::{
-    engine::Engine, event_sources::mev_share_event_source::MevShareEventSource,
-    types::EventSourceMap,
+    engine::Engine,
+    event_sources::mev_share_event_source::MevShareEventSource,
+    types::{EventSourceMap, ExecutorMap},
 };
 use kazuka_mev_share_arbitrage::{
+    executor::MevShareExecutor,
     strategy::MevShareUniswapV2V3Arbitrage,
     types::{Action, Event},
 };
@@ -54,14 +59,14 @@ async fn main() -> Result<()> {
 
     let tx_signer: PrivateKeySigner = args.tx_signer_pk.parse()?;
     let provider = ProviderBuilder::new()
-        .wallet(tx_signer)
+        .wallet(tx_signer.clone())
         .connect_ws(ws)
         .await?;
 
     let flashbots_signer: PrivateKeySigner =
         args.flashbots_signer_pk.parse()?;
 
-    let engine: Engine<Event, Action> = Engine::default();
+    let provider = Arc::new(provider);
 
     let mev_share_event_source =
         MevShareEventSource::new("https://mev-share.flashbots.net".to_string());
@@ -69,9 +74,33 @@ async fn main() -> Result<()> {
         Box::new(mev_share_event_source),
         Event::MevShareEvent,
     );
-    engine.add_event_source(Box::new(mev_share_event_source));
 
-    // let strategy = MevShareUniswapV2V3Arbitrage::new()
+    let arbitrage_contract_address =
+        Address::parse_checksummed(args.arb_contract_address, None)?;
+    let strategy =
+        MevShareUniswapV2V3Arbitrage::new(provider, arbitrage_contract_address);
+
+    let mev_share_executor = MevShareExecutor::new(
+        "https://relay.flashbots.net:443".to_string(),
+        flashbots_signer,
+    );
+    let mev_share_executor = ExecutorMap::new(
+        Box::new(mev_share_executor),
+        |action| match action {
+            Action::SubmitBundle(bundle) => Some(bundle),
+        },
+    );
+
+    let engine: Engine<Event, Action> = Engine::default()
+        .add_event_source(Box::new(mev_share_event_source))
+        .add_strategy(Box::new(strategy))
+        .add_executor(Box::new(mev_share_executor));
+
+    if let Ok(mut set) = engine.run().await {
+        while let Some(result) = set.join_next().await {
+            tracing::info!("result: {:?}", result);
+        }
+    }
 
     Ok(())
 }

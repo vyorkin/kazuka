@@ -10,8 +10,8 @@ runs:
   steps:
     - name: Install dependencies
       shell: bash
-      run: forge install --root ${{ root }}
+      run: forge install --root ${{ inputs.root }}
 
     - name: Build contracts
       shell: bash
-      run: forge build --sizes --root ${{ root }}
+      run: forge build --sizes --root ${{ inputs.root }}

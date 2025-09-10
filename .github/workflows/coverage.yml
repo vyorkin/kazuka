@@ -10,7 +10,22 @@ jobs:
       options: --security-opt seccomp=unconfined
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install foundry
+        uses: foundry-rs/foundry-toolchain@v1
+
+      - name: Show forge version
+        run: |
+          forge --version
+
+      - name: Install dependencies (kazuka-mev-share-arbitrage)
+        run: forge install --root ./crates/strategies/kazuka-mev-share-arbitrage/contracts
+
+      - name: Build contracts (kazuka-mev-share-arbitrage)
+        run: forge build --root ./crates/strategies/kazuka-mev-share-arbitrage/contracts
 
       - name: Generate code coverage
         run: |

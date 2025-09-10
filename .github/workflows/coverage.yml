@@ -17,15 +17,9 @@ jobs:
       - name: Install foundry
         uses: foundry-rs/foundry-toolchain@v1
 
-      - name: Show forge version
-        run: |
-          forge --version
-
-      - name: Install dependencies (kazuka-mev-share-arbitrage)
-        run: forge install --root ./crates/strategies/kazuka-mev-share-arbitrage/contracts
-
-      - name: Build contracts (kazuka-mev-share-arbitrage)
-        run: forge build --root ./crates/strategies/kazuka-mev-share-arbitrage/contracts
+      - uses: ./.github/actions/forge_build
+        with:
+          root: ./crates/strategies/kazuka-mev-share-arbitrage/contracts
 
       - name: Generate code coverage
         run: |

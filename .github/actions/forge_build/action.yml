@@ -1,0 +1,17 @@
+name: Forge build
+description: Install dependencies and build the forge project
+inputs:
+  root:
+    description: The project's root path
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install dependencies
+      shell: bash
+      run: forge install --root ${{ root }}
+
+    - name: Build contracts
+      shell: bash
+      run: forge build --sizes --root ${{ root }}

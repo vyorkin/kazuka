@@ -12,9 +12,6 @@ tokio-stream.workspace = true
 futures.workspace = true
 async-trait.workspace = true
 
-reqwest.workspace = true
-jsonrpsee.workspace = true
-
 alloy.workspace = true
 alloy-node-bindings.workspace = true
 

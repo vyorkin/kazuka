@@ -10,8 +10,6 @@ tracing-subscriber.workspace = true
 
 # async
 tokio = { workspace = true, features = ["full"] }
-futures.workspace = true
-async-trait.workspace = true
 
 # error
 anyhow.workspace = true

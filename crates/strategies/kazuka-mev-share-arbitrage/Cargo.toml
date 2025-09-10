@@ -5,7 +5,6 @@ edition = "2024"
 
 [dependencies]
 tracing.workspace = true
-tokio.workspace = true
 async-trait.workspace = true
 alloy.workspace = true
 serde.workspace = true

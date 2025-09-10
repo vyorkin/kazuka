@@ -28,7 +28,7 @@ test crate:
   cargo nextest run -p {{crate}}
 
 test-all:
-  cargo nextest run --all-features --no-fail-fast --workspace --locked
+  cargo nextest run --all-features --no-fail-fast --workspace
 
 cargo-fmt:
   cargo fmt --all

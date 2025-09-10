@@ -1,9 +1,16 @@
-name: coverage
+name: Coverage
 
-on: [push]
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+env:
+  FOUNDRY_PROFILE: ci
+
 jobs:
   test:
-    name: coverage
+    name: Coverage
     runs-on: ubuntu-latest
     container:
       image: xd009642/tarpaulin:develop-nightly

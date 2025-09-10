@@ -55,8 +55,8 @@ impl Executor<SubmitTxToMempool> for MempoolExecutor {
         let bid_gas_price: U128;
         if let Some(gas_bid_info) = action.gas_bid_info {
             // Gas price at which we'd break even, meaning 100% of profit goes
-            // to validator (your entire profit will be spent on gas).
-            // This is the maximum gas price you can set without going negative.
+            // to validator (the entire profit will be spent on gas).
+            // This is the maximum gas price we can set without going negative.
             let breakeven_gas_price: U128 =
                 gas_bid_info.expected_profit / U128::from(gas_usage);
             // Calculate the actual bid gas price as a fraction of the profit.

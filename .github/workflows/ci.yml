@@ -112,6 +112,9 @@ jobs:
       - name: Install foundry
         uses: foundry-rs/foundry-toolchain@v1
 
+      - name: Mark repository as safe for git
+        run: git config --global --add safe.directory $GITHUB_WORKSPACE
+
       - uses: ./.github/actions/forge
         with:
           root: ./crates/strategies/kazuka-mev-share-arbitrage/contracts

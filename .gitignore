@@ -6,3 +6,4 @@ main
 input*.txt
 .envrc
 .env
+soljson-latest.js

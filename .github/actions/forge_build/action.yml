@@ -15,3 +15,8 @@ runs:
     - name: Build contracts
       shell: bash
       run: forge build --sizes --root ${{ inputs.root }}
+
+    - name: Check formatting
+      shell: bash
+      run: |
+        forge fmt --check --root ${{ inputs.root }}

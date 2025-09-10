@@ -1,5 +1,5 @@
-name: Forge build
-description: Install dependencies and build the forge project
+name: Forge build and check
+description: Install dependencies, build and check the forge project
 inputs:
   root:
     description: The project's root path

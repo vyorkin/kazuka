@@ -6,8 +6,11 @@ fork_block_number := env_var("FORK_BLOCK_NUMBER")
 contracts:
   just forge kazuka-mev-share-arbitrage
 
-forge strategy:
+forge-test strategy:
   forge test --etherscan-api-key $ETHERSCAN_API_KEY -vvv --watch --no-restart --root ./crates/strategies/{{strategy}}/contracts
+
+forge-fmt strategy:
+  forge fmt --root ./crates/strategies/{{strategy}}/contracts
 
 anvil:
   anvil --fork-url {{mainnet_rpc_url}} --fork-block-number {{fork_block_number}}

@@ -37,11 +37,13 @@ jobs:
         run: cargo fmt --check
 
   clippy:
-    name: clippy
+    name: Clippy
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
+        with:
+          submodules: true
 
       - name: Install stable rust toolchain
         uses: dtolnay/rust-toolchain@stable
@@ -79,6 +81,7 @@ jobs:
         with:
           root: ./crates/strategies/kazuka-mev-share-arbitrage/contracts
 
+      - uses: taiki-e/install-action@nextest
       - name: Run cargo tests
         run: cargo nextest run --all-features --no-fail-fast --workspace --locked
 
@@ -97,9 +100,14 @@ jobs:
   coverage:
     name: Coverage
     runs-on: ubuntu-latest
+    container:
+      image: xd009642/tarpaulin:develop-nightly
+      options: --security-opt seccomp=unconfined
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
+        with:
+          submodules: true
 
       - name: Install foundry
         uses: foundry-rs/foundry-toolchain@v1

@@ -4,11 +4,11 @@
 //! Do not manually edit these files.
 //! These files may be overwritten by the codegen system at any time.
 pub mod r#blind_arb;
-pub mod r#ierc20;
 pub mod r#i_swap_router;
 pub mod r#i_uniswap_v2_pair;
 pub mod r#i_uniswap_v3_pool;
 pub mod r#i_uniswap_v3_swap_callback;
+pub mod r#ierc20;
 pub mod r#iweth;
 pub mod r#owned;
 pub mod r#std_constants;

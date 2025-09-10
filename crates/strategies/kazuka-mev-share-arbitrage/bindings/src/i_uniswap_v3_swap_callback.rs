@@ -43,8 +43,9 @@ interface IUniswapV3SwapCallback {
     clippy::empty_structs_with_brackets
 )]
 pub mod IUniswapV3SwapCallback {
-    use super::*;
     use alloy::sol_types as alloy_sol_types;
+
+    use super::*;
     /// The creation / init bytecode of the contract.
     ///
     /// ```text
@@ -65,13 +66,24 @@ pub mod IUniswapV3SwapCallback {
     pub static DEPLOYED_BYTECODE: alloy_sol_types::private::Bytes = alloy_sol_types::private::Bytes::from_static(
         b"",
     );
-    #[derive(serde::Serialize, serde::Deserialize)]
-    #[derive(Default, Debug, PartialEq, Eq, Hash)]
+    #[derive(
+        serde::Serialize,
+        serde::Deserialize,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
     /**Function with signature `uniswapV3SwapCallback(int256,int256,bytes)` and selector `0xfa461e33`.
-```solidity
-function uniswapV3SwapCallback(int256 amount0Delta, int256 amount1Delta, bytes memory data) external;
-```*/
-    #[allow(non_camel_case_types, non_snake_case, clippy::pub_underscore_fields)]
+    ```solidity
+    function uniswapV3SwapCallback(int256 amount0Delta, int256 amount1Delta, bytes memory data) external;
+    ```*/
+    #[allow(
+        non_camel_case_types,
+        non_snake_case,
+        clippy::pub_underscore_fields
+    )]
     #[derive(Clone)]
     pub struct uniswapV3SwapCallbackCall {
         #[allow(missing_docs)]
@@ -81,8 +93,14 @@ function uniswapV3SwapCallback(int256 amount0Delta, int256 amount1Delta, bytes m
         #[allow(missing_docs)]
         pub data: alloy::sol_types::private::Bytes,
     }
-    ///Container type for the return parameters of the [`uniswapV3SwapCallback(int256,int256,bytes)`](uniswapV3SwapCallbackCall) function.
-    #[allow(non_camel_case_types, non_snake_case, clippy::pub_underscore_fields)]
+    ///Container type for the return parameters of the
+    /// [`uniswapV3SwapCallback(int256,int256,
+    /// bytes)`](uniswapV3SwapCallbackCall) function.
+    #[allow(
+        non_camel_case_types,
+        non_snake_case,
+        clippy::pub_underscore_fields
+    )]
     #[derive(Clone)]
     pub struct uniswapV3SwapCallbackReturn {}
     #[allow(
@@ -120,15 +138,21 @@ function uniswapV3SwapCallback(int256 amount0Delta, int256 amount1Delta, bytes m
             #[automatically_derived]
             #[doc(hidden)]
             impl ::core::convert::From<uniswapV3SwapCallbackCall>
-            for UnderlyingRustTuple<'_> {
+                for UnderlyingRustTuple<'_>
+            {
                 fn from(value: uniswapV3SwapCallbackCall) -> Self {
-                    (value.amount0Delta, value.amount1Delta, value.data)
+                    (
+                        value.amount0Delta,
+                        value.amount1Delta,
+                        value.data,
+                    )
                 }
             }
             #[automatically_derived]
             #[doc(hidden)]
             impl ::core::convert::From<UnderlyingRustTuple<'_>>
-            for uniswapV3SwapCallbackCall {
+                for uniswapV3SwapCallbackCall
+            {
                 fn from(tuple: UnderlyingRustTuple<'_>) -> Self {
                     Self {
                         amount0Delta: tuple.0,
@@ -157,7 +181,8 @@ function uniswapV3SwapCallback(int256 amount0Delta, int256 amount1Delta, bytes m
             #[automatically_derived]
             #[doc(hidden)]
             impl ::core::convert::From<uniswapV3SwapCallbackReturn>
-            for UnderlyingRustTuple<'_> {
+                for UnderlyingRustTuple<'_>
+            {
                 fn from(value: uniswapV3SwapCallbackReturn) -> Self {
                     ()
                 }
@@ -165,7 +190,8 @@ function uniswapV3SwapCallback(int256 amount0Delta, int256 amount1Delta, bytes m
             #[automatically_derived]
             #[doc(hidden)]
             impl ::core::convert::From<UnderlyingRustTuple<'_>>
-            for uniswapV3SwapCallbackReturn {
+                for uniswapV3SwapCallbackReturn
+            {
                 fn from(tuple: UnderlyingRustTuple<'_>) -> Self {
                     Self {}
                 }
@@ -176,7 +202,7 @@ function uniswapV3SwapCallback(int256 amount0Delta, int256 amount1Delta, bytes m
                 &self,
             ) -> <uniswapV3SwapCallbackCall as alloy_sol_types::SolCall>::ReturnToken<
                 '_,
-            > {
+            >{
                 ()
             }
         }
@@ -187,15 +213,14 @@ function uniswapV3SwapCallback(int256 amount0Delta, int256 amount1Delta, bytes m
                 alloy::sol_types::sol_data::Int<256>,
                 alloy::sol_types::sol_data::Bytes,
             );
-            type Token<'a> = <Self::Parameters<
-                'a,
-            > as alloy_sol_types::SolType>::Token<'a>;
+            type Token<'a> =
+                <Self::Parameters<'a> as alloy_sol_types::SolType>::Token<'a>;
             type Return = uniswapV3SwapCallbackReturn;
             type ReturnTuple<'a> = ();
-            type ReturnToken<'a> = <Self::ReturnTuple<
-                'a,
-            > as alloy_sol_types::SolType>::Token<'a>;
-            const SIGNATURE: &'static str = "uniswapV3SwapCallback(int256,int256,bytes)";
+            type ReturnToken<'a> =
+                <Self::ReturnTuple<'a> as alloy_sol_types::SolType>::Token<'a>;
+            const SIGNATURE: &'static str =
+                "uniswapV3SwapCallback(int256,int256,bytes)";
             const SELECTOR: [u8; 4] = [250u8, 70u8, 30u8, 51u8];
             #[inline]
             fn new<'a>(
@@ -222,7 +247,9 @@ function uniswapV3SwapCallback(int256 amount0Delta, int256 amount1Delta, bytes m
                 uniswapV3SwapCallbackReturn::_tokenize(ret)
             }
             #[inline]
-            fn abi_decode_returns(data: &[u8]) -> alloy_sol_types::Result<Self::Return> {
+            fn abi_decode_returns(
+                data: &[u8],
+            ) -> alloy_sol_types::Result<Self::Return> {
                 <Self::ReturnTuple<
                     '_,
                 > as alloy_sol_types::SolType>::abi_decode_sequence(data)
@@ -241,7 +268,6 @@ function uniswapV3SwapCallback(int256 amount0Delta, int256 amount1Delta, bytes m
     };
     ///Container for all the [`IUniswapV3SwapCallback`](self) function calls.
     #[derive(serde::Serialize, serde::Deserialize)]
-    #[derive()]
     pub enum IUniswapV3SwapCallbackCalls {
         #[allow(missing_docs)]
         uniswapV3SwapCallback(uniswapV3SwapCallbackCall),
@@ -250,11 +276,13 @@ function uniswapV3SwapCallback(int256 amount0Delta, int256 amount1Delta, bytes m
     impl IUniswapV3SwapCallbackCalls {
         /// All the selectors of this enum.
         ///
-        /// Note that the selectors might not be in the same order as the variants.
-        /// No guarantees are made about the order of the selectors.
+        /// Note that the selectors might not be in the same order as the
+        /// variants. No guarantees are made about the order of the
+        /// selectors.
         ///
         /// Prefer using `SolInterface` methods instead.
-        pub const SELECTORS: &'static [[u8; 4usize]] = &[[250u8, 70u8, 30u8, 51u8]];
+        pub const SELECTORS: &'static [[u8; 4usize]] =
+            &[[250u8, 70u8, 30u8, 51u8]];
     }
     #[automatically_derived]
     impl alloy_sol_types::SolInterface for IUniswapV3SwapCallbackCalls {
@@ -285,19 +313,21 @@ function uniswapV3SwapCallback(int256 amount0Delta, int256 amount1Delta, bytes m
         ) -> alloy_sol_types::Result<Self> {
             static DECODE_SHIMS: &[fn(
                 &[u8],
-            ) -> alloy_sol_types::Result<IUniswapV3SwapCallbackCalls>] = &[
+            )
+                -> alloy_sol_types::Result<
+                IUniswapV3SwapCallbackCalls,
+            >] = &[{
+                fn uniswapV3SwapCallback(
+                    data: &[u8],
+                ) -> alloy_sol_types::Result<IUniswapV3SwapCallbackCalls>
                 {
-                    fn uniswapV3SwapCallback(
-                        data: &[u8],
-                    ) -> alloy_sol_types::Result<IUniswapV3SwapCallbackCalls> {
-                        <uniswapV3SwapCallbackCall as alloy_sol_types::SolCall>::abi_decode_raw(
+                    <uniswapV3SwapCallbackCall as alloy_sol_types::SolCall>::abi_decode_raw(
                                 data,
                             )
                             .map(IUniswapV3SwapCallbackCalls::uniswapV3SwapCallback)
-                    }
-                    uniswapV3SwapCallback
-                },
-            ];
+                }
+                uniswapV3SwapCallback
+            }];
             let Ok(idx) = Self::SELECTORS.binary_search(&selector) else {
                 return Err(
                     alloy_sol_types::Error::unknown_selector(
@@ -316,19 +346,21 @@ function uniswapV3SwapCallback(int256 amount0Delta, int256 amount1Delta, bytes m
         ) -> alloy_sol_types::Result<Self> {
             static DECODE_VALIDATE_SHIMS: &[fn(
                 &[u8],
-            ) -> alloy_sol_types::Result<IUniswapV3SwapCallbackCalls>] = &[
+            )
+                -> alloy_sol_types::Result<
+                IUniswapV3SwapCallbackCalls,
+            >] = &[{
+                fn uniswapV3SwapCallback(
+                    data: &[u8],
+                ) -> alloy_sol_types::Result<IUniswapV3SwapCallbackCalls>
                 {
-                    fn uniswapV3SwapCallback(
-                        data: &[u8],
-                    ) -> alloy_sol_types::Result<IUniswapV3SwapCallbackCalls> {
-                        <uniswapV3SwapCallbackCall as alloy_sol_types::SolCall>::abi_decode_raw_validate(
+                    <uniswapV3SwapCallbackCall as alloy_sol_types::SolCall>::abi_decode_raw_validate(
                                 data,
                             )
                             .map(IUniswapV3SwapCallbackCalls::uniswapV3SwapCallback)
-                    }
-                    uniswapV3SwapCallback
-                },
-            ];
+                }
+                uniswapV3SwapCallback
+            }];
             let Ok(idx) = Self::SELECTORS.binary_search(&selector) else {
                 return Err(
                     alloy_sol_types::Error::unknown_selector(
@@ -364,7 +396,7 @@ function uniswapV3SwapCallback(int256 amount0Delta, int256 amount1Delta, bytes m
     use alloy::contract as alloy_contract;
     /**Creates a new wrapper around an on-chain [`IUniswapV3SwapCallback`](self) contract instance.
 
-See the [wrapper's documentation](`IUniswapV3SwapCallbackInstance`) for more details.*/
+    See the [wrapper's documentation](`IUniswapV3SwapCallbackInstance`) for more details.*/
     #[inline]
     pub const fn new<
         P: alloy_contract::private::Provider<N>,
@@ -377,9 +409,9 @@ See the [wrapper's documentation](`IUniswapV3SwapCallbackInstance`) for more det
     }
     /**Deploys this contract using the given `provider` and constructor arguments, if any.
 
-Returns a new instance of the contract, if the deployment was successful.
+    Returns a new instance of the contract, if the deployment was successful.
 
-For more fine-grained control over the deployment process, use [`deploy_builder`] instead.*/
+    For more fine-grained control over the deployment process, use [`deploy_builder`] instead.*/
     #[inline]
     pub fn deploy<
         P: alloy_contract::private::Provider<N>,
@@ -392,30 +424,35 @@ For more fine-grained control over the deployment process, use [`deploy_builder`
         IUniswapV3SwapCallbackInstance::<P, N>::deploy(provider)
     }
     /**Creates a `RawCallBuilder` for deploying this contract using the given `provider`
-and constructor arguments, if any.
+    and constructor arguments, if any.
 
-This is a simple wrapper around creating a `RawCallBuilder` with the data set to
-the bytecode concatenated with the constructor's ABI-encoded arguments.*/
+    This is a simple wrapper around creating a `RawCallBuilder` with the data set to
+    the bytecode concatenated with the constructor's ABI-encoded arguments.*/
     #[inline]
     pub fn deploy_builder<
         P: alloy_contract::private::Provider<N>,
         N: alloy_contract::private::Network,
-    >(provider: P) -> alloy_contract::RawCallBuilder<P, N> {
+    >(
+        provider: P,
+    ) -> alloy_contract::RawCallBuilder<P, N> {
         IUniswapV3SwapCallbackInstance::<P, N>::deploy_builder(provider)
     }
     /**A [`IUniswapV3SwapCallback`](self) instance.
 
-Contains type-safe methods for interacting with an on-chain instance of the
-[`IUniswapV3SwapCallback`](self) contract located at a given `address`, using a given
-provider `P`.
+    Contains type-safe methods for interacting with an on-chain instance of the
+    [`IUniswapV3SwapCallback`](self) contract located at a given `address`, using a given
+    provider `P`.
 
-If the contract bytecode is available (see the [`sol!`](alloy_sol_types::sol!)
-documentation on how to provide it), the `deploy` and `deploy_builder` methods can
-be used to deploy a new instance of the contract.
+    If the contract bytecode is available (see the [`sol!`](alloy_sol_types::sol!)
+    documentation on how to provide it), the `deploy` and `deploy_builder` methods can
+    be used to deploy a new instance of the contract.
 
-See the [module-level documentation](self) for all the available methods.*/
+    See the [module-level documentation](self) for all the available methods.*/
     #[derive(Clone)]
-    pub struct IUniswapV3SwapCallbackInstance<P, N = alloy_contract::private::Ethereum> {
+    pub struct IUniswapV3SwapCallbackInstance<
+        P,
+        N = alloy_contract::private::Ethereum,
+    > {
         address: alloy_sol_types::private::Address,
         provider: P,
         _network: ::core::marker::PhantomData<N>,
@@ -423,19 +460,25 @@ See the [module-level documentation](self) for all the available methods.*/
     #[automatically_derived]
     impl<P, N> ::core::fmt::Debug for IUniswapV3SwapCallbackInstance<P, N> {
         #[inline]
-        fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
-            f.debug_tuple("IUniswapV3SwapCallbackInstance").field(&self.address).finish()
+        fn fmt(
+            &self,
+            f: &mut ::core::fmt::Formatter<'_>,
+        ) -> ::core::fmt::Result {
+            f.debug_tuple("IUniswapV3SwapCallbackInstance")
+                .field(&self.address)
+                .finish()
         }
     }
     /// Instantiation and getters/setters.
     #[automatically_derived]
     impl<
-        P: alloy_contract::private::Provider<N>,
-        N: alloy_contract::private::Network,
-    > IUniswapV3SwapCallbackInstance<P, N> {
+            P: alloy_contract::private::Provider<N>,
+            N: alloy_contract::private::Network,
+        > IUniswapV3SwapCallbackInstance<P, N>
+    {
         /**Creates a new wrapper around an on-chain [`IUniswapV3SwapCallback`](self) contract instance.
 
-See the [wrapper's documentation](`IUniswapV3SwapCallbackInstance`) for more details.*/
+        See the [wrapper's documentation](`IUniswapV3SwapCallbackInstance`) for more details.*/
         #[inline]
         pub const fn new(
             address: alloy_sol_types::private::Address,
@@ -449,24 +492,30 @@ See the [wrapper's documentation](`IUniswapV3SwapCallbackInstance`) for more det
         }
         /**Deploys this contract using the given `provider` and constructor arguments, if any.
 
-Returns a new instance of the contract, if the deployment was successful.
+        Returns a new instance of the contract, if the deployment was successful.
 
-For more fine-grained control over the deployment process, use [`deploy_builder`] instead.*/
+        For more fine-grained control over the deployment process, use [`deploy_builder`] instead.*/
         #[inline]
         pub async fn deploy(
             provider: P,
-        ) -> alloy_contract::Result<IUniswapV3SwapCallbackInstance<P, N>> {
+        ) -> alloy_contract::Result<IUniswapV3SwapCallbackInstance<P, N>>
+        {
             let call_builder = Self::deploy_builder(provider);
             let contract_address = call_builder.deploy().await?;
-            Ok(Self::new(contract_address, call_builder.provider))
+            Ok(Self::new(
+                contract_address,
+                call_builder.provider,
+            ))
         }
         /**Creates a `RawCallBuilder` for deploying this contract using the given `provider`
-and constructor arguments, if any.
+        and constructor arguments, if any.
 
-This is a simple wrapper around creating a `RawCallBuilder` with the data set to
-the bytecode concatenated with the constructor's ABI-encoded arguments.*/
+        This is a simple wrapper around creating a `RawCallBuilder` with the data set to
+        the bytecode concatenated with the constructor's ABI-encoded arguments.*/
         #[inline]
-        pub fn deploy_builder(provider: P) -> alloy_contract::RawCallBuilder<P, N> {
+        pub fn deploy_builder(
+            provider: P,
+        ) -> alloy_contract::RawCallBuilder<P, N> {
             alloy_contract::RawCallBuilder::new_raw_deploy(
                 provider,
                 ::core::clone::Clone::clone(&BYTECODE),
@@ -479,11 +528,17 @@ the bytecode concatenated with the constructor's ABI-encoded arguments.*/
         }
         /// Sets the address.
         #[inline]
-        pub fn set_address(&mut self, address: alloy_sol_types::private::Address) {
+        pub fn set_address(
+            &mut self,
+            address: alloy_sol_types::private::Address,
+        ) {
             self.address = address;
         }
         /// Sets the address and returns `self`.
-        pub fn at(mut self, address: alloy_sol_types::private::Address) -> Self {
+        pub fn at(
+            mut self,
+            address: alloy_sol_types::private::Address,
+        ) -> Self {
             self.set_address(address);
             self
         }
@@ -494,9 +549,12 @@ the bytecode concatenated with the constructor's ABI-encoded arguments.*/
         }
     }
     impl<P: ::core::clone::Clone, N> IUniswapV3SwapCallbackInstance<&P, N> {
-        /// Clones the provider and returns a new instance with the cloned provider.
+        /// Clones the provider and returns a new instance with the cloned
+        /// provider.
         #[inline]
-        pub fn with_cloned_provider(self) -> IUniswapV3SwapCallbackInstance<P, N> {
+        pub fn with_cloned_provider(
+            self,
+        ) -> IUniswapV3SwapCallbackInstance<P, N> {
             IUniswapV3SwapCallbackInstance {
                 address: self.address,
                 provider: ::core::clone::Clone::clone(&self.provider),
@@ -507,45 +565,55 @@ the bytecode concatenated with the constructor's ABI-encoded arguments.*/
     /// Function calls.
     #[automatically_derived]
     impl<
-        P: alloy_contract::private::Provider<N>,
-        N: alloy_contract::private::Network,
-    > IUniswapV3SwapCallbackInstance<P, N> {
-        /// Creates a new call builder using this contract instance's provider and address.
+            P: alloy_contract::private::Provider<N>,
+            N: alloy_contract::private::Network,
+        > IUniswapV3SwapCallbackInstance<P, N>
+    {
+        /// Creates a new call builder using this contract instance's provider
+        /// and address.
         ///
-        /// Note that the call can be any function call, not just those defined in this
-        /// contract. Prefer using the other methods for building type-safe contract calls.
+        /// Note that the call can be any function call, not just those defined
+        /// in this contract. Prefer using the other methods for
+        /// building type-safe contract calls.
         pub fn call_builder<C: alloy_sol_types::SolCall>(
             &self,
             call: &C,
         ) -> alloy_contract::SolCallBuilder<&P, C, N> {
-            alloy_contract::SolCallBuilder::new_sol(&self.provider, &self.address, call)
+            alloy_contract::SolCallBuilder::new_sol(
+                &self.provider,
+                &self.address,
+                call,
+            )
         }
-        ///Creates a new call builder for the [`uniswapV3SwapCallback`] function.
+        ///Creates a new call builder for the [`uniswapV3SwapCallback`]
+        /// function.
         pub fn uniswapV3SwapCallback(
             &self,
             amount0Delta: alloy::sol_types::private::primitives::aliases::I256,
             amount1Delta: alloy::sol_types::private::primitives::aliases::I256,
             data: alloy::sol_types::private::Bytes,
-        ) -> alloy_contract::SolCallBuilder<&P, uniswapV3SwapCallbackCall, N> {
-            self.call_builder(
-                &uniswapV3SwapCallbackCall {
-                    amount0Delta,
-                    amount1Delta,
-                    data,
-                },
-            )
+        ) -> alloy_contract::SolCallBuilder<&P, uniswapV3SwapCallbackCall, N>
+        {
+            self.call_builder(&uniswapV3SwapCallbackCall {
+                amount0Delta,
+                amount1Delta,
+                data,
+            })
         }
     }
     /// Event filters.
     #[automatically_derived]
     impl<
-        P: alloy_contract::private::Provider<N>,
-        N: alloy_contract::private::Network,
-    > IUniswapV3SwapCallbackInstance<P, N> {
-        /// Creates a new event filter using this contract instance's provider and address.
+            P: alloy_contract::private::Provider<N>,
+            N: alloy_contract::private::Network,
+        > IUniswapV3SwapCallbackInstance<P, N>
+    {
+        /// Creates a new event filter using this contract instance's provider
+        /// and address.
         ///
-        /// Note that the type can be any event, not just those defined in this contract.
-        /// Prefer using the other methods for building type-safe event filters.
+        /// Note that the type can be any event, not just those defined in this
+        /// contract. Prefer using the other methods for building
+        /// type-safe event filters.
         pub fn event_filter<E: alloy_sol_types::SolEvent>(
             &self,
         ) -> alloy_contract::Event<&P, E, N> {

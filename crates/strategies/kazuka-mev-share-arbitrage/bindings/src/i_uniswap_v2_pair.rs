@@ -72,8 +72,9 @@ interface IUniswapV2Pair {
     clippy::empty_structs_with_brackets
 )]
 pub mod IUniswapV2Pair {
-    use super::*;
     use alloy::sol_types as alloy_sol_types;
+
+    use super::*;
     /// The creation / init bytecode of the contract.
     ///
     /// ```text
@@ -94,19 +95,42 @@ pub mod IUniswapV2Pair {
     pub static DEPLOYED_BYTECODE: alloy_sol_types::private::Bytes = alloy_sol_types::private::Bytes::from_static(
         b"",
     );
-    #[derive(serde::Serialize, serde::Deserialize)]
-    #[derive(Default, Debug, PartialEq, Eq, Hash)]
+    #[derive(
+        serde::Serialize,
+        serde::Deserialize,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
     /**Function with signature `getReserves()` and selector `0x0902f1ac`.
-```solidity
-function getReserves() external view returns (uint112 reserve0, uint112 reserve1, uint32 blockTimestampLast);
-```*/
-    #[allow(non_camel_case_types, non_snake_case, clippy::pub_underscore_fields)]
+    ```solidity
+    function getReserves() external view returns (uint112 reserve0, uint112 reserve1, uint32 blockTimestampLast);
+    ```*/
+    #[allow(
+        non_camel_case_types,
+        non_snake_case,
+        clippy::pub_underscore_fields
+    )]
     #[derive(Clone)]
     pub struct getReservesCall;
-    #[derive(serde::Serialize, serde::Deserialize)]
-    #[derive(Default, Debug, PartialEq, Eq, Hash)]
-    ///Container type for the return parameters of the [`getReserves()`](getReservesCall) function.
-    #[allow(non_camel_case_types, non_snake_case, clippy::pub_underscore_fields)]
+    #[derive(
+        serde::Serialize,
+        serde::Deserialize,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
+    ///Container type for the return parameters of the
+    /// [`getReserves()`](getReservesCall) function.
+    #[allow(
+        non_camel_case_types,
+        non_snake_case,
+        clippy::pub_underscore_fields
+    )]
     #[derive(Clone)]
     pub struct getReservesReturn {
         #[allow(missing_docs)]
@@ -183,7 +207,11 @@ function getReserves() external view returns (uint112 reserve0, uint112 reserve1
             #[doc(hidden)]
             impl ::core::convert::From<getReservesReturn> for UnderlyingRustTuple<'_> {
                 fn from(value: getReservesReturn) -> Self {
-                    (value.reserve0, value.reserve1, value.blockTimestampLast)
+                    (
+                        value.reserve0,
+                        value.reserve1,
+                        value.blockTimestampLast,
+                    )
                 }
             }
             #[automatically_derived]
@@ -201,7 +229,8 @@ function getReserves() external view returns (uint112 reserve0, uint112 reserve1
         impl getReservesReturn {
             fn _tokenize(
                 &self,
-            ) -> <getReservesCall as alloy_sol_types::SolCall>::ReturnToken<'_> {
+            ) -> <getReservesCall as alloy_sol_types::SolCall>::ReturnToken<'_>
+            {
                 (
                     <alloy::sol_types::sol_data::Uint<
                         112,
@@ -218,18 +247,16 @@ function getReserves() external view returns (uint112 reserve0, uint112 reserve1
         #[automatically_derived]
         impl alloy_sol_types::SolCall for getReservesCall {
             type Parameters<'a> = ();
-            type Token<'a> = <Self::Parameters<
-                'a,
-            > as alloy_sol_types::SolType>::Token<'a>;
+            type Token<'a> =
+                <Self::Parameters<'a> as alloy_sol_types::SolType>::Token<'a>;
             type Return = getReservesReturn;
             type ReturnTuple<'a> = (
                 alloy::sol_types::sol_data::Uint<112>,
                 alloy::sol_types::sol_data::Uint<112>,
                 alloy::sol_types::sol_data::Uint<32>,
             );
-            type ReturnToken<'a> = <Self::ReturnTuple<
-                'a,
-            > as alloy_sol_types::SolType>::Token<'a>;
+            type ReturnToken<'a> =
+                <Self::ReturnTuple<'a> as alloy_sol_types::SolType>::Token<'a>;
             const SIGNATURE: &'static str = "getReserves()";
             const SELECTOR: [u8; 4] = [9u8, 2u8, 241u8, 172u8];
             #[inline]
@@ -247,7 +274,9 @@ function getReserves() external view returns (uint112 reserve0, uint112 reserve1
                 getReservesReturn::_tokenize(ret)
             }
             #[inline]
-            fn abi_decode_returns(data: &[u8]) -> alloy_sol_types::Result<Self::Return> {
+            fn abi_decode_returns(
+                data: &[u8],
+            ) -> alloy_sol_types::Result<Self::Return> {
                 <Self::ReturnTuple<
                     '_,
                 > as alloy_sol_types::SolType>::abi_decode_sequence(data)
@@ -264,13 +293,24 @@ function getReserves() external view returns (uint112 reserve0, uint112 reserve1
             }
         }
     };
-    #[derive(serde::Serialize, serde::Deserialize)]
-    #[derive(Default, Debug, PartialEq, Eq, Hash)]
+    #[derive(
+        serde::Serialize,
+        serde::Deserialize,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
     /**Function with signature `swap(uint256,uint256,address,bytes)` and selector `0x022c0d9f`.
-```solidity
-function swap(uint256 amount0Out, uint256 amount1Out, address to, bytes memory data) external;
-```*/
-    #[allow(non_camel_case_types, non_snake_case, clippy::pub_underscore_fields)]
+    ```solidity
+    function swap(uint256 amount0Out, uint256 amount1Out, address to, bytes memory data) external;
+    ```*/
+    #[allow(
+        non_camel_case_types,
+        non_snake_case,
+        clippy::pub_underscore_fields
+    )]
     #[derive(Clone)]
     pub struct swapCall {
         #[allow(missing_docs)]
@@ -282,8 +322,13 @@ function swap(uint256 amount0Out, uint256 amount1Out, address to, bytes memory d
         #[allow(missing_docs)]
         pub data: alloy::sol_types::private::Bytes,
     }
-    ///Container type for the return parameters of the [`swap(uint256,uint256,address,bytes)`](swapCall) function.
-    #[allow(non_camel_case_types, non_snake_case, clippy::pub_underscore_fields)]
+    ///Container type for the return parameters of the
+    /// [`swap(uint256,uint256,address,bytes)`](swapCall) function.
+    #[allow(
+        non_camel_case_types,
+        non_snake_case,
+        clippy::pub_underscore_fields
+    )]
     #[derive(Clone)]
     pub struct swapReturn {}
     #[allow(
@@ -324,7 +369,12 @@ function swap(uint256 amount0Out, uint256 amount1Out, address to, bytes memory d
             #[doc(hidden)]
             impl ::core::convert::From<swapCall> for UnderlyingRustTuple<'_> {
                 fn from(value: swapCall) -> Self {
-                    (value.amount0Out, value.amount1Out, value.to, value.data)
+                    (
+                        value.amount0Out,
+                        value.amount1Out,
+                        value.to,
+                        value.data,
+                    )
                 }
             }
             #[automatically_derived]
@@ -374,7 +424,8 @@ function swap(uint256 amount0Out, uint256 amount1Out, address to, bytes memory d
         impl swapReturn {
             fn _tokenize(
                 &self,
-            ) -> <swapCall as alloy_sol_types::SolCall>::ReturnToken<'_> {
+            ) -> <swapCall as alloy_sol_types::SolCall>::ReturnToken<'_>
+            {
                 ()
             }
         }
@@ -386,15 +437,14 @@ function swap(uint256 amount0Out, uint256 amount1Out, address to, bytes memory d
                 alloy::sol_types::sol_data::Address,
                 alloy::sol_types::sol_data::Bytes,
             );
-            type Token<'a> = <Self::Parameters<
-                'a,
-            > as alloy_sol_types::SolType>::Token<'a>;
+            type Token<'a> =
+                <Self::Parameters<'a> as alloy_sol_types::SolType>::Token<'a>;
             type Return = swapReturn;
             type ReturnTuple<'a> = ();
-            type ReturnToken<'a> = <Self::ReturnTuple<
-                'a,
-            > as alloy_sol_types::SolType>::Token<'a>;
-            const SIGNATURE: &'static str = "swap(uint256,uint256,address,bytes)";
+            type ReturnToken<'a> =
+                <Self::ReturnTuple<'a> as alloy_sol_types::SolType>::Token<'a>;
+            const SIGNATURE: &'static str =
+                "swap(uint256,uint256,address,bytes)";
             const SELECTOR: [u8; 4] = [2u8, 44u8, 13u8, 159u8];
             #[inline]
             fn new<'a>(
@@ -424,7 +474,9 @@ function swap(uint256 amount0Out, uint256 amount1Out, address to, bytes memory d
                 swapReturn::_tokenize(ret)
             }
             #[inline]
-            fn abi_decode_returns(data: &[u8]) -> alloy_sol_types::Result<Self::Return> {
+            fn abi_decode_returns(
+                data: &[u8],
+            ) -> alloy_sol_types::Result<Self::Return> {
                 <Self::ReturnTuple<
                     '_,
                 > as alloy_sol_types::SolType>::abi_decode_sequence(data)
@@ -443,7 +495,6 @@ function swap(uint256 amount0Out, uint256 amount1Out, address to, bytes memory d
     };
     ///Container for all the [`IUniswapV2Pair`](self) function calls.
     #[derive(serde::Serialize, serde::Deserialize)]
-    #[derive()]
     pub enum IUniswapV2PairCalls {
         #[allow(missing_docs)]
         getReserves(getReservesCall),
@@ -454,14 +505,13 @@ function swap(uint256 amount0Out, uint256 amount1Out, address to, bytes memory d
     impl IUniswapV2PairCalls {
         /// All the selectors of this enum.
         ///
-        /// Note that the selectors might not be in the same order as the variants.
-        /// No guarantees are made about the order of the selectors.
+        /// Note that the selectors might not be in the same order as the
+        /// variants. No guarantees are made about the order of the
+        /// selectors.
         ///
         /// Prefer using `SolInterface` methods instead.
-        pub const SELECTORS: &'static [[u8; 4usize]] = &[
-            [2u8, 44u8, 13u8, 159u8],
-            [9u8, 2u8, 241u8, 172u8],
-        ];
+        pub const SELECTORS: &'static [[u8; 4usize]] =
+            &[[2u8, 44u8, 13u8, 159u8], [9u8, 2u8, 241u8, 172u8]];
     }
     #[automatically_derived]
     impl alloy_sol_types::SolInterface for IUniswapV2PairCalls {
@@ -474,7 +524,9 @@ function swap(uint256 amount0Out, uint256 amount1Out, address to, bytes memory d
                 Self::getReserves(_) => {
                     <getReservesCall as alloy_sol_types::SolCall>::SELECTOR
                 }
-                Self::swap(_) => <swapCall as alloy_sol_types::SolCall>::SELECTOR,
+                Self::swap(_) => {
+                    <swapCall as alloy_sol_types::SolCall>::SELECTOR
+                }
             }
         }
         #[inline]
@@ -493,20 +545,27 @@ function swap(uint256 amount0Out, uint256 amount1Out, address to, bytes memory d
         ) -> alloy_sol_types::Result<Self> {
             static DECODE_SHIMS: &[fn(
                 &[u8],
-            ) -> alloy_sol_types::Result<IUniswapV2PairCalls>] = &[
+            )
+                -> alloy_sol_types::Result<
+                IUniswapV2PairCalls,
+            >] = &[
                 {
                     fn swap(
                         data: &[u8],
-                    ) -> alloy_sol_types::Result<IUniswapV2PairCalls> {
-                        <swapCall as alloy_sol_types::SolCall>::abi_decode_raw(data)
-                            .map(IUniswapV2PairCalls::swap)
+                    ) -> alloy_sol_types::Result<IUniswapV2PairCalls>
+                    {
+                        <swapCall as alloy_sol_types::SolCall>::abi_decode_raw(
+                            data,
+                        )
+                        .map(IUniswapV2PairCalls::swap)
                     }
                     swap
                 },
                 {
                     fn getReserves(
                         data: &[u8],
-                    ) -> alloy_sol_types::Result<IUniswapV2PairCalls> {
+                    ) -> alloy_sol_types::Result<IUniswapV2PairCalls>
+                    {
                         <getReservesCall as alloy_sol_types::SolCall>::abi_decode_raw(
                                 data,
                             )
@@ -533,11 +592,15 @@ function swap(uint256 amount0Out, uint256 amount1Out, address to, bytes memory d
         ) -> alloy_sol_types::Result<Self> {
             static DECODE_VALIDATE_SHIMS: &[fn(
                 &[u8],
-            ) -> alloy_sol_types::Result<IUniswapV2PairCalls>] = &[
+            )
+                -> alloy_sol_types::Result<
+                IUniswapV2PairCalls,
+            >] = &[
                 {
                     fn swap(
                         data: &[u8],
-                    ) -> alloy_sol_types::Result<IUniswapV2PairCalls> {
+                    ) -> alloy_sol_types::Result<IUniswapV2PairCalls>
+                    {
                         <swapCall as alloy_sol_types::SolCall>::abi_decode_raw_validate(
                                 data,
                             )
@@ -548,7 +611,8 @@ function swap(uint256 amount0Out, uint256 amount1Out, address to, bytes memory d
                 {
                     fn getReserves(
                         data: &[u8],
-                    ) -> alloy_sol_types::Result<IUniswapV2PairCalls> {
+                    ) -> alloy_sol_types::Result<IUniswapV2PairCalls>
+                    {
                         <getReservesCall as alloy_sol_types::SolCall>::abi_decode_raw_validate(
                                 data,
                             )
@@ -598,7 +662,7 @@ function swap(uint256 amount0Out, uint256 amount1Out, address to, bytes memory d
     use alloy::contract as alloy_contract;
     /**Creates a new wrapper around an on-chain [`IUniswapV2Pair`](self) contract instance.
 
-See the [wrapper's documentation](`IUniswapV2PairInstance`) for more details.*/
+    See the [wrapper's documentation](`IUniswapV2PairInstance`) for more details.*/
     #[inline]
     pub const fn new<
         P: alloy_contract::private::Provider<N>,
@@ -611,9 +675,9 @@ See the [wrapper's documentation](`IUniswapV2PairInstance`) for more details.*/
     }
     /**Deploys this contract using the given `provider` and constructor arguments, if any.
 
-Returns a new instance of the contract, if the deployment was successful.
+    Returns a new instance of the contract, if the deployment was successful.
 
-For more fine-grained control over the deployment process, use [`deploy_builder`] instead.*/
+    For more fine-grained control over the deployment process, use [`deploy_builder`] instead.*/
     #[inline]
     pub fn deploy<
         P: alloy_contract::private::Provider<N>,
@@ -626,28 +690,30 @@ For more fine-grained control over the deployment process, use [`deploy_builder`
         IUniswapV2PairInstance::<P, N>::deploy(provider)
     }
     /**Creates a `RawCallBuilder` for deploying this contract using the given `provider`
-and constructor arguments, if any.
+    and constructor arguments, if any.
 
-This is a simple wrapper around creating a `RawCallBuilder` with the data set to
-the bytecode concatenated with the constructor's ABI-encoded arguments.*/
+    This is a simple wrapper around creating a `RawCallBuilder` with the data set to
+    the bytecode concatenated with the constructor's ABI-encoded arguments.*/
     #[inline]
     pub fn deploy_builder<
         P: alloy_contract::private::Provider<N>,
         N: alloy_contract::private::Network,
-    >(provider: P) -> alloy_contract::RawCallBuilder<P, N> {
+    >(
+        provider: P,
+    ) -> alloy_contract::RawCallBuilder<P, N> {
         IUniswapV2PairInstance::<P, N>::deploy_builder(provider)
     }
     /**A [`IUniswapV2Pair`](self) instance.
 
-Contains type-safe methods for interacting with an on-chain instance of the
-[`IUniswapV2Pair`](self) contract located at a given `address`, using a given
-provider `P`.
+    Contains type-safe methods for interacting with an on-chain instance of the
+    [`IUniswapV2Pair`](self) contract located at a given `address`, using a given
+    provider `P`.
 
-If the contract bytecode is available (see the [`sol!`](alloy_sol_types::sol!)
-documentation on how to provide it), the `deploy` and `deploy_builder` methods can
-be used to deploy a new instance of the contract.
+    If the contract bytecode is available (see the [`sol!`](alloy_sol_types::sol!)
+    documentation on how to provide it), the `deploy` and `deploy_builder` methods can
+    be used to deploy a new instance of the contract.
 
-See the [module-level documentation](self) for all the available methods.*/
+    See the [module-level documentation](self) for all the available methods.*/
     #[derive(Clone)]
     pub struct IUniswapV2PairInstance<P, N = alloy_contract::private::Ethereum> {
         address: alloy_sol_types::private::Address,
@@ -657,19 +723,25 @@ See the [module-level documentation](self) for all the available methods.*/
     #[automatically_derived]
     impl<P, N> ::core::fmt::Debug for IUniswapV2PairInstance<P, N> {
         #[inline]
-        fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
-            f.debug_tuple("IUniswapV2PairInstance").field(&self.address).finish()
+        fn fmt(
+            &self,
+            f: &mut ::core::fmt::Formatter<'_>,
+        ) -> ::core::fmt::Result {
+            f.debug_tuple("IUniswapV2PairInstance")
+                .field(&self.address)
+                .finish()
         }
     }
     /// Instantiation and getters/setters.
     #[automatically_derived]
     impl<
-        P: alloy_contract::private::Provider<N>,
-        N: alloy_contract::private::Network,
-    > IUniswapV2PairInstance<P, N> {
+            P: alloy_contract::private::Provider<N>,
+            N: alloy_contract::private::Network,
+        > IUniswapV2PairInstance<P, N>
+    {
         /**Creates a new wrapper around an on-chain [`IUniswapV2Pair`](self) contract instance.
 
-See the [wrapper's documentation](`IUniswapV2PairInstance`) for more details.*/
+        See the [wrapper's documentation](`IUniswapV2PairInstance`) for more details.*/
         #[inline]
         pub const fn new(
             address: alloy_sol_types::private::Address,
@@ -683,24 +755,29 @@ See the [wrapper's documentation](`IUniswapV2PairInstance`) for more details.*/
         }
         /**Deploys this contract using the given `provider` and constructor arguments, if any.
 
-Returns a new instance of the contract, if the deployment was successful.
+        Returns a new instance of the contract, if the deployment was successful.
 
-For more fine-grained control over the deployment process, use [`deploy_builder`] instead.*/
+        For more fine-grained control over the deployment process, use [`deploy_builder`] instead.*/
         #[inline]
         pub async fn deploy(
             provider: P,
         ) -> alloy_contract::Result<IUniswapV2PairInstance<P, N>> {
             let call_builder = Self::deploy_builder(provider);
             let contract_address = call_builder.deploy().await?;
-            Ok(Self::new(contract_address, call_builder.provider))
+            Ok(Self::new(
+                contract_address,
+                call_builder.provider,
+            ))
         }
         /**Creates a `RawCallBuilder` for deploying this contract using the given `provider`
-and constructor arguments, if any.
+        and constructor arguments, if any.
 
-This is a simple wrapper around creating a `RawCallBuilder` with the data set to
-the bytecode concatenated with the constructor's ABI-encoded arguments.*/
+        This is a simple wrapper around creating a `RawCallBuilder` with the data set to
+        the bytecode concatenated with the constructor's ABI-encoded arguments.*/
         #[inline]
-        pub fn deploy_builder(provider: P) -> alloy_contract::RawCallBuilder<P, N> {
+        pub fn deploy_builder(
+            provider: P,
+        ) -> alloy_contract::RawCallBuilder<P, N> {
             alloy_contract::RawCallBuilder::new_raw_deploy(
                 provider,
                 ::core::clone::Clone::clone(&BYTECODE),
@@ -713,11 +790,17 @@ the bytecode concatenated with the constructor's ABI-encoded arguments.*/
         }
         /// Sets the address.
         #[inline]
-        pub fn set_address(&mut self, address: alloy_sol_types::private::Address) {
+        pub fn set_address(
+            &mut self,
+            address: alloy_sol_types::private::Address,
+        ) {
             self.address = address;
         }
         /// Sets the address and returns `self`.
-        pub fn at(mut self, address: alloy_sol_types::private::Address) -> Self {
+        pub fn at(
+            mut self,
+            address: alloy_sol_types::private::Address,
+        ) -> Self {
             self.set_address(address);
             self
         }
@@ -728,7 +811,8 @@ the bytecode concatenated with the constructor's ABI-encoded arguments.*/
         }
     }
     impl<P: ::core::clone::Clone, N> IUniswapV2PairInstance<&P, N> {
-        /// Clones the provider and returns a new instance with the cloned provider.
+        /// Clones the provider and returns a new instance with the cloned
+        /// provider.
         #[inline]
         pub fn with_cloned_provider(self) -> IUniswapV2PairInstance<P, N> {
             IUniswapV2PairInstance {
@@ -741,18 +825,25 @@ the bytecode concatenated with the constructor's ABI-encoded arguments.*/
     /// Function calls.
     #[automatically_derived]
     impl<
-        P: alloy_contract::private::Provider<N>,
-        N: alloy_contract::private::Network,
-    > IUniswapV2PairInstance<P, N> {
-        /// Creates a new call builder using this contract instance's provider and address.
+            P: alloy_contract::private::Provider<N>,
+            N: alloy_contract::private::Network,
+        > IUniswapV2PairInstance<P, N>
+    {
+        /// Creates a new call builder using this contract instance's provider
+        /// and address.
         ///
-        /// Note that the call can be any function call, not just those defined in this
-        /// contract. Prefer using the other methods for building type-safe contract calls.
+        /// Note that the call can be any function call, not just those defined
+        /// in this contract. Prefer using the other methods for
+        /// building type-safe contract calls.
         pub fn call_builder<C: alloy_sol_types::SolCall>(
             &self,
             call: &C,
         ) -> alloy_contract::SolCallBuilder<&P, C, N> {
-            alloy_contract::SolCallBuilder::new_sol(&self.provider, &self.address, call)
+            alloy_contract::SolCallBuilder::new_sol(
+                &self.provider,
+                &self.address,
+                call,
+            )
         }
         ///Creates a new call builder for the [`getReserves`] function.
         pub fn getReserves(
@@ -768,26 +859,27 @@ the bytecode concatenated with the constructor's ABI-encoded arguments.*/
             to: alloy::sol_types::private::Address,
             data: alloy::sol_types::private::Bytes,
         ) -> alloy_contract::SolCallBuilder<&P, swapCall, N> {
-            self.call_builder(
-                &swapCall {
-                    amount0Out,
-                    amount1Out,
-                    to,
-                    data,
-                },
-            )
+            self.call_builder(&swapCall {
+                amount0Out,
+                amount1Out,
+                to,
+                data,
+            })
         }
     }
     /// Event filters.
     #[automatically_derived]
     impl<
-        P: alloy_contract::private::Provider<N>,
-        N: alloy_contract::private::Network,
-    > IUniswapV2PairInstance<P, N> {
-        /// Creates a new event filter using this contract instance's provider and address.
+            P: alloy_contract::private::Provider<N>,
+            N: alloy_contract::private::Network,
+        > IUniswapV2PairInstance<P, N>
+    {
+        /// Creates a new event filter using this contract instance's provider
+        /// and address.
         ///
-        /// Note that the type can be any event, not just those defined in this contract.
-        /// Prefer using the other methods for building type-safe event filters.
+        /// Note that the type can be any event, not just those defined in this
+        /// contract. Prefer using the other methods for building
+        /// type-safe event filters.
         pub fn event_filter<E: alloy_sol_types::SolEvent>(
             &self,
         ) -> alloy_contract::Event<&P, E, N> {

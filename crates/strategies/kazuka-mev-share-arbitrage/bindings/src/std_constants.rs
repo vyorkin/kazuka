@@ -17,8 +17,9 @@ interface StdConstants {}
     clippy::empty_structs_with_brackets
 )]
 pub mod StdConstants {
-    use super::*;
     use alloy::sol_types as alloy_sol_types;
+
+    use super::*;
     /// The creation / init bytecode of the contract.
     ///
     /// ```text
@@ -42,7 +43,7 @@ pub mod StdConstants {
     use alloy::contract as alloy_contract;
     /**Creates a new wrapper around an on-chain [`StdConstants`](self) contract instance.
 
-See the [wrapper's documentation](`StdConstantsInstance`) for more details.*/
+    See the [wrapper's documentation](`StdConstantsInstance`) for more details.*/
     #[inline]
     pub const fn new<
         P: alloy_contract::private::Provider<N>,
@@ -55,9 +56,9 @@ See the [wrapper's documentation](`StdConstantsInstance`) for more details.*/
     }
     /**Deploys this contract using the given `provider` and constructor arguments, if any.
 
-Returns a new instance of the contract, if the deployment was successful.
+    Returns a new instance of the contract, if the deployment was successful.
 
-For more fine-grained control over the deployment process, use [`deploy_builder`] instead.*/
+    For more fine-grained control over the deployment process, use [`deploy_builder`] instead.*/
     #[inline]
     pub fn deploy<
         P: alloy_contract::private::Provider<N>,
@@ -70,28 +71,30 @@ For more fine-grained control over the deployment process, use [`deploy_builder`
         StdConstantsInstance::<P, N>::deploy(provider)
     }
     /**Creates a `RawCallBuilder` for deploying this contract using the given `provider`
-and constructor arguments, if any.
+    and constructor arguments, if any.
 
-This is a simple wrapper around creating a `RawCallBuilder` with the data set to
-the bytecode concatenated with the constructor's ABI-encoded arguments.*/
+    This is a simple wrapper around creating a `RawCallBuilder` with the data set to
+    the bytecode concatenated with the constructor's ABI-encoded arguments.*/
     #[inline]
     pub fn deploy_builder<
         P: alloy_contract::private::Provider<N>,
         N: alloy_contract::private::Network,
-    >(provider: P) -> alloy_contract::RawCallBuilder<P, N> {
+    >(
+        provider: P,
+    ) -> alloy_contract::RawCallBuilder<P, N> {
         StdConstantsInstance::<P, N>::deploy_builder(provider)
     }
     /**A [`StdConstants`](self) instance.
 
-Contains type-safe methods for interacting with an on-chain instance of the
-[`StdConstants`](self) contract located at a given `address`, using a given
-provider `P`.
+    Contains type-safe methods for interacting with an on-chain instance of the
+    [`StdConstants`](self) contract located at a given `address`, using a given
+    provider `P`.
 
-If the contract bytecode is available (see the [`sol!`](alloy_sol_types::sol!)
-documentation on how to provide it), the `deploy` and `deploy_builder` methods can
-be used to deploy a new instance of the contract.
+    If the contract bytecode is available (see the [`sol!`](alloy_sol_types::sol!)
+    documentation on how to provide it), the `deploy` and `deploy_builder` methods can
+    be used to deploy a new instance of the contract.
 
-See the [module-level documentation](self) for all the available methods.*/
+    See the [module-level documentation](self) for all the available methods.*/
     #[derive(Clone)]
     pub struct StdConstantsInstance<P, N = alloy_contract::private::Ethereum> {
         address: alloy_sol_types::private::Address,
@@ -101,19 +104,25 @@ See the [module-level documentation](self) for all the available methods.*/
     #[automatically_derived]
     impl<P, N> ::core::fmt::Debug for StdConstantsInstance<P, N> {
         #[inline]
-        fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
-            f.debug_tuple("StdConstantsInstance").field(&self.address).finish()
+        fn fmt(
+            &self,
+            f: &mut ::core::fmt::Formatter<'_>,
+        ) -> ::core::fmt::Result {
+            f.debug_tuple("StdConstantsInstance")
+                .field(&self.address)
+                .finish()
         }
     }
     /// Instantiation and getters/setters.
     #[automatically_derived]
     impl<
-        P: alloy_contract::private::Provider<N>,
-        N: alloy_contract::private::Network,
-    > StdConstantsInstance<P, N> {
+            P: alloy_contract::private::Provider<N>,
+            N: alloy_contract::private::Network,
+        > StdConstantsInstance<P, N>
+    {
         /**Creates a new wrapper around an on-chain [`StdConstants`](self) contract instance.
 
-See the [wrapper's documentation](`StdConstantsInstance`) for more details.*/
+        See the [wrapper's documentation](`StdConstantsInstance`) for more details.*/
         #[inline]
         pub const fn new(
             address: alloy_sol_types::private::Address,
@@ -127,24 +136,29 @@ See the [wrapper's documentation](`StdConstantsInstance`) for more details.*/
         }
         /**Deploys this contract using the given `provider` and constructor arguments, if any.
 
-Returns a new instance of the contract, if the deployment was successful.
+        Returns a new instance of the contract, if the deployment was successful.
 
-For more fine-grained control over the deployment process, use [`deploy_builder`] instead.*/
+        For more fine-grained control over the deployment process, use [`deploy_builder`] instead.*/
         #[inline]
         pub async fn deploy(
             provider: P,
         ) -> alloy_contract::Result<StdConstantsInstance<P, N>> {
             let call_builder = Self::deploy_builder(provider);
             let contract_address = call_builder.deploy().await?;
-            Ok(Self::new(contract_address, call_builder.provider))
+            Ok(Self::new(
+                contract_address,
+                call_builder.provider,
+            ))
         }
         /**Creates a `RawCallBuilder` for deploying this contract using the given `provider`
-and constructor arguments, if any.
+        and constructor arguments, if any.
 
-This is a simple wrapper around creating a `RawCallBuilder` with the data set to
-the bytecode concatenated with the constructor's ABI-encoded arguments.*/
+        This is a simple wrapper around creating a `RawCallBuilder` with the data set to
+        the bytecode concatenated with the constructor's ABI-encoded arguments.*/
         #[inline]
-        pub fn deploy_builder(provider: P) -> alloy_contract::RawCallBuilder<P, N> {
+        pub fn deploy_builder(
+            provider: P,
+        ) -> alloy_contract::RawCallBuilder<P, N> {
             alloy_contract::RawCallBuilder::new_raw_deploy(
                 provider,
                 ::core::clone::Clone::clone(&BYTECODE),
@@ -157,11 +171,17 @@ the bytecode concatenated with the constructor's ABI-encoded arguments.*/
         }
         /// Sets the address.
         #[inline]
-        pub fn set_address(&mut self, address: alloy_sol_types::private::Address) {
+        pub fn set_address(
+            &mut self,
+            address: alloy_sol_types::private::Address,
+        ) {
             self.address = address;
         }
         /// Sets the address and returns `self`.
-        pub fn at(mut self, address: alloy_sol_types::private::Address) -> Self {
+        pub fn at(
+            mut self,
+            address: alloy_sol_types::private::Address,
+        ) -> Self {
             self.set_address(address);
             self
         }
@@ -172,7 +192,8 @@ the bytecode concatenated with the constructor's ABI-encoded arguments.*/
         }
     }
     impl<P: ::core::clone::Clone, N> StdConstantsInstance<&P, N> {
-        /// Clones the provider and returns a new instance with the cloned provider.
+        /// Clones the provider and returns a new instance with the cloned
+        /// provider.
         #[inline]
         pub fn with_cloned_provider(self) -> StdConstantsInstance<P, N> {
             StdConstantsInstance {
@@ -185,30 +206,40 @@ the bytecode concatenated with the constructor's ABI-encoded arguments.*/
     /// Function calls.
     #[automatically_derived]
     impl<
-        P: alloy_contract::private::Provider<N>,
-        N: alloy_contract::private::Network,
-    > StdConstantsInstance<P, N> {
-        /// Creates a new call builder using this contract instance's provider and address.
+            P: alloy_contract::private::Provider<N>,
+            N: alloy_contract::private::Network,
+        > StdConstantsInstance<P, N>
+    {
+        /// Creates a new call builder using this contract instance's provider
+        /// and address.
         ///
-        /// Note that the call can be any function call, not just those defined in this
-        /// contract. Prefer using the other methods for building type-safe contract calls.
+        /// Note that the call can be any function call, not just those defined
+        /// in this contract. Prefer using the other methods for
+        /// building type-safe contract calls.
         pub fn call_builder<C: alloy_sol_types::SolCall>(
             &self,
             call: &C,
         ) -> alloy_contract::SolCallBuilder<&P, C, N> {
-            alloy_contract::SolCallBuilder::new_sol(&self.provider, &self.address, call)
+            alloy_contract::SolCallBuilder::new_sol(
+                &self.provider,
+                &self.address,
+                call,
+            )
         }
     }
     /// Event filters.
     #[automatically_derived]
     impl<
-        P: alloy_contract::private::Provider<N>,
-        N: alloy_contract::private::Network,
-    > StdConstantsInstance<P, N> {
-        /// Creates a new event filter using this contract instance's provider and address.
+            P: alloy_contract::private::Provider<N>,
+            N: alloy_contract::private::Network,
+        > StdConstantsInstance<P, N>
+    {
+        /// Creates a new event filter using this contract instance's provider
+        /// and address.
         ///
-        /// Note that the type can be any event, not just those defined in this contract.
-        /// Prefer using the other methods for building type-safe event filters.
+        /// Note that the type can be any event, not just those defined in this
+        /// contract. Prefer using the other methods for building
+        /// type-safe event filters.
         pub fn event_filter<E: alloy_sol_types::SolEvent>(
             &self,
         ) -> alloy_contract::Event<&P, E, N> {

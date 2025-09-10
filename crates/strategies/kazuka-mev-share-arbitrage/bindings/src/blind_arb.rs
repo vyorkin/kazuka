@@ -179,8 +179,9 @@ interface BlindArb {
     clippy::empty_structs_with_brackets
 )]
 pub mod BlindArb {
-    use super::*;
     use alloy::sol_types as alloy_sol_types;
+
+    use super::*;
     /// The creation / init bytecode of the contract.
     ///
     /// ```text
@@ -201,12 +202,19 @@ pub mod BlindArb {
     pub static DEPLOYED_BYTECODE: alloy_sol_types::private::Bytes = alloy_sol_types::private::Bytes::from_static(
         b"`\x80`@R`\x046\x10a\0sW_5`\xE0\x1C\x80c\xE0\x86\xE5\xEC\x11a\0MW\x80c\xE0\x86\xE5\xEC\x14a\0\xE6W\x80c\xED4\xB89\x14a\0\xFCW\x80c\xF2\xFD\xE3\x8B\x14a\x01$W\x80c\xFAF\x1E3\x14a\x01LWa\0zV[\x80c%;!\xCD\x14a\0~W\x80cL\x02\xF6.\x14a\0\xA6W\x80c\x8D\xA5\xCB[\x14a\0\xBCWa\0zV[6a\0zW\0[__\xFD[4\x80\x15a\0\x89W__\xFD[Pa\0\xA4`\x04\x806\x03\x81\x01\x90a\0\x9F\x91\x90a\x1D^V[a\x01tV[\0[4\x80\x15a\0\xB1W__\xFD[Pa\0\xBAa\x06\xC8V[\0[4\x80\x15a\0\xC7W__\xFD[Pa\0\xD0a\x08xV[`@Qa\0\xDD\x91\x90a\x1D\xD1V[`@Q\x80\x91\x03\x90\xF3[4\x80\x15a\0\xF1W__\xFD[Pa\0\xFAa\x08\x9CV[\0[4\x80\x15a\x01\x07W__\xFD[Pa\x01\"`\x04\x806\x03\x81\x01\x90a\x01\x1D\x91\x90a\x1D^V[a\tuV[\0[4\x80\x15a\x01/W__\xFD[Pa\x01J`\x04\x806\x03\x81\x01\x90a\x01E\x91\x90a\x1D\xEAV[a\x12\x93V[\0[4\x80\x15a\x01WW__\xFD[Pa\x01r`\x04\x806\x03\x81\x01\x90a\x01m\x91\x90a\x1E\xA9V[a\x13\xBDV[\0[__\x90T\x90a\x01\0\n\x90\x04s\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x16s\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x163s\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x16\x14a\x02\x02W`@Q\x7F\x08\xC3y\xA0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x81R`\x04\x01a\x01\xF9\x90a\x1FtV[`@Q\x80\x91\x03\x90\xFD[_s\xC0*\xAA9\xB2#\xFE\x8D\n\x0E\\O'\xEA\xD9\x08<ul\xC2s\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x16cp\xA0\x8210`@Q\x82c\xFF\xFF\xFF\xFF\x16`\xE0\x1B\x81R`\x04\x01a\x02P\x91\x90a\x1D\xD1V[` `@Q\x80\x83\x03\x81\x86Z\xFA\x15\x80\x15a\x02kW=__>=_\xFD[PPPP`@Q=`\x1F\x19`\x1F\x82\x01\x16\x82\x01\x80`@RP\x81\x01\x90a\x02\x8F\x91\x90a\x1F\xA6V[\x90P_`\x01s\xFF\xFD\x89c\xEF\xD1\xFCjPd\x88I]\x95\x1DRc\x98\x8D&a\x02\xB3\x91\x90a\x1F\xFEV[\x90P_3\x90P_\x81\x88\x88s\xC0*\xAA9\xB2#\xFE\x8D\n\x0E\\O'\xEA\xD9\x08<ul\xC2s\xD8\x91,\x10h\x1D\x8B!\xFD7B$ODe\x8D\xBA\x12&N\x8A_`@Q` \x01a\x02\xFF\x97\x96\x95\x94\x93\x92\x91\x90a nV[`@Q` \x81\x83\x03\x03\x81R\x90`@R\x90P__\x88s\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x16c\x12\x8A\xCB\x08\x8B_\x8B\x89\x88`@Q\x86c\xFF\xFF\xFF\xFF\x16`\xE0\x1B\x81R`\x04\x01a\x03S\x95\x94\x93\x92\x91\x90a!iV[`@\x80Q\x80\x83\x03\x81_\x87Z\xF1\x15\x80\x15a\x03nW=__>=_\xFD[PPPP`@Q=`\x1F\x19`\x1F\x82\x01\x16\x82\x01\x80`@RP\x81\x01\x90a\x03\x92\x91\x90a!\xD5V[\x91P\x91P_\x82a\x03\xA1\x90a\"\x13V[\x90P__\x8Cs\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x16c\t\x02\xF1\xAC`@Q\x81c\xFF\xFF\xFF\xFF\x16`\xE0\x1B\x81R`\x04\x01```@Q\x80\x83\x03\x81\x86Z\xFA\x15\x80\x15a\x03\xEEW=__>=_\xFD[PPPP`@Q=`\x1F\x19`\x1F\x82\x01\x16\x82\x01\x80`@RP\x81\x01\x90a\x04\x12\x91\x90a\"\xD5V[Pm\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x16\x91Pm\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x16\x91P_a\x04C\x84\x84\x84a\x19\x1DV[\x90P\x8Ds\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x16c\x02,\r\x9F_\x830`@Q\x84c\xFF\xFF\xFF\xFF\x16`\xE0\x1B\x81R`\x04\x01a\x04\x82\x93\x92\x91\x90a#\x8AV[_`@Q\x80\x83\x03\x81_\x87\x80;\x15\x80\x15a\x04\x99W__\xFD[PZ\xF1\x15\x80\x15a\x04\xABW=__>=_\xFD[PPPP_s\xC0*\xAA9\xB2#\xFE\x8D\n\x0E\\O'\xEA\xD9\x08<ul\xC2s\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x16cp\xA0\x8210`@Q\x82c\xFF\xFF\xFF\xFF\x16`\xE0\x1B\x81R`\x04\x01a\x04\xFD\x91\x90a\x1D\xD1V[` `@Q\x80\x83\x03\x81\x86Z\xFA\x15\x80\x15a\x05\x18W=__>=_\xFD[PPPP`@Q=`\x1F\x19`\x1F\x82\x01\x16\x82\x01\x80`@RP\x81\x01\x90a\x05<\x91\x90a\x1F\xA6V[\x90P_\x8B\x82a\x05K\x91\x90a#\xD2V[\x90P_\x81\x13a\x05\x8FW`@Q\x7F\x08\xC3y\xA0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x81R`\x04\x01a\x05\x86\x90a$\\V[`@Q\x80\x91\x03\x90\xFD[_`d\x8E\x83a\x05\x9E\x91\x90a$zV[a\x05\xA8\x91\x90a$\xE8V[\x90Ps\xC0*\xAA9\xB2#\xFE\x8D\n\x0E\\O'\xEA\xD9\x08<ul\xC2s\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x16c.\x1A}M\x82`@Q\x82c\xFF\xFF\xFF\xFF\x16`\xE0\x1B\x81R`\x04\x01a\x05\xF7\x91\x90a%\x18V[_`@Q\x80\x83\x03\x81_\x87\x80;\x15\x80\x15a\x06\x0EW__\xFD[PZ\xF1\x15\x80\x15a\x06 W=__>=_\xFD[PPPPAs\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x16a\x08\xFC\x82\x90\x81\x15\x02\x90`@Q_`@Q\x80\x83\x03\x81\x85\x88\x88\xF1\x93PPPP\x15\x80\x15a\x06gW=__>=_\xFD[P\x8C\x81\x84a\x06u\x91\x90a%1V[\x11a\x06\xB5W`@Q\x7F\x08\xC3y\xA0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x81R`\x04\x01a\x06\xAC\x90a%\xAEV[`@Q\x80\x91\x03\x90\xFD[PPPPPPPPPPPPPPPPPV[__\x90T\x90a\x01\0\n\x90\x04s\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x16s\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x163s\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x16\x14a\x07VW`@Q\x7F\x08\xC3y\xA0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x81R`\x04\x01a\x07M\x90a\x1FtV[`@Q\x80\x91\x03\x90\xFD[_s\xC0*\xAA9\xB2#\xFE\x8D\n\x0E\\O'\xEA\xD9\x08<ul\xC2s\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x16cp\xA0\x8210`@Q\x82c\xFF\xFF\xFF\xFF\x16`\xE0\x1B\x81R`\x04\x01a\x07\xA4\x91\x90a\x1D\xD1V[` `@Q\x80\x83\x03\x81\x86Z\xFA\x15\x80\x15a\x07\xBFW=__>=_\xFD[PPPP`@Q=`\x1F\x19`\x1F\x82\x01\x16\x82\x01\x80`@RP\x81\x01\x90a\x07\xE3\x91\x90a\x1F\xA6V[\x90Ps\xC0*\xAA9\xB2#\xFE\x8D\n\x0E\\O'\xEA\xD9\x08<ul\xC2s\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x16c\xA9\x05\x9C\xBB3\x83`@Q\x83c\xFF\xFF\xFF\xFF\x16`\xE0\x1B\x81R`\x04\x01a\x084\x92\x91\x90a%\xCCV[` `@Q\x80\x83\x03\x81_\x87Z\xF1\x15\x80\x15a\x08PW=__>=_\xFD[PPPP`@Q=`\x1F\x19`\x1F\x82\x01\x16\x82\x01\x80`@RP\x81\x01\x90a\x08t\x91\x90a&\x1DV[PPV[__\x90T\x90a\x01\0\n\x90\x04s\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x16\x81V[__\x90T\x90a\x01\0\n\x90\x04s\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x16s\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x163s\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x16\x14a\t*W`@Q\x7F\x08\xC3y\xA0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x81R`\x04\x01a\t!\x90a\x1FtV[`@Q\x80\x91\x03\x90\xFD[_G\x90P3s\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x16a\x08\xFC\x82\x90\x81\x15\x02\x90`@Q_`@Q\x80\x83\x03\x81\x85\x88\x88\xF1\x93PPPP\x15\x80\x15a\tqW=__>=_\xFD[PPV[__\x90T\x90a\x01\0\n\x90\x04s\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x16s\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x163s\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x16\x14a\n\x03W`@Q\x7F\x08\xC3y\xA0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x81R`\x04\x01a\t\xFA\x90a\x1FtV[`@Q\x80\x91\x03\x90\xFD[_s\xC0*\xAA9\xB2#\xFE\x8D\n\x0E\\O'\xEA\xD9\x08<ul\xC2s\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x16cp\xA0\x8210`@Q\x82c\xFF\xFF\xFF\xFF\x16`\xE0\x1B\x81R`\x04\x01a\nQ\x91\x90a\x1D\xD1V[` `@Q\x80\x83\x03\x81\x86Z\xFA\x15\x80\x15a\nlW=__>=_\xFD[PPPP`@Q=`\x1F\x19`\x1F\x82\x01\x16\x82\x01\x80`@RP\x81\x01\x90a\n\x90\x91\x90a\x1F\xA6V[\x90P_`\x01d\x01\0\x02v\xA3a\n\xA5\x91\x90a&HV[\x90P_3\x90P_\x81\x88\x88s\xC0*\xAA9\xB2#\xFE\x8D\n\x0E\\O'\xEA\xD9\x08<ul\xC2s\xD8\x91,\x10h\x1D\x8B!\xFD7B$ODe\x8D\xBA\x12&N\x8A`\x01`@Q` \x01a\n\xF2\x97\x96\x95\x94\x93\x92\x91\x90a nV[`@Q` \x81\x83\x03\x03\x81R\x90`@R\x90Pa\x0B$`@Q\x80``\x01`@R\x80`*\x81R` \x01a+H`*\x919a\x19rV[a\x0Bc`@Q\x80`@\x01`@R\x80`\r\x81R` \x01\x7F  v2Pool = %s\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x81RP\x89a\x1A\x0BV[a\x0B\xA3`@Q\x80`@\x01`@R\x80`\x11\x81R` \x01\x7F  zeroForOne = %s\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x81RP`\x01a\x1A\xA7V[a\x0B\xE2`@Q\x80`@\x01`@R\x80`\x0F\x81R` \x01\x7F  amountIn = %s\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x81RP\x87a\x1BCV[a\x0C7`@Q\x80`@\x01`@R\x80`\x18\x81R` \x01\x7F  sqrtPriceLimitX96 = %s\0\0\0\0\0\0\0\0\x81RP\x84s\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x16a\x1BCV[__\x88s\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x16c\x12\x8A\xCB\x08\x8B`\x01\x8B\x89\x88`@Q\x86c\xFF\xFF\xFF\xFF\x16`\xE0\x1B\x81R`\x04\x01a\x0C{\x95\x94\x93\x92\x91\x90a!iV[`@\x80Q\x80\x83\x03\x81_\x87Z\xF1\x15\x80\x15a\x0C\x96W=__>=_\xFD[PPPP`@Q=`\x1F\x19`\x1F\x82\x01\x16\x82\x01\x80`@RP\x81\x01\x90a\x0C\xBA\x91\x90a!\xD5V[\x91P\x91Pa\x0C\xFC`@Q\x80`@\x01`@R\x80` \x81R` \x01\x7FUniswapV3 pool WETH/PLU changes:\x81RPa\x19rV[a\r\x1E`@Q\x80``\x01`@R\x80`+\x81R` \x01a*o`+\x919\x83a\x1B\xDFV[a\r@`@Q\x80``\x01`@R\x80`*\x81R` \x01a+r`*\x919\x82a\x1B\xDFV[__\x8Bs\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x16c\t\x02\xF1\xAC`@Q\x81c\xFF\xFF\xFF\xFF\x16`\xE0\x1B\x81R`\x04\x01```@Q\x80\x83\x03\x81\x86Z\xFA\x15\x80\x15a\r\x8BW=__>=_\xFD[PPPP`@Q=`\x1F\x19`\x1F\x82\x01\x16\x82\x01\x80`@RP\x81\x01\x90a\r\xAF\x91\x90a\"\xD5V[Pm\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x16\x91Pm\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x16\x91Pa\r\xF5`@Q\x80``\x01`@R\x80`$\x81R` \x01a*\x9A`$\x919a\x19rV[a\x0E4`@Q\x80`@\x01`@R\x80`\x1F\x81R` \x01\x7F  wethReserveV2 = %s wei (WETH)\0\x81RP\x83a\x1BCV[a\x0Es`@Q\x80`@\x01`@R\x80`\x1E\x81R` \x01\x7F  pluReserveV2  = %s wei (PLU)\0\0\x81RP\x82a\x1BCV[_\x83a\x0E~\x90a\"\x13V[\x90P_a\x0E\x8C\x82\x84\x86a\x19\x1DV[\x90Pa\x0E\xAF`@Q\x80`\x80\x01`@R\x80`E\x81R` \x01a*\xE0`E\x919a\x19rV[a\x0E\xEE`@Q\x80`@\x01`@R\x80`\x1E\x81R` \x01\x7F  pluAmountIn   = %s wei (PLU)\0\0\x81RP\x83a\x1BCV[a\x0F-`@Q\x80`@\x01`@R\x80`\x1F\x81R` \x01\x7F  wethAmountOut = %s wei (WETH)\0\x81RP\x82a\x1BCV[a\x0Fk`@Q\x80`@\x01`@R\x80`\x1D\x81R` \x01\x7FIUniswapV2Pair(v2Pool).swap()\0\0\0\x81RPa\x19rV[\x8Ds\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x16c\x02,\r\x9F\x82_0`@Q\x84c\xFF\xFF\xFF\xFF\x16`\xE0\x1B\x81R`\x04\x01a\x0F\xA8\x93\x92\x91\x90a&\x8FV[_`@Q\x80\x83\x03\x81_\x87\x80;\x15\x80\x15a\x0F\xBFW__\xFD[PZ\xF1\x15\x80\x15a\x0F\xD1W=__>=_\xFD[PPPP_s\xC0*\xAA9\xB2#\xFE\x8D\n\x0E\\O'\xEA\xD9\x08<ul\xC2s\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x16cp\xA0\x8210`@Q\x82c\xFF\xFF\xFF\xFF\x16`\xE0\x1B\x81R`\x04\x01a\x10#\x91\x90a\x1D\xD1V[` `@Q\x80\x83\x03\x81\x86Z\xFA\x15\x80\x15a\x10>W=__>=_\xFD[PPPP`@Q=`\x1F\x19`\x1F\x82\x01\x16\x82\x01\x80`@RP\x81\x01\x90a\x10b\x91\x90a\x1F\xA6V[\x90P_\x8B\x82a\x10q\x91\x90a#\xD2V[\x90P_\x81\x13a\x10\xB5W`@Q\x7F\x08\xC3y\xA0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x81R`\x04\x01a\x10\xAC\x90a$\\V[`@Q\x80\x91\x03\x90\xFD[_`d\x8E\x83a\x10\xC4\x91\x90a$zV[a\x10\xCE\x91\x90a$\xE8V[\x90Ps\xC0*\xAA9\xB2#\xFE\x8D\n\x0E\\O'\xEA\xD9\x08<ul\xC2s\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x16c.\x1A}M\x82`@Q\x82c\xFF\xFF\xFF\xFF\x16`\xE0\x1B\x81R`\x04\x01a\x11\x1D\x91\x90a%\x18V[_`@Q\x80\x83\x03\x81_\x87\x80;\x15\x80\x15a\x114W__\xFD[PZ\xF1\x15\x80\x15a\x11FW=__>=_\xFD[PPPPAs\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x16a\x08\xFC\x82\x90\x81\x15\x02\x90`@Q_`@Q\x80\x83\x03\x81\x85\x88\x88\xF1\x93PPPP\x15\x80\x15a\x11\x8DW=__>=_\xFD[Pa\x11\xB0`@Q\x80``\x01`@R\x80`#\x81R` \x01a+%`#\x919\x8Ea\x1BCV[a\x11\xD2`@Q\x80``\x01`@R\x80`\"\x81R` \x01a*M`\"\x919\x84a\x1BCV[a\x11\xF4`@Q\x80``\x01`@R\x80`\"\x81R` \x01a*\xBE`\"\x919\x82a\x1BCV[a\x123`@Q\x80`@\x01`@R\x80`\x18\x81R` \x01\x7F  profit = %s wei (WETH)\0\0\0\0\0\0\0\0\x81RP\x83a\x1B\xDFV[\x8C\x81\x84a\x12@\x91\x90a%1V[\x11a\x12\x80W`@Q\x7F\x08\xC3y\xA0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x81R`\x04\x01a\x12w\x90a%\xAEV[`@Q\x80\x91\x03\x90\xFD[PPPPPPPPPPPPPPPPPV[__\x90T\x90a\x01\0\n\x90\x04s\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x16s\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x163s\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x16\x14a\x13!W`@Q\x7F\x08\xC3y\xA0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x81R`\x04\x01a\x13\x18\x90a\x1FtV[`@Q\x80\x91\x03\x90\xFD[\x80__a\x01\0\n\x81T\x81s\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x02\x19\x16\x90\x83s\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x16\x02\x17\x90UP\x80s\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x163s\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x16\x7F\x8B\xE0\x07\x9CS\x16Y\x14\x13D\xCD\x1F\xD0\xA4\xF2\x84\x19I\x7F\x97\"\xA3\xDA\xAF\xE3\xB4\x18okdW\xE0`@Q`@Q\x80\x91\x03\x90\xA3PV[a\x13\xFB`@Q\x80`@\x01`@R\x80`\x17\x81R` \x01\x7FuniswapV3SwapCallback()\0\0\0\0\0\0\0\0\0\x81RPa\x19rV[a\x14:`@Q\x80`@\x01`@R\x80`\x13\x81R` \x01\x7F  amount0Delta = %s\0\0\0\0\0\0\0\0\0\0\0\0\0\x81RP\x85a\x1B\xDFV[a\x14y`@Q\x80`@\x01`@R\x80`\x13\x81R` \x01\x7F  amount1Delta = %s\0\0\0\0\0\0\0\0\0\0\0\0\0\x81RP\x84a\x1B\xDFV[_\x84\x13\x80\x15a\x14\x87WP_\x83\x12[\x80a\x14\x9CWP_\x84\x12\x80\x15a\x14\x9BWP_\x83\x13[[a\x14\xDBW`@Q\x7F\x08\xC3y\xA0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x81R`\x04\x01a\x14\xD2\x90a'!V[`@Q\x80\x91\x03\x90\xFD[_______\x88\x88\x81\x01\x90a\x14\xF1\x91\x90a'\x8EV[\x96P\x96P\x96P\x96P\x96P\x96P\x96P\x84s\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x163s\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x16\x14a\x15mW`@Q\x7F\x08\xC3y\xA0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x81R`\x04\x01a\x15d\x90a(uV[`@Q\x80\x91\x03\x90\xFD[a\x15\xAB`@Q\x80`@\x01`@R\x80`\x16\x81R` \x01\x7FDecoded callback data:\0\0\0\0\0\0\0\0\0\0\x81RPa\x19rV[a\x15\xEA`@Q\x80`@\x01`@R\x80`\x12\x81R` \x01\x7F  beneficiary = %s\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x81RP\x88a\x1A\x0BV[a\x16)`@Q\x80`@\x01`@R\x80`\r\x81R` \x01\x7F  v2Pool = %s\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x81RP\x87a\x1A\x0BV[a\x16h`@Q\x80`@\x01`@R\x80`\r\x81R` \x01\x7F  v3Pool = %s\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x81RP\x86a\x1A\x0BV[a\x16\xA7`@Q\x80`@\x01`@R\x80`\x0E\x81R` \x01\x7F  tokenIn = %s\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x81RP\x85a\x1A\x0BV[a\x16\xE6`@Q\x80`@\x01`@R\x80`\x0F\x81R` \x01\x7F  tokenOut = %s\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x81RP\x84a\x1A\x0BV[a\x17%`@Q\x80`@\x01`@R\x80`\x0F\x81R` \x01\x7F  amountIn = %s\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x81RP\x83a\x1BCV[a\x17d`@Q\x80`@\x01`@R\x80`\x11\x81R` \x01\x7F  zeroForOne = %s\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x81RP\x82a\x1A\xA7V[___\x8D\x13a\x17\xE0W\x86s\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x16c\xD2\x12 \xA7`@Q\x81c\xFF\xFF\xFF\xFF\x16`\xE0\x1B\x81R`\x04\x01` `@Q\x80\x83\x03\x81\x86Z\xFA\x15\x80\x15a\x17\xB6W=__>=_\xFD[PPPP`@Q=`\x1F\x19`\x1F\x82\x01\x16\x82\x01\x80`@RP\x81\x01\x90a\x17\xDA\x91\x90a(\xA7V[\x8Ca\x18OV[\x86s\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x16c\r\xFE\x16\x81`@Q\x81c\xFF\xFF\xFF\xFF\x16`\xE0\x1B\x81R`\x04\x01` `@Q\x80\x83\x03\x81\x86Z\xFA\x15\x80\x15a\x18)W=__>=_\xFD[PPPP`@Q=`\x1F\x19`\x1F\x82\x01\x16\x82\x01\x80`@RP\x81\x01\x90a\x18M\x91\x90a(\xA7V[\x8D[\x91P\x91Pa\x18\x92`@Q\x80`@\x01`@R\x80`\x1D\x81R` \x01\x7FamountToRepay = %s wei (WETH)\0\0\0\x81RP\x82a\x1BCV[\x81s\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x16c\xA9\x05\x9C\xBB\x88\x83`@Q\x83c\xFF\xFF\xFF\xFF\x16`\xE0\x1B\x81R`\x04\x01a\x18\xCD\x92\x91\x90a%\xCCV[` `@Q\x80\x83\x03\x81_\x87Z\xF1\x15\x80\x15a\x18\xE9W=__>=_\xFD[PPPP`@Q=`\x1F\x19`\x1F\x82\x01\x16\x82\x01\x80`@RP\x81\x01\x90a\x19\r\x91\x90a&\x1DV[PPPPPPPPPPPPPPV[__a\x03\xE5\x85a\x19-\x91\x90a$zV[\x90P_\x83\x82a\x19<\x91\x90a$zV[\x90P_\x82a\x03\xE8\x87a\x19N\x91\x90a$zV[a\x19X\x91\x90a(\xD2V[\x90P\x80\x82a\x19f\x91\x90a$\xE8V[\x93PPPP\x93\x92PPPV[a\x1A\x08\x81`@Q`$\x01a\x19\x86\x91\x90a)GV[`@Q` \x81\x83\x03\x03\x81R\x90`@R\x7FA0O\xAC\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0{\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x19\x16` \x82\x01\x80Q{\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x83\x81\x83\x16\x17\x83RPPPPa\x1C{V[PV[a\x1A\xA3\x82\x82`@Q`$\x01a\x1A!\x92\x91\x90a)gV[`@Q` \x81\x83\x03\x03\x81R\x90`@R\x7F1\x9A\xF33\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0{\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x19\x16` \x82\x01\x80Q{\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x83\x81\x83\x16\x17\x83RPPPPa\x1C{V[PPV[a\x1B?\x82\x82`@Q`$\x01a\x1A\xBD\x92\x91\x90a)\x95V[`@Q` \x81\x83\x03\x03\x81R\x90`@R\x7F\xC3\xB5V5\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0{\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x19\x16` \x82\x01\x80Q{\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x83\x81\x83\x16\x17\x83RPPPPa\x1C{V[PPV[a\x1B\xDB\x82\x82`@Q`$\x01a\x1BY\x92\x91\x90a)\xC3V[`@Q` \x81\x83\x03\x03\x81R\x90`@R\x7F\xB6\x0Er\xCC\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0{\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x19\x16` \x82\x01\x80Q{\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x83\x81\x83\x16\x17\x83RPPPPa\x1C{V[PPV[a\x1Cw\x82\x82`@Q`$\x01a\x1B\xF5\x92\x91\x90a)\xF1V[`@Q` \x81\x83\x03\x03\x81R\x90`@R\x7F<\xA6&\x8E\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0{\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x19\x16` \x82\x01\x80Q{\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x83\x81\x83\x16\x17\x83RPPPPa\x1C{V[PPV[a\x1C\x92\x81a\x1C\x8Aa\x1C\x95a\x1C\xB4V[c\xFF\xFF\xFF\xFF\x16V[PV[_jconsole.log\x90P__\x83Q` \x85\x01\x84Z\xFAPPPV[a\x1C\xBF\x81\x90P\x91\x90PV[a\x1C\xC7a*\x1FV[V[__\xFD[__\xFD[_s\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x82\x16\x90P\x91\x90PV[_a\x1C\xFA\x82a\x1C\xD1V[\x90P\x91\x90PV[a\x1D\n\x81a\x1C\xF0V[\x81\x14a\x1D\x14W__\xFD[PV[_\x815\x90Pa\x1D%\x81a\x1D\x01V[\x92\x91PPV[_\x81\x90P\x91\x90PV[a\x1D=\x81a\x1D+V[\x81\x14a\x1DGW__\xFD[PV[_\x815\x90Pa\x1DX\x81a\x1D4V[\x92\x91PPV[____`\x80\x85\x87\x03\x12\x15a\x1DvWa\x1Dua\x1C\xC9V[[_a\x1D\x83\x87\x82\x88\x01a\x1D\x17V[\x94PP` a\x1D\x94\x87\x82\x88\x01a\x1D\x17V[\x93PP`@a\x1D\xA5\x87\x82\x88\x01a\x1DJV[\x92PP``a\x1D\xB6\x87\x82\x88\x01a\x1DJV[\x91PP\x92\x95\x91\x94P\x92PV[a\x1D\xCB\x81a\x1C\xF0V[\x82RPPV[_` \x82\x01\x90Pa\x1D\xE4_\x83\x01\x84a\x1D\xC2V[\x92\x91PPV[_` \x82\x84\x03\x12\x15a\x1D\xFFWa\x1D\xFEa\x1C\xC9V[[_a\x1E\x0C\x84\x82\x85\x01a\x1D\x17V[\x91PP\x92\x91PPV[_\x81\x90P\x91\x90PV[a\x1E'\x81a\x1E\x15V[\x81\x14a\x1E1W__\xFD[PV[_\x815\x90Pa\x1EB\x81a\x1E\x1EV[\x92\x91PPV[__\xFD[__\xFD[__\xFD[__\x83`\x1F\x84\x01\x12a\x1EiWa\x1Eha\x1EHV[[\x825\x90Pg\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x81\x11\x15a\x1E\x86Wa\x1E\x85a\x1ELV[[` \x83\x01\x91P\x83`\x01\x82\x02\x83\x01\x11\x15a\x1E\xA2Wa\x1E\xA1a\x1EPV[[\x92P\x92\x90PV[____``\x85\x87\x03\x12\x15a\x1E\xC1Wa\x1E\xC0a\x1C\xC9V[[_a\x1E\xCE\x87\x82\x88\x01a\x1E4V[\x94PP` a\x1E\xDF\x87\x82\x88\x01a\x1E4V[\x93PP`@\x85\x015g\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x81\x11\x15a\x1F\0Wa\x1E\xFFa\x1C\xCDV[[a\x1F\x0C\x87\x82\x88\x01a\x1ETV[\x92P\x92PP\x92\x95\x91\x94P\x92PV[_\x82\x82R` \x82\x01\x90P\x92\x91PPV[\x7FUNAUTHORIZED\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0_\x82\x01RPV[_a\x1F^`\x0C\x83a\x1F\x1AV[\x91Pa\x1Fi\x82a\x1F*V[` \x82\x01\x90P\x91\x90PV[_` \x82\x01\x90P\x81\x81\x03_\x83\x01Ra\x1F\x8B\x81a\x1FRV[\x90P\x91\x90PV[_\x81Q\x90Pa\x1F\xA0\x81a\x1D4V[\x92\x91PPV[_` \x82\x84\x03\x12\x15a\x1F\xBBWa\x1F\xBAa\x1C\xC9V[[_a\x1F\xC8\x84\x82\x85\x01a\x1F\x92V[\x91PP\x92\x91PPV[\x7FNH{q\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0_R`\x11`\x04R`$_\xFD[_a \x08\x82a\x1C\xD1V[\x91Pa \x13\x83a\x1C\xD1V[\x92P\x82\x82\x03\x90Ps\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x81\x11\x15a ?Wa >a\x1F\xD1V[[\x92\x91PPV[a N\x81a\x1D+V[\x82RPPV[_\x81\x15\x15\x90P\x91\x90PV[a h\x81a TV[\x82RPPV[_`\xE0\x82\x01\x90Pa \x81_\x83\x01\x8Aa\x1D\xC2V[a \x8E` \x83\x01\x89a\x1D\xC2V[a \x9B`@\x83\x01\x88a\x1D\xC2V[a \xA8``\x83\x01\x87a\x1D\xC2V[a \xB5`\x80\x83\x01\x86a\x1D\xC2V[a \xC2`\xA0\x83\x01\x85a EV[a \xCF`\xC0\x83\x01\x84a _V[\x98\x97PPPPPPPPV[a \xE4\x81a\x1E\x15V[\x82RPPV[a \xF3\x81a\x1C\xD1V[\x82RPPV[_\x81Q\x90P\x91\x90PV[_\x82\x82R` \x82\x01\x90P\x92\x91PPV[\x82\x81\x83^_\x83\x83\x01RPPPV[_`\x1F\x19`\x1F\x83\x01\x16\x90P\x91\x90PV[_a!;\x82a \xF9V[a!E\x81\x85a!\x03V[\x93Pa!U\x81\x85` \x86\x01a!\x13V[a!^\x81a!!V[\x84\x01\x91PP\x92\x91PPV[_`\xA0\x82\x01\x90Pa!|_\x83\x01\x88a\x1D\xC2V[a!\x89` \x83\x01\x87a _V[a!\x96`@\x83\x01\x86a \xDBV[a!\xA3``\x83\x01\x85a \xEAV[\x81\x81\x03`\x80\x83\x01Ra!\xB5\x81\x84a!1V[\x90P\x96\x95PPPPPPV[_\x81Q\x90Pa!\xCF\x81a\x1E\x1EV[\x92\x91PPV[__`@\x83\x85\x03\x12\x15a!\xEBWa!\xEAa\x1C\xC9V[[_a!\xF8\x85\x82\x86\x01a!\xC1V[\x92PP` a\"\t\x85\x82\x86\x01a!\xC1V[\x91PP\x92P\x92\x90PV[_a\"\x1D\x82a\x1E\x15V[\x91P\x7F\x80\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x82\x03a\"OWa\"Na\x1F\xD1V[[\x81_\x03\x90P\x91\x90PV[_m\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x82\x16\x90P\x91\x90PV[a\"{\x81a\"YV[\x81\x14a\"\x85W__\xFD[PV[_\x81Q\x90Pa\"\x96\x81a\"rV[\x92\x91PPV[_c\xFF\xFF\xFF\xFF\x82\x16\x90P\x91\x90PV[a\"\xB4\x81a\"\x9CV[\x81\x14a\"\xBEW__\xFD[PV[_\x81Q\x90Pa\"\xCF\x81a\"\xABV[\x92\x91PPV[___``\x84\x86\x03\x12\x15a\"\xECWa\"\xEBa\x1C\xC9V[[_a\"\xF9\x86\x82\x87\x01a\"\x88V[\x93PP` a#\n\x86\x82\x87\x01a\"\x88V[\x92PP`@a#\x1B\x86\x82\x87\x01a\"\xC1V[\x91PP\x92P\x92P\x92V[_\x81\x90P\x91\x90PV[_\x81\x90P\x91\x90PV[_a#Qa#La#G\x84a#%V[a#.V[a\x1D+V[\x90P\x91\x90PV[a#a\x81a#7V[\x82RPPV[PV[_a#u_\x83a!\x03V[\x91Pa#\x80\x82a#gV[_\x82\x01\x90P\x91\x90PV[_`\x80\x82\x01\x90Pa#\x9D_\x83\x01\x86a#XV[a#\xAA` \x83\x01\x85a EV[a#\xB7`@\x83\x01\x84a\x1D\xC2V[\x81\x81\x03``\x83\x01Ra#\xC8\x81a#jV[\x90P\x94\x93PPPPV[_a#\xDC\x82a\x1E\x15V[\x91Pa#\xE7\x83a\x1E\x15V[\x92P\x82\x82\x03\x90P\x81\x81\x12_\x84\x12\x16\x82\x82\x13_\x85\x12\x15\x16\x17\x15a$\x0CWa$\x0Ba\x1F\xD1V[[\x92\x91PPV[\x7Fno profit\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0_\x82\x01RPV[_a$F`\t\x83a\x1F\x1AV[\x91Pa$Q\x82a$\x12V[` \x82\x01\x90P\x91\x90PV[_` \x82\x01\x90P\x81\x81\x03_\x83\x01Ra$s\x81a$:V[\x90P\x91\x90PV[_a$\x84\x82a\x1D+V[\x91Pa$\x8F\x83a\x1D+V[\x92P\x82\x82\x02a$\x9D\x81a\x1D+V[\x91P\x82\x82\x04\x84\x14\x83\x15\x17a$\xB4Wa$\xB3a\x1F\xD1V[[P\x92\x91PPV[\x7FNH{q\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0_R`\x12`\x04R`$_\xFD[_a$\xF2\x82a\x1D+V[\x91Pa$\xFD\x83a\x1D+V[\x92P\x82a%\rWa%\x0Ca$\xBBV[[\x82\x82\x04\x90P\x92\x91PPV[_` \x82\x01\x90Pa%+_\x83\x01\x84a EV[\x92\x91PPV[_a%;\x82a\x1D+V[\x91Pa%F\x83a\x1D+V[\x92P\x82\x82\x03\x90P\x81\x81\x11\x15a%^Wa%]a\x1F\xD1V[[\x92\x91PPV[\x7Farbitrage failed\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0_\x82\x01RPV[_a%\x98`\x10\x83a\x1F\x1AV[\x91Pa%\xA3\x82a%dV[` \x82\x01\x90P\x91\x90PV[_` \x82\x01\x90P\x81\x81\x03_\x83\x01Ra%\xC5\x81a%\x8CV[\x90P\x91\x90PV[_`@\x82\x01\x90Pa%\xDF_\x83\x01\x85a\x1D\xC2V[a%\xEC` \x83\x01\x84a EV[\x93\x92PPPV[a%\xFC\x81a TV[\x81\x14a&\x06W__\xFD[PV[_\x81Q\x90Pa&\x17\x81a%\xF3V[\x92\x91PPV[_` \x82\x84\x03\x12\x15a&2Wa&1a\x1C\xC9V[[_a&?\x84\x82\x85\x01a&\tV[\x91PP\x92\x91PPV[_a&R\x82a\x1C\xD1V[\x91Pa&]\x83a\x1C\xD1V[\x92P\x82\x82\x01\x90Ps\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\x81\x11\x15a&\x89Wa&\x88a\x1F\xD1V[[\x92\x91PPV[_`\x80\x82\x01\x90Pa&\xA2_\x83\x01\x86a EV[a&\xAF` \x83\x01\x85a#XV[a&\xBC`@\x83\x01\x84a\x1D\xC2V[\x81\x81\x03``\x83\x01Ra&\xCD\x81a#jV[\x90P\x94\x93PPPPV[\x7Fnothing to repay\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0_\x82\x01RPV[_a'\x0B`\x10\x83a\x1F\x1AV[\x91Pa'\x16\x82a&\xD7V[` \x82\x01\x90P\x91\x90PV[_` \x82\x01\x90P\x81\x81\x03_\x83\x01Ra'8\x81a&\xFFV[\x90P\x91\x90PV[_a'I\x82a\x1C\xD1V[\x90P\x91\x90PV[a'Y\x81a'?V[\x81\x14a'cW__\xFD[PV[_\x815\x90Pa't\x81a'PV[\x92\x91PPV[_\x815\x90Pa'\x88\x81a%\xF3V[\x92\x91PPV[_______`\xE0\x88\x8A\x03\x12\x15a'\xA9Wa'\xA8a\x1C\xC9V[[_a'\xB6\x8A\x82\x8B\x01a'fV[\x97PP` a'\xC7\x8A\x82\x8B\x01a'fV[\x96PP`@a'\xD8\x8A\x82\x8B\x01a'fV[\x95PP``a'\xE9\x8A\x82\x8B\x01a'fV[\x94PP`\x80a'\xFA\x8A\x82\x8B\x01a'fV[\x93PP`\xA0a(\x0B\x8A\x82\x8B\x01a\x1DJV[\x92PP`\xC0a(\x1C\x8A\x82\x8B\x01a'zV[\x91PP\x92\x95\x98\x91\x94\x97P\x92\x95PV[\x7Finvalid sender\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0_\x82\x01RPV[_a(_`\x0E\x83a\x1F\x1AV[\x91Pa(j\x82a(+V[` \x82\x01\x90P\x91\x90PV[_` \x82\x01\x90P\x81\x81\x03_\x83\x01Ra(\x8C\x81a(SV[\x90P\x91\x90PV[_\x81Q\x90Pa(\xA1\x81a\x1D\x01V[\x92\x91PPV[_` \x82\x84\x03\x12\x15a(\xBCWa(\xBBa\x1C\xC9V[[_a(\xC9\x84\x82\x85\x01a(\x93V[\x91PP\x92\x91PPV[_a(\xDC\x82a\x1D+V[\x91Pa(\xE7\x83a\x1D+V[\x92P\x82\x82\x01\x90P\x80\x82\x11\x15a(\xFFWa(\xFEa\x1F\xD1V[[\x92\x91PPV[_\x81Q\x90P\x91\x90PV[_a)\x19\x82a)\x05V[a)#\x81\x85a\x1F\x1AV[\x93Pa)3\x81\x85` \x86\x01a!\x13V[a)<\x81a!!V[\x84\x01\x91PP\x92\x91PPV[_` \x82\x01\x90P\x81\x81\x03_\x83\x01Ra)_\x81\x84a)\x0FV[\x90P\x92\x91PPV[_`@\x82\x01\x90P\x81\x81\x03_\x83\x01Ra)\x7F\x81\x85a)\x0FV[\x90Pa)\x8E` \x83\x01\x84a\x1D\xC2V[\x93\x92PPPV[_`@\x82\x01\x90P\x81\x81\x03_\x83\x01Ra)\xAD\x81\x85a)\x0FV[\x90Pa)\xBC` \x83\x01\x84a _V[\x93\x92PPPV[_`@\x82\x01\x90P\x81\x81\x03_\x83\x01Ra)\xDB\x81\x85a)\x0FV[\x90Pa)\xEA` \x83\x01\x84a EV[\x93\x92PPPV[_`@\x82\x01\x90P\x81\x81\x03_\x83\x01Ra*\t\x81\x85a)\x0FV[\x90Pa*\x18` \x83\x01\x84a \xDBV[\x93\x92PPPV[\x7FNH{q\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0_R`Q`\x04R`$_\xFD\xFE  wethBalanceAfter = %s wei (WETH)  wethAmountDelta (amount0) = %s wei (WETH)IUniswapV2Pair(v2Pool).getReserves()  profitToCoinbase = %s wei (WETH)uniswapV2CalculateAmountOut(pluAmountIn, pluReserveV2, wethReserveV2)  wethBalanceBefore = %s wei (WETH)IUniswapV3Pool(v3Pool).swap [WETH -> PLU]:  pluAmountDelta (amount1)  = %s wei (PLU)\xA2dipfsX\"\x12 \xC38\x10\x82\x1C\xB2\xB1` \xF6*P\xB4\x1C^A\xE4\xFC\xD6\xA0\xE8iW\xEC\x9B\x90\x8B\x91s*\xF9\x92dsolcC\0\x08\x1E\x003",
     );
-    #[derive(serde::Serialize, serde::Deserialize)]
-    #[derive(Default, Debug, PartialEq, Eq, Hash)]
+    #[derive(
+        serde::Serialize,
+        serde::Deserialize,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
     /**Event with signature `OwnershipTransferred(address,address)` and selector `0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0`.
-```solidity
-event OwnershipTransferred(address indexed user, address indexed newOwner);
-```*/
+    ```solidity
+    event OwnershipTransferred(address indexed user, address indexed newOwner);
+    ```*/
     #[allow(
         non_camel_case_types,
         non_snake_case,
@@ -231,20 +239,22 @@ event OwnershipTransferred(address indexed user, address indexed newOwner);
         #[automatically_derived]
         impl alloy_sol_types::SolEvent for OwnershipTransferred {
             type DataTuple<'a> = ();
-            type DataToken<'a> = <Self::DataTuple<
-                'a,
-            > as alloy_sol_types::SolType>::Token<'a>;
+            type DataToken<'a> =
+                <Self::DataTuple<'a> as alloy_sol_types::SolType>::Token<'a>;
             type TopicList = (
                 alloy_sol_types::sol_data::FixedBytes<32>,
                 alloy::sol_types::sol_data::Address,
                 alloy::sol_types::sol_data::Address,
             );
-            const SIGNATURE: &'static str = "OwnershipTransferred(address,address)";
-            const SIGNATURE_HASH: alloy_sol_types::private::B256 = alloy_sol_types::private::B256::new([
-                139u8, 224u8, 7u8, 156u8, 83u8, 22u8, 89u8, 20u8, 19u8, 68u8, 205u8,
-                31u8, 208u8, 164u8, 242u8, 132u8, 25u8, 73u8, 127u8, 151u8, 34u8, 163u8,
-                218u8, 175u8, 227u8, 180u8, 24u8, 111u8, 107u8, 100u8, 87u8, 224u8,
-            ]);
+            const SIGNATURE: &'static str =
+                "OwnershipTransferred(address,address)";
+            const SIGNATURE_HASH: alloy_sol_types::private::B256 =
+                alloy_sol_types::private::B256::new([
+                    139u8, 224u8, 7u8, 156u8, 83u8, 22u8, 89u8, 20u8, 19u8,
+                    68u8, 205u8, 31u8, 208u8, 164u8, 242u8, 132u8, 25u8, 73u8,
+                    127u8, 151u8, 34u8, 163u8, 218u8, 175u8, 227u8, 180u8,
+                    24u8, 111u8, 107u8, 100u8, 87u8, 224u8,
+                ]);
             const ANONYMOUS: bool = false;
             #[allow(unused_variables)]
             #[inline]
@@ -277,15 +287,24 @@ event OwnershipTransferred(address indexed user, address indexed newOwner);
                 ()
             }
             #[inline]
-            fn topics(&self) -> <Self::TopicList as alloy_sol_types::SolType>::RustType {
-                (Self::SIGNATURE_HASH.into(), self.user.clone(), self.newOwner.clone())
+            fn topics(
+                &self,
+            ) -> <Self::TopicList as alloy_sol_types::SolType>::RustType
+            {
+                (
+                    Self::SIGNATURE_HASH.into(),
+                    self.user.clone(),
+                    self.newOwner.clone(),
+                )
             }
             #[inline]
             fn encode_topics_raw(
                 &self,
                 out: &mut [alloy_sol_types::abi::token::WordToken],
             ) -> alloy_sol_types::Result<()> {
-                if out.len() < <Self::TopicList as alloy_sol_types::TopicList>::COUNT {
+                if out.len()
+                    < <Self::TopicList as alloy_sol_types::TopicList>::COUNT
+                {
                     return Err(alloy_sol_types::Error::Overrun);
                 }
                 out[0usize] = alloy_sol_types::abi::token::WordToken(
@@ -312,16 +331,22 @@ event OwnershipTransferred(address indexed user, address indexed newOwner);
         #[automatically_derived]
         impl From<&OwnershipTransferred> for alloy_sol_types::private::LogData {
             #[inline]
-            fn from(this: &OwnershipTransferred) -> alloy_sol_types::private::LogData {
+            fn from(
+                this: &OwnershipTransferred,
+            ) -> alloy_sol_types::private::LogData {
                 alloy_sol_types::SolEvent::encode_log_data(this)
             }
         }
     };
     /**Constructor`.
-```solidity
-constructor();
-```*/
-    #[allow(non_camel_case_types, non_snake_case, clippy::pub_underscore_fields)]
+    ```solidity
+    constructor();
+    ```*/
+    #[allow(
+        non_camel_case_types,
+        non_snake_case,
+        clippy::pub_underscore_fields
+    )]
     #[derive(Clone)]
     pub struct constructorCall {}
     const _: () = {
@@ -360,9 +385,8 @@ constructor();
         #[automatically_derived]
         impl alloy_sol_types::SolConstructor for constructorCall {
             type Parameters<'a> = ();
-            type Token<'a> = <Self::Parameters<
-                'a,
-            > as alloy_sol_types::SolType>::Token<'a>;
+            type Token<'a> =
+                <Self::Parameters<'a> as alloy_sol_types::SolType>::Token<'a>;
             #[inline]
             fn new<'a>(
                 tuple: <Self::Parameters<'a> as alloy_sol_types::SolType>::RustType,
@@ -375,13 +399,24 @@ constructor();
             }
         }
     };
-    #[derive(serde::Serialize, serde::Deserialize)]
-    #[derive(Default, Debug, PartialEq, Eq, Hash)]
+    #[derive(
+        serde::Serialize,
+        serde::Deserialize,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
     /**Function with signature `execute_weth_token0(address,address,uint256,uint256)` and selector `0xed34b839`.
-```solidity
-function execute_weth_token0(address v2Pool, address v3Pool, uint256 amountIn, uint256 percentageToPayToCoinbase) external;
-```*/
-    #[allow(non_camel_case_types, non_snake_case, clippy::pub_underscore_fields)]
+    ```solidity
+    function execute_weth_token0(address v2Pool, address v3Pool, uint256 amountIn, uint256 percentageToPayToCoinbase) external;
+    ```*/
+    #[allow(
+        non_camel_case_types,
+        non_snake_case,
+        clippy::pub_underscore_fields
+    )]
     #[derive(Clone)]
     pub struct execute_weth_token0Call {
         #[allow(missing_docs)]
@@ -391,10 +426,17 @@ function execute_weth_token0(address v2Pool, address v3Pool, uint256 amountIn, u
         #[allow(missing_docs)]
         pub amountIn: alloy::sol_types::private::primitives::aliases::U256,
         #[allow(missing_docs)]
-        pub percentageToPayToCoinbase: alloy::sol_types::private::primitives::aliases::U256,
+        pub percentageToPayToCoinbase:
+            alloy::sol_types::private::primitives::aliases::U256,
     }
-    ///Container type for the return parameters of the [`execute_weth_token0(address,address,uint256,uint256)`](execute_weth_token0Call) function.
-    #[allow(non_camel_case_types, non_snake_case, clippy::pub_underscore_fields)]
+    ///Container type for the return parameters of the
+    /// [`execute_weth_token0(address,address,uint256,
+    /// uint256)`](execute_weth_token0Call) function.
+    #[allow(
+        non_camel_case_types,
+        non_snake_case,
+        clippy::pub_underscore_fields
+    )]
     #[derive(Clone)]
     pub struct execute_weth_token0Return {}
     #[allow(
@@ -434,7 +476,8 @@ function execute_weth_token0(address v2Pool, address v3Pool, uint256 amountIn, u
             #[automatically_derived]
             #[doc(hidden)]
             impl ::core::convert::From<execute_weth_token0Call>
-            for UnderlyingRustTuple<'_> {
+                for UnderlyingRustTuple<'_>
+            {
                 fn from(value: execute_weth_token0Call) -> Self {
                     (
                         value.v2Pool,
@@ -447,7 +490,8 @@ function execute_weth_token0(address v2Pool, address v3Pool, uint256 amountIn, u
             #[automatically_derived]
             #[doc(hidden)]
             impl ::core::convert::From<UnderlyingRustTuple<'_>>
-            for execute_weth_token0Call {
+                for execute_weth_token0Call
+            {
                 fn from(tuple: UnderlyingRustTuple<'_>) -> Self {
                     Self {
                         v2Pool: tuple.0,
@@ -477,7 +521,8 @@ function execute_weth_token0(address v2Pool, address v3Pool, uint256 amountIn, u
             #[automatically_derived]
             #[doc(hidden)]
             impl ::core::convert::From<execute_weth_token0Return>
-            for UnderlyingRustTuple<'_> {
+                for UnderlyingRustTuple<'_>
+            {
                 fn from(value: execute_weth_token0Return) -> Self {
                     ()
                 }
@@ -485,7 +530,8 @@ function execute_weth_token0(address v2Pool, address v3Pool, uint256 amountIn, u
             #[automatically_derived]
             #[doc(hidden)]
             impl ::core::convert::From<UnderlyingRustTuple<'_>>
-            for execute_weth_token0Return {
+                for execute_weth_token0Return
+            {
                 fn from(tuple: UnderlyingRustTuple<'_>) -> Self {
                     Self {}
                 }
@@ -494,7 +540,7 @@ function execute_weth_token0(address v2Pool, address v3Pool, uint256 amountIn, u
         impl execute_weth_token0Return {
             fn _tokenize(
                 &self,
-            ) -> <execute_weth_token0Call as alloy_sol_types::SolCall>::ReturnToken<'_> {
+            ) -> <execute_weth_token0Call as alloy_sol_types::SolCall>::ReturnToken<'_>{
                 ()
             }
         }
@@ -506,15 +552,14 @@ function execute_weth_token0(address v2Pool, address v3Pool, uint256 amountIn, u
                 alloy::sol_types::sol_data::Uint<256>,
                 alloy::sol_types::sol_data::Uint<256>,
             );
-            type Token<'a> = <Self::Parameters<
-                'a,
-            > as alloy_sol_types::SolType>::Token<'a>;
+            type Token<'a> =
+                <Self::Parameters<'a> as alloy_sol_types::SolType>::Token<'a>;
             type Return = execute_weth_token0Return;
             type ReturnTuple<'a> = ();
-            type ReturnToken<'a> = <Self::ReturnTuple<
-                'a,
-            > as alloy_sol_types::SolType>::Token<'a>;
-            const SIGNATURE: &'static str = "execute_weth_token0(address,address,uint256,uint256)";
+            type ReturnToken<'a> =
+                <Self::ReturnTuple<'a> as alloy_sol_types::SolType>::Token<'a>;
+            const SIGNATURE: &'static str =
+                "execute_weth_token0(address,address,uint256,uint256)";
             const SELECTOR: [u8; 4] = [237u8, 52u8, 184u8, 57u8];
             #[inline]
             fn new<'a>(
@@ -546,7 +591,9 @@ function execute_weth_token0(address v2Pool, address v3Pool, uint256 amountIn, u
                 execute_weth_token0Return::_tokenize(ret)
             }
             #[inline]
-            fn abi_decode_returns(data: &[u8]) -> alloy_sol_types::Result<Self::Return> {
+            fn abi_decode_returns(
+                data: &[u8],
+            ) -> alloy_sol_types::Result<Self::Return> {
                 <Self::ReturnTuple<
                     '_,
                 > as alloy_sol_types::SolType>::abi_decode_sequence(data)
@@ -563,13 +610,24 @@ function execute_weth_token0(address v2Pool, address v3Pool, uint256 amountIn, u
             }
         }
     };
-    #[derive(serde::Serialize, serde::Deserialize)]
-    #[derive(Default, Debug, PartialEq, Eq, Hash)]
+    #[derive(
+        serde::Serialize,
+        serde::Deserialize,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
     /**Function with signature `execute_weth_token1(address,address,uint256,uint256)` and selector `0x253b21cd`.
-```solidity
-function execute_weth_token1(address v2Pool, address v3Pool, uint256 amountIn, uint256 percentageToPayToCoinbase) external;
-```*/
-    #[allow(non_camel_case_types, non_snake_case, clippy::pub_underscore_fields)]
+    ```solidity
+    function execute_weth_token1(address v2Pool, address v3Pool, uint256 amountIn, uint256 percentageToPayToCoinbase) external;
+    ```*/
+    #[allow(
+        non_camel_case_types,
+        non_snake_case,
+        clippy::pub_underscore_fields
+    )]
     #[derive(Clone)]
     pub struct execute_weth_token1Call {
         #[allow(missing_docs)]
@@ -579,10 +637,17 @@ function execute_weth_token1(address v2Pool, address v3Pool, uint256 amountIn, u
         #[allow(missing_docs)]
         pub amountIn: alloy::sol_types::private::primitives::aliases::U256,
         #[allow(missing_docs)]
-        pub percentageToPayToCoinbase: alloy::sol_types::private::primitives::aliases::U256,
+        pub percentageToPayToCoinbase:
+            alloy::sol_types::private::primitives::aliases::U256,
     }
-    ///Container type for the return parameters of the [`execute_weth_token1(address,address,uint256,uint256)`](execute_weth_token1Call) function.
-    #[allow(non_camel_case_types, non_snake_case, clippy::pub_underscore_fields)]
+    ///Container type for the return parameters of the
+    /// [`execute_weth_token1(address,address,uint256,
+    /// uint256)`](execute_weth_token1Call) function.
+    #[allow(
+        non_camel_case_types,
+        non_snake_case,
+        clippy::pub_underscore_fields
+    )]
     #[derive(Clone)]
     pub struct execute_weth_token1Return {}
     #[allow(
@@ -622,7 +687,8 @@ function execute_weth_token1(address v2Pool, address v3Pool, uint256 amountIn, u
             #[automatically_derived]
             #[doc(hidden)]
             impl ::core::convert::From<execute_weth_token1Call>
-            for UnderlyingRustTuple<'_> {
+                for UnderlyingRustTuple<'_>
+            {
                 fn from(value: execute_weth_token1Call) -> Self {
                     (
                         value.v2Pool,
@@ -635,7 +701,8 @@ function execute_weth_token1(address v2Pool, address v3Pool, uint256 amountIn, u
             #[automatically_derived]
             #[doc(hidden)]
             impl ::core::convert::From<UnderlyingRustTuple<'_>>
-            for execute_weth_token1Call {
+                for execute_weth_token1Call
+            {
                 fn from(tuple: UnderlyingRustTuple<'_>) -> Self {
                     Self {
                         v2Pool: tuple.0,
@@ -665,7 +732,8 @@ function execute_weth_token1(address v2Pool, address v3Pool, uint256 amountIn, u
             #[automatically_derived]
             #[doc(hidden)]
             impl ::core::convert::From<execute_weth_token1Return>
-            for UnderlyingRustTuple<'_> {
+                for UnderlyingRustTuple<'_>
+            {
                 fn from(value: execute_weth_token1Return) -> Self {
                     ()
                 }
@@ -673,7 +741,8 @@ function execute_weth_token1(address v2Pool, address v3Pool, uint256 amountIn, u
             #[automatically_derived]
             #[doc(hidden)]
             impl ::core::convert::From<UnderlyingRustTuple<'_>>
-            for execute_weth_token1Return {
+                for execute_weth_token1Return
+            {
                 fn from(tuple: UnderlyingRustTuple<'_>) -> Self {
                     Self {}
                 }
@@ -682,7 +751,7 @@ function execute_weth_token1(address v2Pool, address v3Pool, uint256 amountIn, u
         impl execute_weth_token1Return {
             fn _tokenize(
                 &self,
-            ) -> <execute_weth_token1Call as alloy_sol_types::SolCall>::ReturnToken<'_> {
+            ) -> <execute_weth_token1Call as alloy_sol_types::SolCall>::ReturnToken<'_>{
                 ()
             }
         }
@@ -694,15 +763,14 @@ function execute_weth_token1(address v2Pool, address v3Pool, uint256 amountIn, u
                 alloy::sol_types::sol_data::Uint<256>,
                 alloy::sol_types::sol_data::Uint<256>,
             );
-            type Token<'a> = <Self::Parameters<
-                'a,
-            > as alloy_sol_types::SolType>::Token<'a>;
+            type Token<'a> =
+                <Self::Parameters<'a> as alloy_sol_types::SolType>::Token<'a>;
             type Return = execute_weth_token1Return;
             type ReturnTuple<'a> = ();
-            type ReturnToken<'a> = <Self::ReturnTuple<
-                'a,
-            > as alloy_sol_types::SolType>::Token<'a>;
-            const SIGNATURE: &'static str = "execute_weth_token1(address,address,uint256,uint256)";
+            type ReturnToken<'a> =
+                <Self::ReturnTuple<'a> as alloy_sol_types::SolType>::Token<'a>;
+            const SIGNATURE: &'static str =
+                "execute_weth_token1(address,address,uint256,uint256)";
             const SELECTOR: [u8; 4] = [37u8, 59u8, 33u8, 205u8];
             #[inline]
             fn new<'a>(
@@ -734,7 +802,9 @@ function execute_weth_token1(address v2Pool, address v3Pool, uint256 amountIn, u
                 execute_weth_token1Return::_tokenize(ret)
             }
             #[inline]
-            fn abi_decode_returns(data: &[u8]) -> alloy_sol_types::Result<Self::Return> {
+            fn abi_decode_returns(
+                data: &[u8],
+            ) -> alloy_sol_types::Result<Self::Return> {
                 <Self::ReturnTuple<
                     '_,
                 > as alloy_sol_types::SolType>::abi_decode_sequence(data)
@@ -751,19 +821,42 @@ function execute_weth_token1(address v2Pool, address v3Pool, uint256 amountIn, u
             }
         }
     };
-    #[derive(serde::Serialize, serde::Deserialize)]
-    #[derive(Default, Debug, PartialEq, Eq, Hash)]
+    #[derive(
+        serde::Serialize,
+        serde::Deserialize,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
     /**Function with signature `owner()` and selector `0x8da5cb5b`.
-```solidity
-function owner() external view returns (address);
-```*/
-    #[allow(non_camel_case_types, non_snake_case, clippy::pub_underscore_fields)]
+    ```solidity
+    function owner() external view returns (address);
+    ```*/
+    #[allow(
+        non_camel_case_types,
+        non_snake_case,
+        clippy::pub_underscore_fields
+    )]
     #[derive(Clone)]
     pub struct ownerCall;
-    #[derive(serde::Serialize, serde::Deserialize)]
-    #[derive(Default, Debug, PartialEq, Eq, Hash)]
-    ///Container type for the return parameters of the [`owner()`](ownerCall) function.
-    #[allow(non_camel_case_types, non_snake_case, clippy::pub_underscore_fields)]
+    #[derive(
+        serde::Serialize,
+        serde::Deserialize,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
+    ///Container type for the return parameters of the [`owner()`](ownerCall)
+    /// function.
+    #[allow(
+        non_camel_case_types,
+        non_snake_case,
+        clippy::pub_underscore_fields
+    )]
     #[derive(Clone)]
     pub struct ownerReturn {
         #[allow(missing_docs)]
@@ -810,9 +903,11 @@ function owner() external view returns (address);
         }
         {
             #[doc(hidden)]
-            type UnderlyingSolTuple<'a> = (alloy::sol_types::sol_data::Address,);
+            type UnderlyingSolTuple<'a> =
+                (alloy::sol_types::sol_data::Address,);
             #[doc(hidden)]
-            type UnderlyingRustTuple<'a> = (alloy::sol_types::private::Address,);
+            type UnderlyingRustTuple<'a> =
+                (alloy::sol_types::private::Address,);
             #[cfg(test)]
             #[allow(dead_code, unreachable_patterns)]
             fn _type_assertion(
@@ -842,14 +937,12 @@ function owner() external view returns (address);
         #[automatically_derived]
         impl alloy_sol_types::SolCall for ownerCall {
             type Parameters<'a> = ();
-            type Token<'a> = <Self::Parameters<
-                'a,
-            > as alloy_sol_types::SolType>::Token<'a>;
+            type Token<'a> =
+                <Self::Parameters<'a> as alloy_sol_types::SolType>::Token<'a>;
             type Return = alloy::sol_types::private::Address;
             type ReturnTuple<'a> = (alloy::sol_types::sol_data::Address,);
-            type ReturnToken<'a> = <Self::ReturnTuple<
-                'a,
-            > as alloy_sol_types::SolType>::Token<'a>;
+            type ReturnToken<'a> =
+                <Self::ReturnTuple<'a> as alloy_sol_types::SolType>::Token<'a>;
             const SIGNATURE: &'static str = "owner()";
             const SELECTOR: [u8; 4] = [141u8, 165u8, 203u8, 91u8];
             #[inline]
@@ -871,7 +964,9 @@ function owner() external view returns (address);
                 )
             }
             #[inline]
-            fn abi_decode_returns(data: &[u8]) -> alloy_sol_types::Result<Self::Return> {
+            fn abi_decode_returns(
+                data: &[u8],
+            ) -> alloy_sol_types::Result<Self::Return> {
                 <Self::ReturnTuple<
                     '_,
                 > as alloy_sol_types::SolType>::abi_decode_sequence(data)
@@ -894,20 +989,36 @@ function owner() external view returns (address);
             }
         }
     };
-    #[derive(serde::Serialize, serde::Deserialize)]
-    #[derive(Default, Debug, PartialEq, Eq, Hash)]
+    #[derive(
+        serde::Serialize,
+        serde::Deserialize,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
     /**Function with signature `transferOwnership(address)` and selector `0xf2fde38b`.
-```solidity
-function transferOwnership(address newOwner) external;
-```*/
-    #[allow(non_camel_case_types, non_snake_case, clippy::pub_underscore_fields)]
+    ```solidity
+    function transferOwnership(address newOwner) external;
+    ```*/
+    #[allow(
+        non_camel_case_types,
+        non_snake_case,
+        clippy::pub_underscore_fields
+    )]
     #[derive(Clone)]
     pub struct transferOwnershipCall {
         #[allow(missing_docs)]
         pub newOwner: alloy::sol_types::private::Address,
     }
-    ///Container type for the return parameters of the [`transferOwnership(address)`](transferOwnershipCall) function.
-    #[allow(non_camel_case_types, non_snake_case, clippy::pub_underscore_fields)]
+    ///Container type for the return parameters of the
+    /// [`transferOwnership(address)`](transferOwnershipCall) function.
+    #[allow(
+        non_camel_case_types,
+        non_snake_case,
+        clippy::pub_underscore_fields
+    )]
     #[derive(Clone)]
     pub struct transferOwnershipReturn {}
     #[allow(
@@ -920,9 +1031,11 @@ function transferOwnership(address newOwner) external;
         use alloy::sol_types as alloy_sol_types;
         {
             #[doc(hidden)]
-            type UnderlyingSolTuple<'a> = (alloy::sol_types::sol_data::Address,);
+            type UnderlyingSolTuple<'a> =
+                (alloy::sol_types::sol_data::Address,);
             #[doc(hidden)]
-            type UnderlyingRustTuple<'a> = (alloy::sol_types::private::Address,);
+            type UnderlyingRustTuple<'a> =
+                (alloy::sol_types::private::Address,);
             #[cfg(test)]
             #[allow(dead_code, unreachable_patterns)]
             fn _type_assertion(
@@ -936,16 +1049,14 @@ function transferOwnership(address newOwner) external;
             }
             #[automatically_derived]
             #[doc(hidden)]
-            impl ::core::convert::From<transferOwnershipCall>
-            for UnderlyingRustTuple<'_> {
+            impl ::core::convert::From<transferOwnershipCall> for UnderlyingRustTuple<'_> {
                 fn from(value: transferOwnershipCall) -> Self {
                     (value.newOwner,)
                 }
             }
             #[automatically_derived]
             #[doc(hidden)]
-            impl ::core::convert::From<UnderlyingRustTuple<'_>>
-            for transferOwnershipCall {
+            impl ::core::convert::From<UnderlyingRustTuple<'_>> for transferOwnershipCall {
                 fn from(tuple: UnderlyingRustTuple<'_>) -> Self {
                     Self { newOwner: tuple.0 }
                 }
@@ -970,7 +1081,8 @@ function transferOwnership(address newOwner) external;
             #[automatically_derived]
             #[doc(hidden)]
             impl ::core::convert::From<transferOwnershipReturn>
-            for UnderlyingRustTuple<'_> {
+                for UnderlyingRustTuple<'_>
+            {
                 fn from(value: transferOwnershipReturn) -> Self {
                     ()
                 }
@@ -978,7 +1090,8 @@ function transferOwnership(address newOwner) external;
             #[automatically_derived]
             #[doc(hidden)]
             impl ::core::convert::From<UnderlyingRustTuple<'_>>
-            for transferOwnershipReturn {
+                for transferOwnershipReturn
+            {
                 fn from(tuple: UnderlyingRustTuple<'_>) -> Self {
                     Self {}
                 }
@@ -987,21 +1100,19 @@ function transferOwnership(address newOwner) external;
         impl transferOwnershipReturn {
             fn _tokenize(
                 &self,
-            ) -> <transferOwnershipCall as alloy_sol_types::SolCall>::ReturnToken<'_> {
+            ) -> <transferOwnershipCall as alloy_sol_types::SolCall>::ReturnToken<'_>{
                 ()
             }
         }
         #[automatically_derived]
         impl alloy_sol_types::SolCall for transferOwnershipCall {
             type Parameters<'a> = (alloy::sol_types::sol_data::Address,);
-            type Token<'a> = <Self::Parameters<
-                'a,
-            > as alloy_sol_types::SolType>::Token<'a>;
+            type Token<'a> =
+                <Self::Parameters<'a> as alloy_sol_types::SolType>::Token<'a>;
             type Return = transferOwnershipReturn;
             type ReturnTuple<'a> = ();
-            type ReturnToken<'a> = <Self::ReturnTuple<
-                'a,
-            > as alloy_sol_types::SolType>::Token<'a>;
+            type ReturnToken<'a> =
+                <Self::ReturnTuple<'a> as alloy_sol_types::SolType>::Token<'a>;
             const SIGNATURE: &'static str = "transferOwnership(address)";
             const SELECTOR: [u8; 4] = [242u8, 253u8, 227u8, 139u8];
             #[inline]
@@ -1023,7 +1134,9 @@ function transferOwnership(address newOwner) external;
                 transferOwnershipReturn::_tokenize(ret)
             }
             #[inline]
-            fn abi_decode_returns(data: &[u8]) -> alloy_sol_types::Result<Self::Return> {
+            fn abi_decode_returns(
+                data: &[u8],
+            ) -> alloy_sol_types::Result<Self::Return> {
                 <Self::ReturnTuple<
                     '_,
                 > as alloy_sol_types::SolType>::abi_decode_sequence(data)
@@ -1040,13 +1153,24 @@ function transferOwnership(address newOwner) external;
             }
         }
     };
-    #[derive(serde::Serialize, serde::Deserialize)]
-    #[derive(Default, Debug, PartialEq, Eq, Hash)]
+    #[derive(
+        serde::Serialize,
+        serde::Deserialize,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
     /**Function with signature `uniswapV3SwapCallback(int256,int256,bytes)` and selector `0xfa461e33`.
-```solidity
-function uniswapV3SwapCallback(int256 amount0Delta, int256 amount1Delta, bytes memory data) external;
-```*/
-    #[allow(non_camel_case_types, non_snake_case, clippy::pub_underscore_fields)]
+    ```solidity
+    function uniswapV3SwapCallback(int256 amount0Delta, int256 amount1Delta, bytes memory data) external;
+    ```*/
+    #[allow(
+        non_camel_case_types,
+        non_snake_case,
+        clippy::pub_underscore_fields
+    )]
     #[derive(Clone)]
     pub struct uniswapV3SwapCallbackCall {
         #[allow(missing_docs)]
@@ -1056,8 +1180,14 @@ function uniswapV3SwapCallback(int256 amount0Delta, int256 amount1Delta, bytes m
         #[allow(missing_docs)]
         pub data: alloy::sol_types::private::Bytes,
     }
-    ///Container type for the return parameters of the [`uniswapV3SwapCallback(int256,int256,bytes)`](uniswapV3SwapCallbackCall) function.
-    #[allow(non_camel_case_types, non_snake_case, clippy::pub_underscore_fields)]
+    ///Container type for the return parameters of the
+    /// [`uniswapV3SwapCallback(int256,int256,
+    /// bytes)`](uniswapV3SwapCallbackCall) function.
+    #[allow(
+        non_camel_case_types,
+        non_snake_case,
+        clippy::pub_underscore_fields
+    )]
     #[derive(Clone)]
     pub struct uniswapV3SwapCallbackReturn {}
     #[allow(
@@ -1095,15 +1225,21 @@ function uniswapV3SwapCallback(int256 amount0Delta, int256 amount1Delta, bytes m
             #[automatically_derived]
             #[doc(hidden)]
             impl ::core::convert::From<uniswapV3SwapCallbackCall>
-            for UnderlyingRustTuple<'_> {
+                for UnderlyingRustTuple<'_>
+            {
                 fn from(value: uniswapV3SwapCallbackCall) -> Self {
-                    (value.amount0Delta, value.amount1Delta, value.data)
+                    (
+                        value.amount0Delta,
+                        value.amount1Delta,
+                        value.data,
+                    )
                 }
             }
             #[automatically_derived]
             #[doc(hidden)]
             impl ::core::convert::From<UnderlyingRustTuple<'_>>
-            for uniswapV3SwapCallbackCall {
+                for uniswapV3SwapCallbackCall
+            {
                 fn from(tuple: UnderlyingRustTuple<'_>) -> Self {
                     Self {
                         amount0Delta: tuple.0,
@@ -1132,7 +1268,8 @@ function uniswapV3SwapCallback(int256 amount0Delta, int256 amount1Delta, bytes m
             #[automatically_derived]
             #[doc(hidden)]
             impl ::core::convert::From<uniswapV3SwapCallbackReturn>
-            for UnderlyingRustTuple<'_> {
+                for UnderlyingRustTuple<'_>
+            {
                 fn from(value: uniswapV3SwapCallbackReturn) -> Self {
                     ()
                 }
@@ -1140,7 +1277,8 @@ function uniswapV3SwapCallback(int256 amount0Delta, int256 amount1Delta, bytes m
             #[automatically_derived]
             #[doc(hidden)]
             impl ::core::convert::From<UnderlyingRustTuple<'_>>
-            for uniswapV3SwapCallbackReturn {
+                for uniswapV3SwapCallbackReturn
+            {
                 fn from(tuple: UnderlyingRustTuple<'_>) -> Self {
                     Self {}
                 }
@@ -1151,7 +1289,7 @@ function uniswapV3SwapCallback(int256 amount0Delta, int256 amount1Delta, bytes m
                 &self,
             ) -> <uniswapV3SwapCallbackCall as alloy_sol_types::SolCall>::ReturnToken<
                 '_,
-            > {
+            >{
                 ()
             }
         }
@@ -1162,15 +1300,14 @@ function uniswapV3SwapCallback(int256 amount0Delta, int256 amount1Delta, bytes m
                 alloy::sol_types::sol_data::Int<256>,
                 alloy::sol_types::sol_data::Bytes,
             );
-            type Token<'a> = <Self::Parameters<
-                'a,
-            > as alloy_sol_types::SolType>::Token<'a>;
+            type Token<'a> =
+                <Self::Parameters<'a> as alloy_sol_types::SolType>::Token<'a>;
             type Return = uniswapV3SwapCallbackReturn;
             type ReturnTuple<'a> = ();
-            type ReturnToken<'a> = <Self::ReturnTuple<
-                'a,
-            > as alloy_sol_types::SolType>::Token<'a>;
-            const SIGNATURE: &'static str = "uniswapV3SwapCallback(int256,int256,bytes)";
+            type ReturnToken<'a> =
+                <Self::ReturnTuple<'a> as alloy_sol_types::SolType>::Token<'a>;
+            const SIGNATURE: &'static str =
+                "uniswapV3SwapCallback(int256,int256,bytes)";
             const SELECTOR: [u8; 4] = [250u8, 70u8, 30u8, 51u8];
             #[inline]
             fn new<'a>(
@@ -1197,7 +1334,9 @@ function uniswapV3SwapCallback(int256 amount0Delta, int256 amount1Delta, bytes m
                 uniswapV3SwapCallbackReturn::_tokenize(ret)
             }
             #[inline]
-            fn abi_decode_returns(data: &[u8]) -> alloy_sol_types::Result<Self::Return> {
+            fn abi_decode_returns(
+                data: &[u8],
+            ) -> alloy_sol_types::Result<Self::Return> {
                 <Self::ReturnTuple<
                     '_,
                 > as alloy_sol_types::SolType>::abi_decode_sequence(data)
@@ -1214,17 +1353,33 @@ function uniswapV3SwapCallback(int256 amount0Delta, int256 amount1Delta, bytes m
             }
         }
     };
-    #[derive(serde::Serialize, serde::Deserialize)]
-    #[derive(Default, Debug, PartialEq, Eq, Hash)]
+    #[derive(
+        serde::Serialize,
+        serde::Deserialize,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
     /**Function with signature `withdrawETH()` and selector `0xe086e5ec`.
-```solidity
-function withdrawETH() external;
-```*/
-    #[allow(non_camel_case_types, non_snake_case, clippy::pub_underscore_fields)]
+    ```solidity
+    function withdrawETH() external;
+    ```*/
+    #[allow(
+        non_camel_case_types,
+        non_snake_case,
+        clippy::pub_underscore_fields
+    )]
     #[derive(Clone)]
     pub struct withdrawETHCall;
-    ///Container type for the return parameters of the [`withdrawETH()`](withdrawETHCall) function.
-    #[allow(non_camel_case_types, non_snake_case, clippy::pub_underscore_fields)]
+    ///Container type for the return parameters of the
+    /// [`withdrawETH()`](withdrawETHCall) function.
+    #[allow(
+        non_camel_case_types,
+        non_snake_case,
+        clippy::pub_underscore_fields
+    )]
     #[derive(Clone)]
     pub struct withdrawETHReturn {}
     #[allow(
@@ -1300,21 +1455,20 @@ function withdrawETH() external;
         impl withdrawETHReturn {
             fn _tokenize(
                 &self,
-            ) -> <withdrawETHCall as alloy_sol_types::SolCall>::ReturnToken<'_> {
+            ) -> <withdrawETHCall as alloy_sol_types::SolCall>::ReturnToken<'_>
+            {
                 ()
             }
         }
         #[automatically_derived]
         impl alloy_sol_types::SolCall for withdrawETHCall {
             type Parameters<'a> = ();
-            type Token<'a> = <Self::Parameters<
-                'a,
-            > as alloy_sol_types::SolType>::Token<'a>;
+            type Token<'a> =
+                <Self::Parameters<'a> as alloy_sol_types::SolType>::Token<'a>;
             type Return = withdrawETHReturn;
             type ReturnTuple<'a> = ();
-            type ReturnToken<'a> = <Self::ReturnTuple<
-                'a,
-            > as alloy_sol_types::SolType>::Token<'a>;
+            type ReturnToken<'a> =
+                <Self::ReturnTuple<'a> as alloy_sol_types::SolType>::Token<'a>;
             const SIGNATURE: &'static str = "withdrawETH()";
             const SELECTOR: [u8; 4] = [224u8, 134u8, 229u8, 236u8];
             #[inline]
@@ -1332,7 +1486,9 @@ function withdrawETH() external;
                 withdrawETHReturn::_tokenize(ret)
             }
             #[inline]
-            fn abi_decode_returns(data: &[u8]) -> alloy_sol_types::Result<Self::Return> {
+            fn abi_decode_returns(
+                data: &[u8],
+            ) -> alloy_sol_types::Result<Self::Return> {
                 <Self::ReturnTuple<
                     '_,
                 > as alloy_sol_types::SolType>::abi_decode_sequence(data)
@@ -1349,17 +1505,33 @@ function withdrawETH() external;
             }
         }
     };
-    #[derive(serde::Serialize, serde::Deserialize)]
-    #[derive(Default, Debug, PartialEq, Eq, Hash)]
+    #[derive(
+        serde::Serialize,
+        serde::Deserialize,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
     /**Function with signature `withdrawWETH()` and selector `0x4c02f62e`.
-```solidity
-function withdrawWETH() external;
-```*/
-    #[allow(non_camel_case_types, non_snake_case, clippy::pub_underscore_fields)]
+    ```solidity
+    function withdrawWETH() external;
+    ```*/
+    #[allow(
+        non_camel_case_types,
+        non_snake_case,
+        clippy::pub_underscore_fields
+    )]
     #[derive(Clone)]
     pub struct withdrawWETHCall;
-    ///Container type for the return parameters of the [`withdrawWETH()`](withdrawWETHCall) function.
-    #[allow(non_camel_case_types, non_snake_case, clippy::pub_underscore_fields)]
+    ///Container type for the return parameters of the
+    /// [`withdrawWETH()`](withdrawWETHCall) function.
+    #[allow(
+        non_camel_case_types,
+        non_snake_case,
+        clippy::pub_underscore_fields
+    )]
     #[derive(Clone)]
     pub struct withdrawWETHReturn {}
     #[allow(
@@ -1435,21 +1607,20 @@ function withdrawWETH() external;
         impl withdrawWETHReturn {
             fn _tokenize(
                 &self,
-            ) -> <withdrawWETHCall as alloy_sol_types::SolCall>::ReturnToken<'_> {
+            ) -> <withdrawWETHCall as alloy_sol_types::SolCall>::ReturnToken<'_>
+            {
                 ()
             }
         }
         #[automatically_derived]
         impl alloy_sol_types::SolCall for withdrawWETHCall {
             type Parameters<'a> = ();
-            type Token<'a> = <Self::Parameters<
-                'a,
-            > as alloy_sol_types::SolType>::Token<'a>;
+            type Token<'a> =
+                <Self::Parameters<'a> as alloy_sol_types::SolType>::Token<'a>;
             type Return = withdrawWETHReturn;
             type ReturnTuple<'a> = ();
-            type ReturnToken<'a> = <Self::ReturnTuple<
-                'a,
-            > as alloy_sol_types::SolType>::Token<'a>;
+            type ReturnToken<'a> =
+                <Self::ReturnTuple<'a> as alloy_sol_types::SolType>::Token<'a>;
             const SIGNATURE: &'static str = "withdrawWETH()";
             const SELECTOR: [u8; 4] = [76u8, 2u8, 246u8, 46u8];
             #[inline]
@@ -1467,7 +1638,9 @@ function withdrawWETH() external;
                 withdrawWETHReturn::_tokenize(ret)
             }
             #[inline]
-            fn abi_decode_returns(data: &[u8]) -> alloy_sol_types::Result<Self::Return> {
+            fn abi_decode_returns(
+                data: &[u8],
+            ) -> alloy_sol_types::Result<Self::Return> {
                 <Self::ReturnTuple<
                     '_,
                 > as alloy_sol_types::SolType>::abi_decode_sequence(data)
@@ -1486,7 +1659,6 @@ function withdrawWETH() external;
     };
     ///Container for all the [`BlindArb`](self) function calls.
     #[derive(serde::Serialize, serde::Deserialize)]
-    #[derive()]
     pub enum BlindArbCalls {
         #[allow(missing_docs)]
         execute_weth_token0(execute_weth_token0Call),
@@ -1507,8 +1679,9 @@ function withdrawWETH() external;
     impl BlindArbCalls {
         /// All the selectors of this enum.
         ///
-        /// Note that the selectors might not be in the same order as the variants.
-        /// No guarantees are made about the order of the selectors.
+        /// Note that the selectors might not be in the same order as the
+        /// variants. No guarantees are made about the order of the
+        /// selectors.
         ///
         /// Prefer using `SolInterface` methods instead.
         pub const SELECTORS: &'static [[u8; 4usize]] = &[
@@ -1566,11 +1739,15 @@ function withdrawWETH() external;
         ) -> alloy_sol_types::Result<Self> {
             static DECODE_SHIMS: &[fn(
                 &[u8],
-            ) -> alloy_sol_types::Result<BlindArbCalls>] = &[
+            )
+                -> alloy_sol_types::Result<
+                BlindArbCalls,
+            >] = &[
                 {
                     fn execute_weth_token1(
                         data: &[u8],
-                    ) -> alloy_sol_types::Result<BlindArbCalls> {
+                    ) -> alloy_sol_types::Result<BlindArbCalls>
+                    {
                         <execute_weth_token1Call as alloy_sol_types::SolCall>::abi_decode_raw(
                                 data,
                             )
@@ -1581,7 +1758,8 @@ function withdrawWETH() external;
                 {
                     fn withdrawWETH(
                         data: &[u8],
-                    ) -> alloy_sol_types::Result<BlindArbCalls> {
+                    ) -> alloy_sol_types::Result<BlindArbCalls>
+                    {
                         <withdrawWETHCall as alloy_sol_types::SolCall>::abi_decode_raw(
                                 data,
                             )
@@ -1590,16 +1768,22 @@ function withdrawWETH() external;
                     withdrawWETH
                 },
                 {
-                    fn owner(data: &[u8]) -> alloy_sol_types::Result<BlindArbCalls> {
-                        <ownerCall as alloy_sol_types::SolCall>::abi_decode_raw(data)
-                            .map(BlindArbCalls::owner)
+                    fn owner(
+                        data: &[u8],
+                    ) -> alloy_sol_types::Result<BlindArbCalls>
+                    {
+                        <ownerCall as alloy_sol_types::SolCall>::abi_decode_raw(
+                            data,
+                        )
+                        .map(BlindArbCalls::owner)
                     }
                     owner
                 },
                 {
                     fn withdrawETH(
                         data: &[u8],
-                    ) -> alloy_sol_types::Result<BlindArbCalls> {
+                    ) -> alloy_sol_types::Result<BlindArbCalls>
+                    {
                         <withdrawETHCall as alloy_sol_types::SolCall>::abi_decode_raw(
                                 data,
                             )
@@ -1610,7 +1794,8 @@ function withdrawWETH() external;
                 {
                     fn execute_weth_token0(
                         data: &[u8],
-                    ) -> alloy_sol_types::Result<BlindArbCalls> {
+                    ) -> alloy_sol_types::Result<BlindArbCalls>
+                    {
                         <execute_weth_token0Call as alloy_sol_types::SolCall>::abi_decode_raw(
                                 data,
                             )
@@ -1621,7 +1806,8 @@ function withdrawWETH() external;
                 {
                     fn transferOwnership(
                         data: &[u8],
-                    ) -> alloy_sol_types::Result<BlindArbCalls> {
+                    ) -> alloy_sol_types::Result<BlindArbCalls>
+                    {
                         <transferOwnershipCall as alloy_sol_types::SolCall>::abi_decode_raw(
                                 data,
                             )
@@ -1632,7 +1818,8 @@ function withdrawWETH() external;
                 {
                     fn uniswapV3SwapCallback(
                         data: &[u8],
-                    ) -> alloy_sol_types::Result<BlindArbCalls> {
+                    ) -> alloy_sol_types::Result<BlindArbCalls>
+                    {
                         <uniswapV3SwapCallbackCall as alloy_sol_types::SolCall>::abi_decode_raw(
                                 data,
                             )
@@ -1659,11 +1846,15 @@ function withdrawWETH() external;
         ) -> alloy_sol_types::Result<Self> {
             static DECODE_VALIDATE_SHIMS: &[fn(
                 &[u8],
-            ) -> alloy_sol_types::Result<BlindArbCalls>] = &[
+            )
+                -> alloy_sol_types::Result<
+                BlindArbCalls,
+            >] = &[
                 {
                     fn execute_weth_token1(
                         data: &[u8],
-                    ) -> alloy_sol_types::Result<BlindArbCalls> {
+                    ) -> alloy_sol_types::Result<BlindArbCalls>
+                    {
                         <execute_weth_token1Call as alloy_sol_types::SolCall>::abi_decode_raw_validate(
                                 data,
                             )
@@ -1674,7 +1865,8 @@ function withdrawWETH() external;
                 {
                     fn withdrawWETH(
                         data: &[u8],
-                    ) -> alloy_sol_types::Result<BlindArbCalls> {
+                    ) -> alloy_sol_types::Result<BlindArbCalls>
+                    {
                         <withdrawWETHCall as alloy_sol_types::SolCall>::abi_decode_raw_validate(
                                 data,
                             )
@@ -1683,7 +1875,10 @@ function withdrawWETH() external;
                     withdrawWETH
                 },
                 {
-                    fn owner(data: &[u8]) -> alloy_sol_types::Result<BlindArbCalls> {
+                    fn owner(
+                        data: &[u8],
+                    ) -> alloy_sol_types::Result<BlindArbCalls>
+                    {
                         <ownerCall as alloy_sol_types::SolCall>::abi_decode_raw_validate(
                                 data,
                             )
@@ -1694,7 +1889,8 @@ function withdrawWETH() external;
                 {
                     fn withdrawETH(
                         data: &[u8],
-                    ) -> alloy_sol_types::Result<BlindArbCalls> {
+                    ) -> alloy_sol_types::Result<BlindArbCalls>
+                    {
                         <withdrawETHCall as alloy_sol_types::SolCall>::abi_decode_raw_validate(
                                 data,
                             )
@@ -1705,7 +1901,8 @@ function withdrawWETH() external;
                 {
                     fn execute_weth_token0(
                         data: &[u8],
-                    ) -> alloy_sol_types::Result<BlindArbCalls> {
+                    ) -> alloy_sol_types::Result<BlindArbCalls>
+                    {
                         <execute_weth_token0Call as alloy_sol_types::SolCall>::abi_decode_raw_validate(
                                 data,
                             )
@@ -1716,7 +1913,8 @@ function withdrawWETH() external;
                 {
                     fn transferOwnership(
                         data: &[u8],
-                    ) -> alloy_sol_types::Result<BlindArbCalls> {
+                    ) -> alloy_sol_types::Result<BlindArbCalls>
+                    {
                         <transferOwnershipCall as alloy_sol_types::SolCall>::abi_decode_raw_validate(
                                 data,
                             )
@@ -1727,7 +1925,8 @@ function withdrawWETH() external;
                 {
                     fn uniswapV3SwapCallback(
                         data: &[u8],
-                    ) -> alloy_sol_types::Result<BlindArbCalls> {
+                    ) -> alloy_sol_types::Result<BlindArbCalls>
+                    {
                         <uniswapV3SwapCallbackCall as alloy_sol_types::SolCall>::abi_decode_raw_validate(
                                 data,
                             )
@@ -1830,8 +2029,9 @@ function withdrawWETH() external;
         }
     }
     ///Container for all the [`BlindArb`](self) events.
-    #[derive(serde::Serialize, serde::Deserialize)]
-    #[derive(Debug, PartialEq, Eq, Hash)]
+    #[derive(
+        serde::Serialize, serde::Deserialize, Debug, PartialEq, Eq, Hash,
+    )]
     pub enum BlindArbEvents {
         #[allow(missing_docs)]
         OwnershipTransferred(OwnershipTransferred),
@@ -1840,17 +2040,17 @@ function withdrawWETH() external;
     impl BlindArbEvents {
         /// All the selectors of this enum.
         ///
-        /// Note that the selectors might not be in the same order as the variants.
-        /// No guarantees are made about the order of the selectors.
+        /// Note that the selectors might not be in the same order as the
+        /// variants. No guarantees are made about the order of the
+        /// selectors.
         ///
         /// Prefer using `SolInterface` methods instead.
-        pub const SELECTORS: &'static [[u8; 32usize]] = &[
-            [
-                139u8, 224u8, 7u8, 156u8, 83u8, 22u8, 89u8, 20u8, 19u8, 68u8, 205u8,
-                31u8, 208u8, 164u8, 242u8, 132u8, 25u8, 73u8, 127u8, 151u8, 34u8, 163u8,
-                218u8, 175u8, 227u8, 180u8, 24u8, 111u8, 107u8, 100u8, 87u8, 224u8,
-            ],
-        ];
+        pub const SELECTORS: &'static [[u8; 32usize]] = &[[
+            139u8, 224u8, 7u8, 156u8, 83u8, 22u8, 89u8, 20u8, 19u8, 68u8,
+            205u8, 31u8, 208u8, 164u8, 242u8, 132u8, 25u8, 73u8, 127u8, 151u8,
+            34u8, 163u8, 218u8, 175u8, 227u8, 180u8, 24u8, 111u8, 107u8, 100u8,
+            87u8, 224u8,
+        ]];
     }
     #[automatically_derived]
     impl alloy_sol_types::SolEventInterface for BlindArbEvents {
@@ -1904,7 +2104,7 @@ function withdrawWETH() external;
     use alloy::contract as alloy_contract;
     /**Creates a new wrapper around an on-chain [`BlindArb`](self) contract instance.
 
-See the [wrapper's documentation](`BlindArbInstance`) for more details.*/
+    See the [wrapper's documentation](`BlindArbInstance`) for more details.*/
     #[inline]
     pub const fn new<
         P: alloy_contract::private::Provider<N>,
@@ -1917,9 +2117,9 @@ See the [wrapper's documentation](`BlindArbInstance`) for more details.*/
     }
     /**Deploys this contract using the given `provider` and constructor arguments, if any.
 
-Returns a new instance of the contract, if the deployment was successful.
+    Returns a new instance of the contract, if the deployment was successful.
 
-For more fine-grained control over the deployment process, use [`deploy_builder`] instead.*/
+    For more fine-grained control over the deployment process, use [`deploy_builder`] instead.*/
     #[inline]
     pub fn deploy<
         P: alloy_contract::private::Provider<N>,
@@ -1932,28 +2132,30 @@ For more fine-grained control over the deployment process, use [`deploy_builder`
         BlindArbInstance::<P, N>::deploy(provider)
     }
     /**Creates a `RawCallBuilder` for deploying this contract using the given `provider`
-and constructor arguments, if any.
+    and constructor arguments, if any.
 
-This is a simple wrapper around creating a `RawCallBuilder` with the data set to
-the bytecode concatenated with the constructor's ABI-encoded arguments.*/
+    This is a simple wrapper around creating a `RawCallBuilder` with the data set to
+    the bytecode concatenated with the constructor's ABI-encoded arguments.*/
     #[inline]
     pub fn deploy_builder<
         P: alloy_contract::private::Provider<N>,
         N: alloy_contract::private::Network,
-    >(provider: P) -> alloy_contract::RawCallBuilder<P, N> {
+    >(
+        provider: P,
+    ) -> alloy_contract::RawCallBuilder<P, N> {
         BlindArbInstance::<P, N>::deploy_builder(provider)
     }
     /**A [`BlindArb`](self) instance.
 
-Contains type-safe methods for interacting with an on-chain instance of the
-[`BlindArb`](self) contract located at a given `address`, using a given
-provider `P`.
+    Contains type-safe methods for interacting with an on-chain instance of the
+    [`BlindArb`](self) contract located at a given `address`, using a given
+    provider `P`.
 
-If the contract bytecode is available (see the [`sol!`](alloy_sol_types::sol!)
-documentation on how to provide it), the `deploy` and `deploy_builder` methods can
-be used to deploy a new instance of the contract.
+    If the contract bytecode is available (see the [`sol!`](alloy_sol_types::sol!)
+    documentation on how to provide it), the `deploy` and `deploy_builder` methods can
+    be used to deploy a new instance of the contract.
 
-See the [module-level documentation](self) for all the available methods.*/
+    See the [module-level documentation](self) for all the available methods.*/
     #[derive(Clone)]
     pub struct BlindArbInstance<P, N = alloy_contract::private::Ethereum> {
         address: alloy_sol_types::private::Address,
@@ -1963,19 +2165,25 @@ See the [module-level documentation](self) for all the available methods.*/
     #[automatically_derived]
     impl<P, N> ::core::fmt::Debug for BlindArbInstance<P, N> {
         #[inline]
-        fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
-            f.debug_tuple("BlindArbInstance").field(&self.address).finish()
+        fn fmt(
+            &self,
+            f: &mut ::core::fmt::Formatter<'_>,
+        ) -> ::core::fmt::Result {
+            f.debug_tuple("BlindArbInstance")
+                .field(&self.address)
+                .finish()
         }
     }
     /// Instantiation and getters/setters.
     #[automatically_derived]
     impl<
-        P: alloy_contract::private::Provider<N>,
-        N: alloy_contract::private::Network,
-    > BlindArbInstance<P, N> {
+            P: alloy_contract::private::Provider<N>,
+            N: alloy_contract::private::Network,
+        > BlindArbInstance<P, N>
+    {
         /**Creates a new wrapper around an on-chain [`BlindArb`](self) contract instance.
 
-See the [wrapper's documentation](`BlindArbInstance`) for more details.*/
+        See the [wrapper's documentation](`BlindArbInstance`) for more details.*/
         #[inline]
         pub const fn new(
             address: alloy_sol_types::private::Address,
@@ -1989,24 +2197,29 @@ See the [wrapper's documentation](`BlindArbInstance`) for more details.*/
         }
         /**Deploys this contract using the given `provider` and constructor arguments, if any.
 
-Returns a new instance of the contract, if the deployment was successful.
+        Returns a new instance of the contract, if the deployment was successful.
 
-For more fine-grained control over the deployment process, use [`deploy_builder`] instead.*/
+        For more fine-grained control over the deployment process, use [`deploy_builder`] instead.*/
         #[inline]
         pub async fn deploy(
             provider: P,
         ) -> alloy_contract::Result<BlindArbInstance<P, N>> {
             let call_builder = Self::deploy_builder(provider);
             let contract_address = call_builder.deploy().await?;
-            Ok(Self::new(contract_address, call_builder.provider))
+            Ok(Self::new(
+                contract_address,
+                call_builder.provider,
+            ))
         }
         /**Creates a `RawCallBuilder` for deploying this contract using the given `provider`
-and constructor arguments, if any.
+        and constructor arguments, if any.
 
-This is a simple wrapper around creating a `RawCallBuilder` with the data set to
-the bytecode concatenated with the constructor's ABI-encoded arguments.*/
+        This is a simple wrapper around creating a `RawCallBuilder` with the data set to
+        the bytecode concatenated with the constructor's ABI-encoded arguments.*/
         #[inline]
-        pub fn deploy_builder(provider: P) -> alloy_contract::RawCallBuilder<P, N> {
+        pub fn deploy_builder(
+            provider: P,
+        ) -> alloy_contract::RawCallBuilder<P, N> {
             alloy_contract::RawCallBuilder::new_raw_deploy(
                 provider,
                 ::core::clone::Clone::clone(&BYTECODE),
@@ -2019,11 +2232,17 @@ the bytecode concatenated with the constructor's ABI-encoded arguments.*/
         }
         /// Sets the address.
         #[inline]
-        pub fn set_address(&mut self, address: alloy_sol_types::private::Address) {
+        pub fn set_address(
+            &mut self,
+            address: alloy_sol_types::private::Address,
+        ) {
             self.address = address;
         }
         /// Sets the address and returns `self`.
-        pub fn at(mut self, address: alloy_sol_types::private::Address) -> Self {
+        pub fn at(
+            mut self,
+            address: alloy_sol_types::private::Address,
+        ) -> Self {
             self.set_address(address);
             self
         }
@@ -2034,7 +2253,8 @@ the bytecode concatenated with the constructor's ABI-encoded arguments.*/
         }
     }
     impl<P: ::core::clone::Clone, N> BlindArbInstance<&P, N> {
-        /// Clones the provider and returns a new instance with the cloned provider.
+        /// Clones the provider and returns a new instance with the cloned
+        /// provider.
         #[inline]
         pub fn with_cloned_provider(self) -> BlindArbInstance<P, N> {
             BlindArbInstance {
@@ -2047,18 +2267,25 @@ the bytecode concatenated with the constructor's ABI-encoded arguments.*/
     /// Function calls.
     #[automatically_derived]
     impl<
-        P: alloy_contract::private::Provider<N>,
-        N: alloy_contract::private::Network,
-    > BlindArbInstance<P, N> {
-        /// Creates a new call builder using this contract instance's provider and address.
+            P: alloy_contract::private::Provider<N>,
+            N: alloy_contract::private::Network,
+        > BlindArbInstance<P, N>
+    {
+        /// Creates a new call builder using this contract instance's provider
+        /// and address.
         ///
-        /// Note that the call can be any function call, not just those defined in this
-        /// contract. Prefer using the other methods for building type-safe contract calls.
+        /// Note that the call can be any function call, not just those defined
+        /// in this contract. Prefer using the other methods for
+        /// building type-safe contract calls.
         pub fn call_builder<C: alloy_sol_types::SolCall>(
             &self,
             call: &C,
         ) -> alloy_contract::SolCallBuilder<&P, C, N> {
-            alloy_contract::SolCallBuilder::new_sol(&self.provider, &self.address, call)
+            alloy_contract::SolCallBuilder::new_sol(
+                &self.provider,
+                &self.address,
+                call,
+            )
         }
         ///Creates a new call builder for the [`execute_weth_token0`] function.
         pub fn execute_weth_token0(
@@ -2067,15 +2294,14 @@ the bytecode concatenated with the constructor's ABI-encoded arguments.*/
             v3Pool: alloy::sol_types::private::Address,
             amountIn: alloy::sol_types::private::primitives::aliases::U256,
             percentageToPayToCoinbase: alloy::sol_types::private::primitives::aliases::U256,
-        ) -> alloy_contract::SolCallBuilder<&P, execute_weth_token0Call, N> {
-            self.call_builder(
-                &execute_weth_token0Call {
-                    v2Pool,
-                    v3Pool,
-                    amountIn,
-                    percentageToPayToCoinbase,
-                },
-            )
+        ) -> alloy_contract::SolCallBuilder<&P, execute_weth_token0Call, N>
+        {
+            self.call_builder(&execute_weth_token0Call {
+                v2Pool,
+                v3Pool,
+                amountIn,
+                percentageToPayToCoinbase,
+            })
         }
         ///Creates a new call builder for the [`execute_weth_token1`] function.
         pub fn execute_weth_token1(
@@ -2084,41 +2310,43 @@ the bytecode concatenated with the constructor's ABI-encoded arguments.*/
             v3Pool: alloy::sol_types::private::Address,
             amountIn: alloy::sol_types::private::primitives::aliases::U256,
             percentageToPayToCoinbase: alloy::sol_types::private::primitives::aliases::U256,
-        ) -> alloy_contract::SolCallBuilder<&P, execute_weth_token1Call, N> {
-            self.call_builder(
-                &execute_weth_token1Call {
-                    v2Pool,
-                    v3Pool,
-                    amountIn,
-                    percentageToPayToCoinbase,
-                },
-            )
+        ) -> alloy_contract::SolCallBuilder<&P, execute_weth_token1Call, N>
+        {
+            self.call_builder(&execute_weth_token1Call {
+                v2Pool,
+                v3Pool,
+                amountIn,
+                percentageToPayToCoinbase,
+            })
         }
         ///Creates a new call builder for the [`owner`] function.
-        pub fn owner(&self) -> alloy_contract::SolCallBuilder<&P, ownerCall, N> {
+        pub fn owner(
+            &self,
+        ) -> alloy_contract::SolCallBuilder<&P, ownerCall, N> {
             self.call_builder(&ownerCall)
         }
         ///Creates a new call builder for the [`transferOwnership`] function.
         pub fn transferOwnership(
             &self,
             newOwner: alloy::sol_types::private::Address,
-        ) -> alloy_contract::SolCallBuilder<&P, transferOwnershipCall, N> {
+        ) -> alloy_contract::SolCallBuilder<&P, transferOwnershipCall, N>
+        {
             self.call_builder(&transferOwnershipCall { newOwner })
         }
-        ///Creates a new call builder for the [`uniswapV3SwapCallback`] function.
+        ///Creates a new call builder for the [`uniswapV3SwapCallback`]
+        /// function.
         pub fn uniswapV3SwapCallback(
             &self,
             amount0Delta: alloy::sol_types::private::primitives::aliases::I256,
             amount1Delta: alloy::sol_types::private::primitives::aliases::I256,
             data: alloy::sol_types::private::Bytes,
-        ) -> alloy_contract::SolCallBuilder<&P, uniswapV3SwapCallbackCall, N> {
-            self.call_builder(
-                &uniswapV3SwapCallbackCall {
-                    amount0Delta,
-                    amount1Delta,
-                    data,
-                },
-            )
+        ) -> alloy_contract::SolCallBuilder<&P, uniswapV3SwapCallbackCall, N>
+        {
+            self.call_builder(&uniswapV3SwapCallbackCall {
+                amount0Delta,
+                amount1Delta,
+                data,
+            })
         }
         ///Creates a new call builder for the [`withdrawETH`] function.
         pub fn withdrawETH(
@@ -2136,13 +2364,16 @@ the bytecode concatenated with the constructor's ABI-encoded arguments.*/
     /// Event filters.
     #[automatically_derived]
     impl<
-        P: alloy_contract::private::Provider<N>,
-        N: alloy_contract::private::Network,
-    > BlindArbInstance<P, N> {
-        /// Creates a new event filter using this contract instance's provider and address.
+            P: alloy_contract::private::Provider<N>,
+            N: alloy_contract::private::Network,
+        > BlindArbInstance<P, N>
+    {
+        /// Creates a new event filter using this contract instance's provider
+        /// and address.
         ///
-        /// Note that the type can be any event, not just those defined in this contract.
-        /// Prefer using the other methods for building type-safe event filters.
+        /// Note that the type can be any event, not just those defined in this
+        /// contract. Prefer using the other methods for building
+        /// type-safe event filters.
         pub fn event_filter<E: alloy_sol_types::SolEvent>(
             &self,
         ) -> alloy_contract::Event<&P, E, N> {

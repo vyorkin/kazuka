@@ -253,8 +253,9 @@ interface IERC20 {
     clippy::empty_structs_with_brackets
 )]
 pub mod IERC20 {
-    use super::*;
     use alloy::sol_types as alloy_sol_types;
+
+    use super::*;
     /// The creation / init bytecode of the contract.
     ///
     /// ```text
@@ -275,12 +276,19 @@ pub mod IERC20 {
     pub static DEPLOYED_BYTECODE: alloy_sol_types::private::Bytes = alloy_sol_types::private::Bytes::from_static(
         b"",
     );
-    #[derive(serde::Serialize, serde::Deserialize)]
-    #[derive(Default, Debug, PartialEq, Eq, Hash)]
+    #[derive(
+        serde::Serialize,
+        serde::Deserialize,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
     /**Event with signature `Approval(address,address,uint256)` and selector `0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925`.
-```solidity
-event Approval(address indexed owner, address indexed spender, uint256 value);
-```*/
+    ```solidity
+    event Approval(address indexed owner, address indexed spender, uint256 value);
+    ```*/
     #[allow(
         non_camel_case_types,
         non_snake_case,
@@ -307,20 +315,21 @@ event Approval(address indexed owner, address indexed spender, uint256 value);
         #[automatically_derived]
         impl alloy_sol_types::SolEvent for Approval {
             type DataTuple<'a> = (alloy::sol_types::sol_data::Uint<256>,);
-            type DataToken<'a> = <Self::DataTuple<
-                'a,
-            > as alloy_sol_types::SolType>::Token<'a>;
+            type DataToken<'a> =
+                <Self::DataTuple<'a> as alloy_sol_types::SolType>::Token<'a>;
             type TopicList = (
                 alloy_sol_types::sol_data::FixedBytes<32>,
                 alloy::sol_types::sol_data::Address,
                 alloy::sol_types::sol_data::Address,
             );
             const SIGNATURE: &'static str = "Approval(address,address,uint256)";
-            const SIGNATURE_HASH: alloy_sol_types::private::B256 = alloy_sol_types::private::B256::new([
-                140u8, 91u8, 225u8, 229u8, 235u8, 236u8, 125u8, 91u8, 209u8, 79u8, 113u8,
-                66u8, 125u8, 30u8, 132u8, 243u8, 221u8, 3u8, 20u8, 192u8, 247u8, 178u8,
-                41u8, 30u8, 91u8, 32u8, 10u8, 200u8, 199u8, 195u8, 185u8, 37u8,
-            ]);
+            const SIGNATURE_HASH: alloy_sol_types::private::B256 =
+                alloy_sol_types::private::B256::new([
+                    140u8, 91u8, 225u8, 229u8, 235u8, 236u8, 125u8, 91u8,
+                    209u8, 79u8, 113u8, 66u8, 125u8, 30u8, 132u8, 243u8, 221u8,
+                    3u8, 20u8, 192u8, 247u8, 178u8, 41u8, 30u8, 91u8, 32u8,
+                    10u8, 200u8, 199u8, 195u8, 185u8, 37u8,
+                ]);
             const ANONYMOUS: bool = false;
             #[allow(unused_variables)]
             #[inline]
@@ -358,15 +367,24 @@ event Approval(address indexed owner, address indexed spender, uint256 value);
                 )
             }
             #[inline]
-            fn topics(&self) -> <Self::TopicList as alloy_sol_types::SolType>::RustType {
-                (Self::SIGNATURE_HASH.into(), self.owner.clone(), self.spender.clone())
+            fn topics(
+                &self,
+            ) -> <Self::TopicList as alloy_sol_types::SolType>::RustType
+            {
+                (
+                    Self::SIGNATURE_HASH.into(),
+                    self.owner.clone(),
+                    self.spender.clone(),
+                )
             }
             #[inline]
             fn encode_topics_raw(
                 &self,
                 out: &mut [alloy_sol_types::abi::token::WordToken],
             ) -> alloy_sol_types::Result<()> {
-                if out.len() < <Self::TopicList as alloy_sol_types::TopicList>::COUNT {
+                if out.len()
+                    < <Self::TopicList as alloy_sol_types::TopicList>::COUNT
+                {
                     return Err(alloy_sol_types::Error::Overrun);
                 }
                 out[0usize] = alloy_sol_types::abi::token::WordToken(
@@ -398,12 +416,19 @@ event Approval(address indexed owner, address indexed spender, uint256 value);
             }
         }
     };
-    #[derive(serde::Serialize, serde::Deserialize)]
-    #[derive(Default, Debug, PartialEq, Eq, Hash)]
+    #[derive(
+        serde::Serialize,
+        serde::Deserialize,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
     /**Event with signature `Transfer(address,address,uint256)` and selector `0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef`.
-```solidity
-event Transfer(address indexed from, address indexed to, uint256 value);
-```*/
+    ```solidity
+    event Transfer(address indexed from, address indexed to, uint256 value);
+    ```*/
     #[allow(
         non_camel_case_types,
         non_snake_case,
@@ -430,20 +455,21 @@ event Transfer(address indexed from, address indexed to, uint256 value);
         #[automatically_derived]
         impl alloy_sol_types::SolEvent for Transfer {
             type DataTuple<'a> = (alloy::sol_types::sol_data::Uint<256>,);
-            type DataToken<'a> = <Self::DataTuple<
-                'a,
-            > as alloy_sol_types::SolType>::Token<'a>;
+            type DataToken<'a> =
+                <Self::DataTuple<'a> as alloy_sol_types::SolType>::Token<'a>;
             type TopicList = (
                 alloy_sol_types::sol_data::FixedBytes<32>,
                 alloy::sol_types::sol_data::Address,
                 alloy::sol_types::sol_data::Address,
             );
             const SIGNATURE: &'static str = "Transfer(address,address,uint256)";
-            const SIGNATURE_HASH: alloy_sol_types::private::B256 = alloy_sol_types::private::B256::new([
-                221u8, 242u8, 82u8, 173u8, 27u8, 226u8, 200u8, 155u8, 105u8, 194u8,
-                176u8, 104u8, 252u8, 55u8, 141u8, 170u8, 149u8, 43u8, 167u8, 241u8, 99u8,
-                196u8, 161u8, 22u8, 40u8, 245u8, 90u8, 77u8, 245u8, 35u8, 179u8, 239u8,
-            ]);
+            const SIGNATURE_HASH: alloy_sol_types::private::B256 =
+                alloy_sol_types::private::B256::new([
+                    221u8, 242u8, 82u8, 173u8, 27u8, 226u8, 200u8, 155u8,
+                    105u8, 194u8, 176u8, 104u8, 252u8, 55u8, 141u8, 170u8,
+                    149u8, 43u8, 167u8, 241u8, 99u8, 196u8, 161u8, 22u8, 40u8,
+                    245u8, 90u8, 77u8, 245u8, 35u8, 179u8, 239u8,
+                ]);
             const ANONYMOUS: bool = false;
             #[allow(unused_variables)]
             #[inline]
@@ -481,15 +507,24 @@ event Transfer(address indexed from, address indexed to, uint256 value);
                 )
             }
             #[inline]
-            fn topics(&self) -> <Self::TopicList as alloy_sol_types::SolType>::RustType {
-                (Self::SIGNATURE_HASH.into(), self.from.clone(), self.to.clone())
+            fn topics(
+                &self,
+            ) -> <Self::TopicList as alloy_sol_types::SolType>::RustType
+            {
+                (
+                    Self::SIGNATURE_HASH.into(),
+                    self.from.clone(),
+                    self.to.clone(),
+                )
             }
             #[inline]
             fn encode_topics_raw(
                 &self,
                 out: &mut [alloy_sol_types::abi::token::WordToken],
             ) -> alloy_sol_types::Result<()> {
-                if out.len() < <Self::TopicList as alloy_sol_types::TopicList>::COUNT {
+                if out.len()
+                    < <Self::TopicList as alloy_sol_types::TopicList>::COUNT
+                {
                     return Err(alloy_sol_types::Error::Overrun);
                 }
                 out[0usize] = alloy_sol_types::abi::token::WordToken(
@@ -521,13 +556,24 @@ event Transfer(address indexed from, address indexed to, uint256 value);
             }
         }
     };
-    #[derive(serde::Serialize, serde::Deserialize)]
-    #[derive(Default, Debug, PartialEq, Eq, Hash)]
+    #[derive(
+        serde::Serialize,
+        serde::Deserialize,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
     /**Function with signature `allowance(address,address)` and selector `0xdd62ed3e`.
-```solidity
-function allowance(address owner, address spender) external view returns (uint256);
-```*/
-    #[allow(non_camel_case_types, non_snake_case, clippy::pub_underscore_fields)]
+    ```solidity
+    function allowance(address owner, address spender) external view returns (uint256);
+    ```*/
+    #[allow(
+        non_camel_case_types,
+        non_snake_case,
+        clippy::pub_underscore_fields
+    )]
     #[derive(Clone)]
     pub struct allowanceCall {
         #[allow(missing_docs)]
@@ -535,10 +581,22 @@ function allowance(address owner, address spender) external view returns (uint25
         #[allow(missing_docs)]
         pub spender: alloy::sol_types::private::Address,
     }
-    #[derive(serde::Serialize, serde::Deserialize)]
-    #[derive(Default, Debug, PartialEq, Eq, Hash)]
-    ///Container type for the return parameters of the [`allowance(address,address)`](allowanceCall) function.
-    #[allow(non_camel_case_types, non_snake_case, clippy::pub_underscore_fields)]
+    #[derive(
+        serde::Serialize,
+        serde::Deserialize,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
+    ///Container type for the return parameters of the
+    /// [`allowance(address,address)`](allowanceCall) function.
+    #[allow(
+        non_camel_case_types,
+        non_snake_case,
+        clippy::pub_underscore_fields
+    )]
     #[derive(Clone)]
     pub struct allowanceReturn {
         #[allow(missing_docs)]
@@ -594,11 +652,11 @@ function allowance(address owner, address spender) external view returns (uint25
         }
         {
             #[doc(hidden)]
-            type UnderlyingSolTuple<'a> = (alloy::sol_types::sol_data::Uint<256>,);
+            type UnderlyingSolTuple<'a> =
+                (alloy::sol_types::sol_data::Uint<256>,);
             #[doc(hidden)]
-            type UnderlyingRustTuple<'a> = (
-                alloy::sol_types::private::primitives::aliases::U256,
-            );
+            type UnderlyingRustTuple<'a> =
+                (alloy::sol_types::private::primitives::aliases::U256,);
             #[cfg(test)]
             #[allow(dead_code, unreachable_patterns)]
             fn _type_assertion(
@@ -631,14 +689,12 @@ function allowance(address owner, address spender) external view returns (uint25
                 alloy::sol_types::sol_data::Address,
                 alloy::sol_types::sol_data::Address,
             );
-            type Token<'a> = <Self::Parameters<
-                'a,
-            > as alloy_sol_types::SolType>::Token<'a>;
+            type Token<'a> =
+                <Self::Parameters<'a> as alloy_sol_types::SolType>::Token<'a>;
             type Return = alloy::sol_types::private::primitives::aliases::U256;
             type ReturnTuple<'a> = (alloy::sol_types::sol_data::Uint<256>,);
-            type ReturnToken<'a> = <Self::ReturnTuple<
-                'a,
-            > as alloy_sol_types::SolType>::Token<'a>;
+            type ReturnToken<'a> =
+                <Self::ReturnTuple<'a> as alloy_sol_types::SolType>::Token<'a>;
             const SIGNATURE: &'static str = "allowance(address,address)";
             const SELECTOR: [u8; 4] = [221u8, 98u8, 237u8, 62u8];
             #[inline]
@@ -667,7 +723,9 @@ function allowance(address owner, address spender) external view returns (uint25
                 )
             }
             #[inline]
-            fn abi_decode_returns(data: &[u8]) -> alloy_sol_types::Result<Self::Return> {
+            fn abi_decode_returns(
+                data: &[u8],
+            ) -> alloy_sol_types::Result<Self::Return> {
                 <Self::ReturnTuple<
                     '_,
                 > as alloy_sol_types::SolType>::abi_decode_sequence(data)
@@ -690,13 +748,24 @@ function allowance(address owner, address spender) external view returns (uint25
             }
         }
     };
-    #[derive(serde::Serialize, serde::Deserialize)]
-    #[derive(Default, Debug, PartialEq, Eq, Hash)]
+    #[derive(
+        serde::Serialize,
+        serde::Deserialize,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
     /**Function with signature `approve(address,uint256)` and selector `0x095ea7b3`.
-```solidity
-function approve(address spender, uint256 amount) external returns (bool);
-```*/
-    #[allow(non_camel_case_types, non_snake_case, clippy::pub_underscore_fields)]
+    ```solidity
+    function approve(address spender, uint256 amount) external returns (bool);
+    ```*/
+    #[allow(
+        non_camel_case_types,
+        non_snake_case,
+        clippy::pub_underscore_fields
+    )]
     #[derive(Clone)]
     pub struct approveCall {
         #[allow(missing_docs)]
@@ -704,10 +773,22 @@ function approve(address spender, uint256 amount) external returns (bool);
         #[allow(missing_docs)]
         pub amount: alloy::sol_types::private::primitives::aliases::U256,
     }
-    #[derive(serde::Serialize, serde::Deserialize)]
-    #[derive(Default, Debug, PartialEq, Eq, Hash)]
-    ///Container type for the return parameters of the [`approve(address,uint256)`](approveCall) function.
-    #[allow(non_camel_case_types, non_snake_case, clippy::pub_underscore_fields)]
+    #[derive(
+        serde::Serialize,
+        serde::Deserialize,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
+    ///Container type for the return parameters of the
+    /// [`approve(address,uint256)`](approveCall) function.
+    #[allow(
+        non_camel_case_types,
+        non_snake_case,
+        clippy::pub_underscore_fields
+    )]
     #[derive(Clone)]
     pub struct approveReturn {
         #[allow(missing_docs)]
@@ -798,14 +879,12 @@ function approve(address spender, uint256 amount) external returns (bool);
                 alloy::sol_types::sol_data::Address,
                 alloy::sol_types::sol_data::Uint<256>,
             );
-            type Token<'a> = <Self::Parameters<
-                'a,
-            > as alloy_sol_types::SolType>::Token<'a>;
+            type Token<'a> =
+                <Self::Parameters<'a> as alloy_sol_types::SolType>::Token<'a>;
             type Return = bool;
             type ReturnTuple<'a> = (alloy::sol_types::sol_data::Bool,);
-            type ReturnToken<'a> = <Self::ReturnTuple<
-                'a,
-            > as alloy_sol_types::SolType>::Token<'a>;
+            type ReturnToken<'a> =
+                <Self::ReturnTuple<'a> as alloy_sol_types::SolType>::Token<'a>;
             const SIGNATURE: &'static str = "approve(address,uint256)";
             const SELECTOR: [u8; 4] = [9u8, 94u8, 167u8, 179u8];
             #[inline]
@@ -834,7 +913,9 @@ function approve(address spender, uint256 amount) external returns (bool);
                 )
             }
             #[inline]
-            fn abi_decode_returns(data: &[u8]) -> alloy_sol_types::Result<Self::Return> {
+            fn abi_decode_returns(
+                data: &[u8],
+            ) -> alloy_sol_types::Result<Self::Return> {
                 <Self::ReturnTuple<
                     '_,
                 > as alloy_sol_types::SolType>::abi_decode_sequence(data)
@@ -857,22 +938,45 @@ function approve(address spender, uint256 amount) external returns (bool);
             }
         }
     };
-    #[derive(serde::Serialize, serde::Deserialize)]
-    #[derive(Default, Debug, PartialEq, Eq, Hash)]
+    #[derive(
+        serde::Serialize,
+        serde::Deserialize,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
     /**Function with signature `balanceOf(address)` and selector `0x70a08231`.
-```solidity
-function balanceOf(address account) external view returns (uint256);
-```*/
-    #[allow(non_camel_case_types, non_snake_case, clippy::pub_underscore_fields)]
+    ```solidity
+    function balanceOf(address account) external view returns (uint256);
+    ```*/
+    #[allow(
+        non_camel_case_types,
+        non_snake_case,
+        clippy::pub_underscore_fields
+    )]
     #[derive(Clone)]
     pub struct balanceOfCall {
         #[allow(missing_docs)]
         pub account: alloy::sol_types::private::Address,
     }
-    #[derive(serde::Serialize, serde::Deserialize)]
-    #[derive(Default, Debug, PartialEq, Eq, Hash)]
-    ///Container type for the return parameters of the [`balanceOf(address)`](balanceOfCall) function.
-    #[allow(non_camel_case_types, non_snake_case, clippy::pub_underscore_fields)]
+    #[derive(
+        serde::Serialize,
+        serde::Deserialize,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
+    ///Container type for the return parameters of the
+    /// [`balanceOf(address)`](balanceOfCall) function.
+    #[allow(
+        non_camel_case_types,
+        non_snake_case,
+        clippy::pub_underscore_fields
+    )]
     #[derive(Clone)]
     pub struct balanceOfReturn {
         #[allow(missing_docs)]
@@ -888,9 +992,11 @@ function balanceOf(address account) external view returns (uint256);
         use alloy::sol_types as alloy_sol_types;
         {
             #[doc(hidden)]
-            type UnderlyingSolTuple<'a> = (alloy::sol_types::sol_data::Address,);
+            type UnderlyingSolTuple<'a> =
+                (alloy::sol_types::sol_data::Address,);
             #[doc(hidden)]
-            type UnderlyingRustTuple<'a> = (alloy::sol_types::private::Address,);
+            type UnderlyingRustTuple<'a> =
+                (alloy::sol_types::private::Address,);
             #[cfg(test)]
             #[allow(dead_code, unreachable_patterns)]
             fn _type_assertion(
@@ -919,11 +1025,11 @@ function balanceOf(address account) external view returns (uint256);
         }
         {
             #[doc(hidden)]
-            type UnderlyingSolTuple<'a> = (alloy::sol_types::sol_data::Uint<256>,);
+            type UnderlyingSolTuple<'a> =
+                (alloy::sol_types::sol_data::Uint<256>,);
             #[doc(hidden)]
-            type UnderlyingRustTuple<'a> = (
-                alloy::sol_types::private::primitives::aliases::U256,
-            );
+            type UnderlyingRustTuple<'a> =
+                (alloy::sol_types::private::primitives::aliases::U256,);
             #[cfg(test)]
             #[allow(dead_code, unreachable_patterns)]
             fn _type_assertion(
@@ -953,14 +1059,12 @@ function balanceOf(address account) external view returns (uint256);
         #[automatically_derived]
         impl alloy_sol_types::SolCall for balanceOfCall {
             type Parameters<'a> = (alloy::sol_types::sol_data::Address,);
-            type Token<'a> = <Self::Parameters<
-                'a,
-            > as alloy_sol_types::SolType>::Token<'a>;
+            type Token<'a> =
+                <Self::Parameters<'a> as alloy_sol_types::SolType>::Token<'a>;
             type Return = alloy::sol_types::private::primitives::aliases::U256;
             type ReturnTuple<'a> = (alloy::sol_types::sol_data::Uint<256>,);
-            type ReturnToken<'a> = <Self::ReturnTuple<
-                'a,
-            > as alloy_sol_types::SolType>::Token<'a>;
+            type ReturnToken<'a> =
+                <Self::ReturnTuple<'a> as alloy_sol_types::SolType>::Token<'a>;
             const SIGNATURE: &'static str = "balanceOf(address)";
             const SELECTOR: [u8; 4] = [112u8, 160u8, 130u8, 49u8];
             #[inline]
@@ -986,7 +1090,9 @@ function balanceOf(address account) external view returns (uint256);
                 )
             }
             #[inline]
-            fn abi_decode_returns(data: &[u8]) -> alloy_sol_types::Result<Self::Return> {
+            fn abi_decode_returns(
+                data: &[u8],
+            ) -> alloy_sol_types::Result<Self::Return> {
                 <Self::ReturnTuple<
                     '_,
                 > as alloy_sol_types::SolType>::abi_decode_sequence(data)
@@ -1009,19 +1115,42 @@ function balanceOf(address account) external view returns (uint256);
             }
         }
     };
-    #[derive(serde::Serialize, serde::Deserialize)]
-    #[derive(Default, Debug, PartialEq, Eq, Hash)]
+    #[derive(
+        serde::Serialize,
+        serde::Deserialize,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
     /**Function with signature `decimals()` and selector `0x313ce567`.
-```solidity
-function decimals() external view returns (uint8);
-```*/
-    #[allow(non_camel_case_types, non_snake_case, clippy::pub_underscore_fields)]
+    ```solidity
+    function decimals() external view returns (uint8);
+    ```*/
+    #[allow(
+        non_camel_case_types,
+        non_snake_case,
+        clippy::pub_underscore_fields
+    )]
     #[derive(Clone)]
     pub struct decimalsCall;
-    #[derive(serde::Serialize, serde::Deserialize)]
-    #[derive(Default, Debug, PartialEq, Eq, Hash)]
-    ///Container type for the return parameters of the [`decimals()`](decimalsCall) function.
-    #[allow(non_camel_case_types, non_snake_case, clippy::pub_underscore_fields)]
+    #[derive(
+        serde::Serialize,
+        serde::Deserialize,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
+    ///Container type for the return parameters of the
+    /// [`decimals()`](decimalsCall) function.
+    #[allow(
+        non_camel_case_types,
+        non_snake_case,
+        clippy::pub_underscore_fields
+    )]
     #[derive(Clone)]
     pub struct decimalsReturn {
         #[allow(missing_docs)]
@@ -1068,7 +1197,8 @@ function decimals() external view returns (uint8);
         }
         {
             #[doc(hidden)]
-            type UnderlyingSolTuple<'a> = (alloy::sol_types::sol_data::Uint<8>,);
+            type UnderlyingSolTuple<'a> =
+                (alloy::sol_types::sol_data::Uint<8>,);
             #[doc(hidden)]
             type UnderlyingRustTuple<'a> = (u8,);
             #[cfg(test)]
@@ -1100,14 +1230,12 @@ function decimals() external view returns (uint8);
         #[automatically_derived]
         impl alloy_sol_types::SolCall for decimalsCall {
             type Parameters<'a> = ();
-            type Token<'a> = <Self::Parameters<
-                'a,
-            > as alloy_sol_types::SolType>::Token<'a>;
+            type Token<'a> =
+                <Self::Parameters<'a> as alloy_sol_types::SolType>::Token<'a>;
             type Return = u8;
             type ReturnTuple<'a> = (alloy::sol_types::sol_data::Uint<8>,);
-            type ReturnToken<'a> = <Self::ReturnTuple<
-                'a,
-            > as alloy_sol_types::SolType>::Token<'a>;
+            type ReturnToken<'a> =
+                <Self::ReturnTuple<'a> as alloy_sol_types::SolType>::Token<'a>;
             const SIGNATURE: &'static str = "decimals()";
             const SELECTOR: [u8; 4] = [49u8, 60u8, 229u8, 103u8];
             #[inline]
@@ -1129,7 +1257,9 @@ function decimals() external view returns (uint8);
                 )
             }
             #[inline]
-            fn abi_decode_returns(data: &[u8]) -> alloy_sol_types::Result<Self::Return> {
+            fn abi_decode_returns(
+                data: &[u8],
+            ) -> alloy_sol_types::Result<Self::Return> {
                 <Self::ReturnTuple<
                     '_,
                 > as alloy_sol_types::SolType>::abi_decode_sequence(data)
@@ -1152,19 +1282,42 @@ function decimals() external view returns (uint8);
             }
         }
     };
-    #[derive(serde::Serialize, serde::Deserialize)]
-    #[derive(Default, Debug, PartialEq, Eq, Hash)]
+    #[derive(
+        serde::Serialize,
+        serde::Deserialize,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
     /**Function with signature `name()` and selector `0x06fdde03`.
-```solidity
-function name() external view returns (string memory);
-```*/
-    #[allow(non_camel_case_types, non_snake_case, clippy::pub_underscore_fields)]
+    ```solidity
+    function name() external view returns (string memory);
+    ```*/
+    #[allow(
+        non_camel_case_types,
+        non_snake_case,
+        clippy::pub_underscore_fields
+    )]
     #[derive(Clone)]
     pub struct nameCall;
-    #[derive(serde::Serialize, serde::Deserialize)]
-    #[derive(Default, Debug, PartialEq, Eq, Hash)]
-    ///Container type for the return parameters of the [`name()`](nameCall) function.
-    #[allow(non_camel_case_types, non_snake_case, clippy::pub_underscore_fields)]
+    #[derive(
+        serde::Serialize,
+        serde::Deserialize,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
+    ///Container type for the return parameters of the [`name()`](nameCall)
+    /// function.
+    #[allow(
+        non_camel_case_types,
+        non_snake_case,
+        clippy::pub_underscore_fields
+    )]
     #[derive(Clone)]
     pub struct nameReturn {
         #[allow(missing_docs)]
@@ -1243,14 +1396,12 @@ function name() external view returns (string memory);
         #[automatically_derived]
         impl alloy_sol_types::SolCall for nameCall {
             type Parameters<'a> = ();
-            type Token<'a> = <Self::Parameters<
-                'a,
-            > as alloy_sol_types::SolType>::Token<'a>;
+            type Token<'a> =
+                <Self::Parameters<'a> as alloy_sol_types::SolType>::Token<'a>;
             type Return = alloy::sol_types::private::String;
             type ReturnTuple<'a> = (alloy::sol_types::sol_data::String,);
-            type ReturnToken<'a> = <Self::ReturnTuple<
-                'a,
-            > as alloy_sol_types::SolType>::Token<'a>;
+            type ReturnToken<'a> =
+                <Self::ReturnTuple<'a> as alloy_sol_types::SolType>::Token<'a>;
             const SIGNATURE: &'static str = "name()";
             const SELECTOR: [u8; 4] = [6u8, 253u8, 222u8, 3u8];
             #[inline]
@@ -1272,7 +1423,9 @@ function name() external view returns (string memory);
                 )
             }
             #[inline]
-            fn abi_decode_returns(data: &[u8]) -> alloy_sol_types::Result<Self::Return> {
+            fn abi_decode_returns(
+                data: &[u8],
+            ) -> alloy_sol_types::Result<Self::Return> {
                 <Self::ReturnTuple<
                     '_,
                 > as alloy_sol_types::SolType>::abi_decode_sequence(data)
@@ -1295,19 +1448,42 @@ function name() external view returns (string memory);
             }
         }
     };
-    #[derive(serde::Serialize, serde::Deserialize)]
-    #[derive(Default, Debug, PartialEq, Eq, Hash)]
+    #[derive(
+        serde::Serialize,
+        serde::Deserialize,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
     /**Function with signature `symbol()` and selector `0x95d89b41`.
-```solidity
-function symbol() external view returns (string memory);
-```*/
-    #[allow(non_camel_case_types, non_snake_case, clippy::pub_underscore_fields)]
+    ```solidity
+    function symbol() external view returns (string memory);
+    ```*/
+    #[allow(
+        non_camel_case_types,
+        non_snake_case,
+        clippy::pub_underscore_fields
+    )]
     #[derive(Clone)]
     pub struct symbolCall;
-    #[derive(serde::Serialize, serde::Deserialize)]
-    #[derive(Default, Debug, PartialEq, Eq, Hash)]
-    ///Container type for the return parameters of the [`symbol()`](symbolCall) function.
-    #[allow(non_camel_case_types, non_snake_case, clippy::pub_underscore_fields)]
+    #[derive(
+        serde::Serialize,
+        serde::Deserialize,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
+    ///Container type for the return parameters of the [`symbol()`](symbolCall)
+    /// function.
+    #[allow(
+        non_camel_case_types,
+        non_snake_case,
+        clippy::pub_underscore_fields
+    )]
     #[derive(Clone)]
     pub struct symbolReturn {
         #[allow(missing_docs)]
@@ -1386,14 +1562,12 @@ function symbol() external view returns (string memory);
         #[automatically_derived]
         impl alloy_sol_types::SolCall for symbolCall {
             type Parameters<'a> = ();
-            type Token<'a> = <Self::Parameters<
-                'a,
-            > as alloy_sol_types::SolType>::Token<'a>;
+            type Token<'a> =
+                <Self::Parameters<'a> as alloy_sol_types::SolType>::Token<'a>;
             type Return = alloy::sol_types::private::String;
             type ReturnTuple<'a> = (alloy::sol_types::sol_data::String,);
-            type ReturnToken<'a> = <Self::ReturnTuple<
-                'a,
-            > as alloy_sol_types::SolType>::Token<'a>;
+            type ReturnToken<'a> =
+                <Self::ReturnTuple<'a> as alloy_sol_types::SolType>::Token<'a>;
             const SIGNATURE: &'static str = "symbol()";
             const SELECTOR: [u8; 4] = [149u8, 216u8, 155u8, 65u8];
             #[inline]
@@ -1415,7 +1589,9 @@ function symbol() external view returns (string memory);
                 )
             }
             #[inline]
-            fn abi_decode_returns(data: &[u8]) -> alloy_sol_types::Result<Self::Return> {
+            fn abi_decode_returns(
+                data: &[u8],
+            ) -> alloy_sol_types::Result<Self::Return> {
                 <Self::ReturnTuple<
                     '_,
                 > as alloy_sol_types::SolType>::abi_decode_sequence(data)
@@ -1438,19 +1614,42 @@ function symbol() external view returns (string memory);
             }
         }
     };
-    #[derive(serde::Serialize, serde::Deserialize)]
-    #[derive(Default, Debug, PartialEq, Eq, Hash)]
+    #[derive(
+        serde::Serialize,
+        serde::Deserialize,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
     /**Function with signature `totalSupply()` and selector `0x18160ddd`.
-```solidity
-function totalSupply() external view returns (uint256);
-```*/
-    #[allow(non_camel_case_types, non_snake_case, clippy::pub_underscore_fields)]
+    ```solidity
+    function totalSupply() external view returns (uint256);
+    ```*/
+    #[allow(
+        non_camel_case_types,
+        non_snake_case,
+        clippy::pub_underscore_fields
+    )]
     #[derive(Clone)]
     pub struct totalSupplyCall;
-    #[derive(serde::Serialize, serde::Deserialize)]
-    #[derive(Default, Debug, PartialEq, Eq, Hash)]
-    ///Container type for the return parameters of the [`totalSupply()`](totalSupplyCall) function.
-    #[allow(non_camel_case_types, non_snake_case, clippy::pub_underscore_fields)]
+    #[derive(
+        serde::Serialize,
+        serde::Deserialize,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
+    ///Container type for the return parameters of the
+    /// [`totalSupply()`](totalSupplyCall) function.
+    #[allow(
+        non_camel_case_types,
+        non_snake_case,
+        clippy::pub_underscore_fields
+    )]
     #[derive(Clone)]
     pub struct totalSupplyReturn {
         #[allow(missing_docs)]
@@ -1497,11 +1696,11 @@ function totalSupply() external view returns (uint256);
         }
         {
             #[doc(hidden)]
-            type UnderlyingSolTuple<'a> = (alloy::sol_types::sol_data::Uint<256>,);
+            type UnderlyingSolTuple<'a> =
+                (alloy::sol_types::sol_data::Uint<256>,);
             #[doc(hidden)]
-            type UnderlyingRustTuple<'a> = (
-                alloy::sol_types::private::primitives::aliases::U256,
-            );
+            type UnderlyingRustTuple<'a> =
+                (alloy::sol_types::private::primitives::aliases::U256,);
             #[cfg(test)]
             #[allow(dead_code, unreachable_patterns)]
             fn _type_assertion(
@@ -1531,14 +1730,12 @@ function totalSupply() external view returns (uint256);
         #[automatically_derived]
         impl alloy_sol_types::SolCall for totalSupplyCall {
             type Parameters<'a> = ();
-            type Token<'a> = <Self::Parameters<
-                'a,
-            > as alloy_sol_types::SolType>::Token<'a>;
+            type Token<'a> =
+                <Self::Parameters<'a> as alloy_sol_types::SolType>::Token<'a>;
             type Return = alloy::sol_types::private::primitives::aliases::U256;
             type ReturnTuple<'a> = (alloy::sol_types::sol_data::Uint<256>,);
-            type ReturnToken<'a> = <Self::ReturnTuple<
-                'a,
-            > as alloy_sol_types::SolType>::Token<'a>;
+            type ReturnToken<'a> =
+                <Self::ReturnTuple<'a> as alloy_sol_types::SolType>::Token<'a>;
             const SIGNATURE: &'static str = "totalSupply()";
             const SELECTOR: [u8; 4] = [24u8, 22u8, 13u8, 221u8];
             #[inline]
@@ -1560,7 +1757,9 @@ function totalSupply() external view returns (uint256);
                 )
             }
             #[inline]
-            fn abi_decode_returns(data: &[u8]) -> alloy_sol_types::Result<Self::Return> {
+            fn abi_decode_returns(
+                data: &[u8],
+            ) -> alloy_sol_types::Result<Self::Return> {
                 <Self::ReturnTuple<
                     '_,
                 > as alloy_sol_types::SolType>::abi_decode_sequence(data)
@@ -1583,13 +1782,24 @@ function totalSupply() external view returns (uint256);
             }
         }
     };
-    #[derive(serde::Serialize, serde::Deserialize)]
-    #[derive(Default, Debug, PartialEq, Eq, Hash)]
+    #[derive(
+        serde::Serialize,
+        serde::Deserialize,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
     /**Function with signature `transfer(address,uint256)` and selector `0xa9059cbb`.
-```solidity
-function transfer(address to, uint256 amount) external returns (bool);
-```*/
-    #[allow(non_camel_case_types, non_snake_case, clippy::pub_underscore_fields)]
+    ```solidity
+    function transfer(address to, uint256 amount) external returns (bool);
+    ```*/
+    #[allow(
+        non_camel_case_types,
+        non_snake_case,
+        clippy::pub_underscore_fields
+    )]
     #[derive(Clone)]
     pub struct transferCall {
         #[allow(missing_docs)]
@@ -1597,10 +1807,22 @@ function transfer(address to, uint256 amount) external returns (bool);
         #[allow(missing_docs)]
         pub amount: alloy::sol_types::private::primitives::aliases::U256,
     }
-    #[derive(serde::Serialize, serde::Deserialize)]
-    #[derive(Default, Debug, PartialEq, Eq, Hash)]
-    ///Container type for the return parameters of the [`transfer(address,uint256)`](transferCall) function.
-    #[allow(non_camel_case_types, non_snake_case, clippy::pub_underscore_fields)]
+    #[derive(
+        serde::Serialize,
+        serde::Deserialize,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
+    ///Container type for the return parameters of the
+    /// [`transfer(address,uint256)`](transferCall) function.
+    #[allow(
+        non_camel_case_types,
+        non_snake_case,
+        clippy::pub_underscore_fields
+    )]
     #[derive(Clone)]
     pub struct transferReturn {
         #[allow(missing_docs)]
@@ -1691,14 +1913,12 @@ function transfer(address to, uint256 amount) external returns (bool);
                 alloy::sol_types::sol_data::Address,
                 alloy::sol_types::sol_data::Uint<256>,
             );
-            type Token<'a> = <Self::Parameters<
-                'a,
-            > as alloy_sol_types::SolType>::Token<'a>;
+            type Token<'a> =
+                <Self::Parameters<'a> as alloy_sol_types::SolType>::Token<'a>;
             type Return = bool;
             type ReturnTuple<'a> = (alloy::sol_types::sol_data::Bool,);
-            type ReturnToken<'a> = <Self::ReturnTuple<
-                'a,
-            > as alloy_sol_types::SolType>::Token<'a>;
+            type ReturnToken<'a> =
+                <Self::ReturnTuple<'a> as alloy_sol_types::SolType>::Token<'a>;
             const SIGNATURE: &'static str = "transfer(address,uint256)";
             const SELECTOR: [u8; 4] = [169u8, 5u8, 156u8, 187u8];
             #[inline]
@@ -1727,7 +1947,9 @@ function transfer(address to, uint256 amount) external returns (bool);
                 )
             }
             #[inline]
-            fn abi_decode_returns(data: &[u8]) -> alloy_sol_types::Result<Self::Return> {
+            fn abi_decode_returns(
+                data: &[u8],
+            ) -> alloy_sol_types::Result<Self::Return> {
                 <Self::ReturnTuple<
                     '_,
                 > as alloy_sol_types::SolType>::abi_decode_sequence(data)
@@ -1750,13 +1972,24 @@ function transfer(address to, uint256 amount) external returns (bool);
             }
         }
     };
-    #[derive(serde::Serialize, serde::Deserialize)]
-    #[derive(Default, Debug, PartialEq, Eq, Hash)]
+    #[derive(
+        serde::Serialize,
+        serde::Deserialize,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
     /**Function with signature `transferFrom(address,address,uint256)` and selector `0x23b872dd`.
-```solidity
-function transferFrom(address from, address to, uint256 amount) external returns (bool);
-```*/
-    #[allow(non_camel_case_types, non_snake_case, clippy::pub_underscore_fields)]
+    ```solidity
+    function transferFrom(address from, address to, uint256 amount) external returns (bool);
+    ```*/
+    #[allow(
+        non_camel_case_types,
+        non_snake_case,
+        clippy::pub_underscore_fields
+    )]
     #[derive(Clone)]
     pub struct transferFromCall {
         #[allow(missing_docs)]
@@ -1766,10 +1999,22 @@ function transferFrom(address from, address to, uint256 amount) external returns
         #[allow(missing_docs)]
         pub amount: alloy::sol_types::private::primitives::aliases::U256,
     }
-    #[derive(serde::Serialize, serde::Deserialize)]
-    #[derive(Default, Debug, PartialEq, Eq, Hash)]
-    ///Container type for the return parameters of the [`transferFrom(address,address,uint256)`](transferFromCall) function.
-    #[allow(non_camel_case_types, non_snake_case, clippy::pub_underscore_fields)]
+    #[derive(
+        serde::Serialize,
+        serde::Deserialize,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
+    ///Container type for the return parameters of the
+    /// [`transferFrom(address,address,uint256)`](transferFromCall) function.
+    #[allow(
+        non_camel_case_types,
+        non_snake_case,
+        clippy::pub_underscore_fields
+    )]
     #[derive(Clone)]
     pub struct transferFromReturn {
         #[allow(missing_docs)]
@@ -1864,15 +2109,14 @@ function transferFrom(address from, address to, uint256 amount) external returns
                 alloy::sol_types::sol_data::Address,
                 alloy::sol_types::sol_data::Uint<256>,
             );
-            type Token<'a> = <Self::Parameters<
-                'a,
-            > as alloy_sol_types::SolType>::Token<'a>;
+            type Token<'a> =
+                <Self::Parameters<'a> as alloy_sol_types::SolType>::Token<'a>;
             type Return = bool;
             type ReturnTuple<'a> = (alloy::sol_types::sol_data::Bool,);
-            type ReturnToken<'a> = <Self::ReturnTuple<
-                'a,
-            > as alloy_sol_types::SolType>::Token<'a>;
-            const SIGNATURE: &'static str = "transferFrom(address,address,uint256)";
+            type ReturnToken<'a> =
+                <Self::ReturnTuple<'a> as alloy_sol_types::SolType>::Token<'a>;
+            const SIGNATURE: &'static str =
+                "transferFrom(address,address,uint256)";
             const SELECTOR: [u8; 4] = [35u8, 184u8, 114u8, 221u8];
             #[inline]
             fn new<'a>(
@@ -1903,7 +2147,9 @@ function transferFrom(address from, address to, uint256 amount) external returns
                 )
             }
             #[inline]
-            fn abi_decode_returns(data: &[u8]) -> alloy_sol_types::Result<Self::Return> {
+            fn abi_decode_returns(
+                data: &[u8],
+            ) -> alloy_sol_types::Result<Self::Return> {
                 <Self::ReturnTuple<
                     '_,
                 > as alloy_sol_types::SolType>::abi_decode_sequence(data)
@@ -1928,7 +2174,6 @@ function transferFrom(address from, address to, uint256 amount) external returns
     };
     ///Container for all the [`IERC20`](self) function calls.
     #[derive(serde::Serialize, serde::Deserialize)]
-    #[derive()]
     pub enum IERC20Calls {
         #[allow(missing_docs)]
         allowance(allowanceCall),
@@ -1953,8 +2198,9 @@ function transferFrom(address from, address to, uint256 amount) external returns
     impl IERC20Calls {
         /// All the selectors of this enum.
         ///
-        /// Note that the selectors might not be in the same order as the variants.
-        /// No guarantees are made about the order of the selectors.
+        /// Note that the selectors might not be in the same order as the
+        /// variants. No guarantees are made about the order of the
+        /// selectors.
         ///
         /// Prefer using `SolInterface` methods instead.
         pub const SELECTORS: &'static [[u8; 4usize]] = &[
@@ -1980,17 +2226,27 @@ function transferFrom(address from, address to, uint256 amount) external returns
                 Self::allowance(_) => {
                     <allowanceCall as alloy_sol_types::SolCall>::SELECTOR
                 }
-                Self::approve(_) => <approveCall as alloy_sol_types::SolCall>::SELECTOR,
+                Self::approve(_) => {
+                    <approveCall as alloy_sol_types::SolCall>::SELECTOR
+                }
                 Self::balanceOf(_) => {
                     <balanceOfCall as alloy_sol_types::SolCall>::SELECTOR
                 }
-                Self::decimals(_) => <decimalsCall as alloy_sol_types::SolCall>::SELECTOR,
-                Self::name(_) => <nameCall as alloy_sol_types::SolCall>::SELECTOR,
-                Self::symbol(_) => <symbolCall as alloy_sol_types::SolCall>::SELECTOR,
+                Self::decimals(_) => {
+                    <decimalsCall as alloy_sol_types::SolCall>::SELECTOR
+                }
+                Self::name(_) => {
+                    <nameCall as alloy_sol_types::SolCall>::SELECTOR
+                }
+                Self::symbol(_) => {
+                    <symbolCall as alloy_sol_types::SolCall>::SELECTOR
+                }
                 Self::totalSupply(_) => {
                     <totalSupplyCall as alloy_sol_types::SolCall>::SELECTOR
                 }
-                Self::transfer(_) => <transferCall as alloy_sol_types::SolCall>::SELECTOR,
+                Self::transfer(_) => {
+                    <transferCall as alloy_sol_types::SolCall>::SELECTOR
+                }
                 Self::transferFrom(_) => {
                     <transferFromCall as alloy_sol_types::SolCall>::SELECTOR
                 }
@@ -2010,23 +2266,39 @@ function transferFrom(address from, address to, uint256 amount) external returns
             selector: [u8; 4],
             data: &[u8],
         ) -> alloy_sol_types::Result<Self> {
-            static DECODE_SHIMS: &[fn(&[u8]) -> alloy_sol_types::Result<IERC20Calls>] = &[
+            static DECODE_SHIMS: &[fn(
+                &[u8],
+            )
+                -> alloy_sol_types::Result<
+                IERC20Calls,
+            >] = &[
                 {
-                    fn name(data: &[u8]) -> alloy_sol_types::Result<IERC20Calls> {
-                        <nameCall as alloy_sol_types::SolCall>::abi_decode_raw(data)
-                            .map(IERC20Calls::name)
+                    fn name(
+                        data: &[u8],
+                    ) -> alloy_sol_types::Result<IERC20Calls>
+                    {
+                        <nameCall as alloy_sol_types::SolCall>::abi_decode_raw(
+                            data,
+                        )
+                        .map(IERC20Calls::name)
                     }
                     name
                 },
                 {
-                    fn approve(data: &[u8]) -> alloy_sol_types::Result<IERC20Calls> {
+                    fn approve(
+                        data: &[u8],
+                    ) -> alloy_sol_types::Result<IERC20Calls>
+                    {
                         <approveCall as alloy_sol_types::SolCall>::abi_decode_raw(data)
                             .map(IERC20Calls::approve)
                     }
                     approve
                 },
                 {
-                    fn totalSupply(data: &[u8]) -> alloy_sol_types::Result<IERC20Calls> {
+                    fn totalSupply(
+                        data: &[u8],
+                    ) -> alloy_sol_types::Result<IERC20Calls>
+                    {
                         <totalSupplyCall as alloy_sol_types::SolCall>::abi_decode_raw(
                                 data,
                             )
@@ -2037,7 +2309,8 @@ function transferFrom(address from, address to, uint256 amount) external returns
                 {
                     fn transferFrom(
                         data: &[u8],
-                    ) -> alloy_sol_types::Result<IERC20Calls> {
+                    ) -> alloy_sol_types::Result<IERC20Calls>
+                    {
                         <transferFromCall as alloy_sol_types::SolCall>::abi_decode_raw(
                                 data,
                             )
@@ -2046,35 +2319,50 @@ function transferFrom(address from, address to, uint256 amount) external returns
                     transferFrom
                 },
                 {
-                    fn decimals(data: &[u8]) -> alloy_sol_types::Result<IERC20Calls> {
+                    fn decimals(
+                        data: &[u8],
+                    ) -> alloy_sol_types::Result<IERC20Calls>
+                    {
                         <decimalsCall as alloy_sol_types::SolCall>::abi_decode_raw(data)
                             .map(IERC20Calls::decimals)
                     }
                     decimals
                 },
                 {
-                    fn balanceOf(data: &[u8]) -> alloy_sol_types::Result<IERC20Calls> {
+                    fn balanceOf(
+                        data: &[u8],
+                    ) -> alloy_sol_types::Result<IERC20Calls>
+                    {
                         <balanceOfCall as alloy_sol_types::SolCall>::abi_decode_raw(data)
                             .map(IERC20Calls::balanceOf)
                     }
                     balanceOf
                 },
                 {
-                    fn symbol(data: &[u8]) -> alloy_sol_types::Result<IERC20Calls> {
+                    fn symbol(
+                        data: &[u8],
+                    ) -> alloy_sol_types::Result<IERC20Calls>
+                    {
                         <symbolCall as alloy_sol_types::SolCall>::abi_decode_raw(data)
                             .map(IERC20Calls::symbol)
                     }
                     symbol
                 },
                 {
-                    fn transfer(data: &[u8]) -> alloy_sol_types::Result<IERC20Calls> {
+                    fn transfer(
+                        data: &[u8],
+                    ) -> alloy_sol_types::Result<IERC20Calls>
+                    {
                         <transferCall as alloy_sol_types::SolCall>::abi_decode_raw(data)
                             .map(IERC20Calls::transfer)
                     }
                     transfer
                 },
                 {
-                    fn allowance(data: &[u8]) -> alloy_sol_types::Result<IERC20Calls> {
+                    fn allowance(
+                        data: &[u8],
+                    ) -> alloy_sol_types::Result<IERC20Calls>
+                    {
                         <allowanceCall as alloy_sol_types::SolCall>::abi_decode_raw(data)
                             .map(IERC20Calls::allowance)
                     }
@@ -2099,9 +2387,15 @@ function transferFrom(address from, address to, uint256 amount) external returns
         ) -> alloy_sol_types::Result<Self> {
             static DECODE_VALIDATE_SHIMS: &[fn(
                 &[u8],
-            ) -> alloy_sol_types::Result<IERC20Calls>] = &[
+            )
+                -> alloy_sol_types::Result<
+                IERC20Calls,
+            >] = &[
                 {
-                    fn name(data: &[u8]) -> alloy_sol_types::Result<IERC20Calls> {
+                    fn name(
+                        data: &[u8],
+                    ) -> alloy_sol_types::Result<IERC20Calls>
+                    {
                         <nameCall as alloy_sol_types::SolCall>::abi_decode_raw_validate(
                                 data,
                             )
@@ -2110,7 +2404,10 @@ function transferFrom(address from, address to, uint256 amount) external returns
                     name
                 },
                 {
-                    fn approve(data: &[u8]) -> alloy_sol_types::Result<IERC20Calls> {
+                    fn approve(
+                        data: &[u8],
+                    ) -> alloy_sol_types::Result<IERC20Calls>
+                    {
                         <approveCall as alloy_sol_types::SolCall>::abi_decode_raw_validate(
                                 data,
                             )
@@ -2119,7 +2416,10 @@ function transferFrom(address from, address to, uint256 amount) external returns
                     approve
                 },
                 {
-                    fn totalSupply(data: &[u8]) -> alloy_sol_types::Result<IERC20Calls> {
+                    fn totalSupply(
+                        data: &[u8],
+                    ) -> alloy_sol_types::Result<IERC20Calls>
+                    {
                         <totalSupplyCall as alloy_sol_types::SolCall>::abi_decode_raw_validate(
                                 data,
                             )
@@ -2130,7 +2430,8 @@ function transferFrom(address from, address to, uint256 amount) external returns
                 {
                     fn transferFrom(
                         data: &[u8],
-                    ) -> alloy_sol_types::Result<IERC20Calls> {
+                    ) -> alloy_sol_types::Result<IERC20Calls>
+                    {
                         <transferFromCall as alloy_sol_types::SolCall>::abi_decode_raw_validate(
                                 data,
                             )
@@ -2139,7 +2440,10 @@ function transferFrom(address from, address to, uint256 amount) external returns
                     transferFrom
                 },
                 {
-                    fn decimals(data: &[u8]) -> alloy_sol_types::Result<IERC20Calls> {
+                    fn decimals(
+                        data: &[u8],
+                    ) -> alloy_sol_types::Result<IERC20Calls>
+                    {
                         <decimalsCall as alloy_sol_types::SolCall>::abi_decode_raw_validate(
                                 data,
                             )
@@ -2148,7 +2452,10 @@ function transferFrom(address from, address to, uint256 amount) external returns
                     decimals
                 },
                 {
-                    fn balanceOf(data: &[u8]) -> alloy_sol_types::Result<IERC20Calls> {
+                    fn balanceOf(
+                        data: &[u8],
+                    ) -> alloy_sol_types::Result<IERC20Calls>
+                    {
                         <balanceOfCall as alloy_sol_types::SolCall>::abi_decode_raw_validate(
                                 data,
                             )
@@ -2157,7 +2464,10 @@ function transferFrom(address from, address to, uint256 amount) external returns
                     balanceOf
                 },
                 {
-                    fn symbol(data: &[u8]) -> alloy_sol_types::Result<IERC20Calls> {
+                    fn symbol(
+                        data: &[u8],
+                    ) -> alloy_sol_types::Result<IERC20Calls>
+                    {
                         <symbolCall as alloy_sol_types::SolCall>::abi_decode_raw_validate(
                                 data,
                             )
@@ -2166,7 +2476,10 @@ function transferFrom(address from, address to, uint256 amount) external returns
                     symbol
                 },
                 {
-                    fn transfer(data: &[u8]) -> alloy_sol_types::Result<IERC20Calls> {
+                    fn transfer(
+                        data: &[u8],
+                    ) -> alloy_sol_types::Result<IERC20Calls>
+                    {
                         <transferCall as alloy_sol_types::SolCall>::abi_decode_raw_validate(
                                 data,
                             )
@@ -2175,7 +2488,10 @@ function transferFrom(address from, address to, uint256 amount) external returns
                     transfer
                 },
                 {
-                    fn allowance(data: &[u8]) -> alloy_sol_types::Result<IERC20Calls> {
+                    fn allowance(
+                        data: &[u8],
+                    ) -> alloy_sol_types::Result<IERC20Calls>
+                    {
                         <allowanceCall as alloy_sol_types::SolCall>::abi_decode_raw_validate(
                                 data,
                             )
@@ -2282,8 +2598,9 @@ function transferFrom(address from, address to, uint256 amount) external returns
         }
     }
     ///Container for all the [`IERC20`](self) events.
-    #[derive(serde::Serialize, serde::Deserialize)]
-    #[derive(Debug, PartialEq, Eq, Hash)]
+    #[derive(
+        serde::Serialize, serde::Deserialize, Debug, PartialEq, Eq, Hash,
+    )]
     pub enum IERC20Events {
         #[allow(missing_docs)]
         Approval(Approval),
@@ -2294,20 +2611,23 @@ function transferFrom(address from, address to, uint256 amount) external returns
     impl IERC20Events {
         /// All the selectors of this enum.
         ///
-        /// Note that the selectors might not be in the same order as the variants.
-        /// No guarantees are made about the order of the selectors.
+        /// Note that the selectors might not be in the same order as the
+        /// variants. No guarantees are made about the order of the
+        /// selectors.
         ///
         /// Prefer using `SolInterface` methods instead.
         pub const SELECTORS: &'static [[u8; 32usize]] = &[
             [
-                140u8, 91u8, 225u8, 229u8, 235u8, 236u8, 125u8, 91u8, 209u8, 79u8, 113u8,
-                66u8, 125u8, 30u8, 132u8, 243u8, 221u8, 3u8, 20u8, 192u8, 247u8, 178u8,
-                41u8, 30u8, 91u8, 32u8, 10u8, 200u8, 199u8, 195u8, 185u8, 37u8,
+                140u8, 91u8, 225u8, 229u8, 235u8, 236u8, 125u8, 91u8, 209u8,
+                79u8, 113u8, 66u8, 125u8, 30u8, 132u8, 243u8, 221u8, 3u8, 20u8,
+                192u8, 247u8, 178u8, 41u8, 30u8, 91u8, 32u8, 10u8, 200u8,
+                199u8, 195u8, 185u8, 37u8,
             ],
             [
-                221u8, 242u8, 82u8, 173u8, 27u8, 226u8, 200u8, 155u8, 105u8, 194u8,
-                176u8, 104u8, 252u8, 55u8, 141u8, 170u8, 149u8, 43u8, 167u8, 241u8, 99u8,
-                196u8, 161u8, 22u8, 40u8, 245u8, 90u8, 77u8, 245u8, 35u8, 179u8, 239u8,
+                221u8, 242u8, 82u8, 173u8, 27u8, 226u8, 200u8, 155u8, 105u8,
+                194u8, 176u8, 104u8, 252u8, 55u8, 141u8, 170u8, 149u8, 43u8,
+                167u8, 241u8, 99u8, 196u8, 161u8, 22u8, 40u8, 245u8, 90u8,
+                77u8, 245u8, 35u8, 179u8, 239u8,
             ],
         ];
     }
@@ -2320,25 +2640,30 @@ function transferFrom(address from, address to, uint256 amount) external returns
             data: &[u8],
         ) -> alloy_sol_types::Result<Self> {
             match topics.first().copied() {
-                Some(<Approval as alloy_sol_types::SolEvent>::SIGNATURE_HASH) => {
-                    <Approval as alloy_sol_types::SolEvent>::decode_raw_log(topics, data)
-                        .map(Self::Approval)
-                }
-                Some(<Transfer as alloy_sol_types::SolEvent>::SIGNATURE_HASH) => {
-                    <Transfer as alloy_sol_types::SolEvent>::decode_raw_log(topics, data)
-                        .map(Self::Transfer)
-                }
-                _ => {
-                    alloy_sol_types::private::Err(alloy_sol_types::Error::InvalidLog {
-                        name: <Self as alloy_sol_types::SolEventInterface>::NAME,
+                Some(
+                    <Approval as alloy_sol_types::SolEvent>::SIGNATURE_HASH,
+                ) => <Approval as alloy_sol_types::SolEvent>::decode_raw_log(
+                    topics, data,
+                )
+                .map(Self::Approval),
+                Some(
+                    <Transfer as alloy_sol_types::SolEvent>::SIGNATURE_HASH,
+                ) => <Transfer as alloy_sol_types::SolEvent>::decode_raw_log(
+                    topics, data,
+                )
+                .map(Self::Transfer),
+                _ => alloy_sol_types::private::Err(
+                    alloy_sol_types::Error::InvalidLog {
+                        name:
+                            <Self as alloy_sol_types::SolEventInterface>::NAME,
                         log: alloy_sol_types::private::Box::new(
                             alloy_sol_types::private::LogData::new_unchecked(
                                 topics.to_vec(),
                                 data.to_vec().into(),
                             ),
                         ),
-                    })
-                }
+                    },
+                ),
             }
         }
     }
@@ -2368,19 +2693,22 @@ function transferFrom(address from, address to, uint256 amount) external returns
     use alloy::contract as alloy_contract;
     /**Creates a new wrapper around an on-chain [`IERC20`](self) contract instance.
 
-See the [wrapper's documentation](`IERC20Instance`) for more details.*/
+    See the [wrapper's documentation](`IERC20Instance`) for more details.*/
     #[inline]
     pub const fn new<
         P: alloy_contract::private::Provider<N>,
         N: alloy_contract::private::Network,
-    >(address: alloy_sol_types::private::Address, provider: P) -> IERC20Instance<P, N> {
+    >(
+        address: alloy_sol_types::private::Address,
+        provider: P,
+    ) -> IERC20Instance<P, N> {
         IERC20Instance::<P, N>::new(address, provider)
     }
     /**Deploys this contract using the given `provider` and constructor arguments, if any.
 
-Returns a new instance of the contract, if the deployment was successful.
+    Returns a new instance of the contract, if the deployment was successful.
 
-For more fine-grained control over the deployment process, use [`deploy_builder`] instead.*/
+    For more fine-grained control over the deployment process, use [`deploy_builder`] instead.*/
     #[inline]
     pub fn deploy<
         P: alloy_contract::private::Provider<N>,
@@ -2393,28 +2721,30 @@ For more fine-grained control over the deployment process, use [`deploy_builder`
         IERC20Instance::<P, N>::deploy(provider)
     }
     /**Creates a `RawCallBuilder` for deploying this contract using the given `provider`
-and constructor arguments, if any.
+    and constructor arguments, if any.
 
-This is a simple wrapper around creating a `RawCallBuilder` with the data set to
-the bytecode concatenated with the constructor's ABI-encoded arguments.*/
+    This is a simple wrapper around creating a `RawCallBuilder` with the data set to
+    the bytecode concatenated with the constructor's ABI-encoded arguments.*/
     #[inline]
     pub fn deploy_builder<
         P: alloy_contract::private::Provider<N>,
         N: alloy_contract::private::Network,
-    >(provider: P) -> alloy_contract::RawCallBuilder<P, N> {
+    >(
+        provider: P,
+    ) -> alloy_contract::RawCallBuilder<P, N> {
         IERC20Instance::<P, N>::deploy_builder(provider)
     }
     /**A [`IERC20`](self) instance.
 
-Contains type-safe methods for interacting with an on-chain instance of the
-[`IERC20`](self) contract located at a given `address`, using a given
-provider `P`.
+    Contains type-safe methods for interacting with an on-chain instance of the
+    [`IERC20`](self) contract located at a given `address`, using a given
+    provider `P`.
 
-If the contract bytecode is available (see the [`sol!`](alloy_sol_types::sol!)
-documentation on how to provide it), the `deploy` and `deploy_builder` methods can
-be used to deploy a new instance of the contract.
+    If the contract bytecode is available (see the [`sol!`](alloy_sol_types::sol!)
+    documentation on how to provide it), the `deploy` and `deploy_builder` methods can
+    be used to deploy a new instance of the contract.
 
-See the [module-level documentation](self) for all the available methods.*/
+    See the [module-level documentation](self) for all the available methods.*/
     #[derive(Clone)]
     pub struct IERC20Instance<P, N = alloy_contract::private::Ethereum> {
         address: alloy_sol_types::private::Address,
@@ -2424,19 +2754,25 @@ See the [module-level documentation](self) for all the available methods.*/
     #[automatically_derived]
     impl<P, N> ::core::fmt::Debug for IERC20Instance<P, N> {
         #[inline]
-        fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
-            f.debug_tuple("IERC20Instance").field(&self.address).finish()
+        fn fmt(
+            &self,
+            f: &mut ::core::fmt::Formatter<'_>,
+        ) -> ::core::fmt::Result {
+            f.debug_tuple("IERC20Instance")
+                .field(&self.address)
+                .finish()
         }
     }
     /// Instantiation and getters/setters.
     #[automatically_derived]
     impl<
-        P: alloy_contract::private::Provider<N>,
-        N: alloy_contract::private::Network,
-    > IERC20Instance<P, N> {
+            P: alloy_contract::private::Provider<N>,
+            N: alloy_contract::private::Network,
+        > IERC20Instance<P, N>
+    {
         /**Creates a new wrapper around an on-chain [`IERC20`](self) contract instance.
 
-See the [wrapper's documentation](`IERC20Instance`) for more details.*/
+        See the [wrapper's documentation](`IERC20Instance`) for more details.*/
         #[inline]
         pub const fn new(
             address: alloy_sol_types::private::Address,
@@ -2450,24 +2786,29 @@ See the [wrapper's documentation](`IERC20Instance`) for more details.*/
         }
         /**Deploys this contract using the given `provider` and constructor arguments, if any.
 
-Returns a new instance of the contract, if the deployment was successful.
+        Returns a new instance of the contract, if the deployment was successful.
 
-For more fine-grained control over the deployment process, use [`deploy_builder`] instead.*/
+        For more fine-grained control over the deployment process, use [`deploy_builder`] instead.*/
         #[inline]
         pub async fn deploy(
             provider: P,
         ) -> alloy_contract::Result<IERC20Instance<P, N>> {
             let call_builder = Self::deploy_builder(provider);
             let contract_address = call_builder.deploy().await?;
-            Ok(Self::new(contract_address, call_builder.provider))
+            Ok(Self::new(
+                contract_address,
+                call_builder.provider,
+            ))
         }
         /**Creates a `RawCallBuilder` for deploying this contract using the given `provider`
-and constructor arguments, if any.
+        and constructor arguments, if any.
 
-This is a simple wrapper around creating a `RawCallBuilder` with the data set to
-the bytecode concatenated with the constructor's ABI-encoded arguments.*/
+        This is a simple wrapper around creating a `RawCallBuilder` with the data set to
+        the bytecode concatenated with the constructor's ABI-encoded arguments.*/
         #[inline]
-        pub fn deploy_builder(provider: P) -> alloy_contract::RawCallBuilder<P, N> {
+        pub fn deploy_builder(
+            provider: P,
+        ) -> alloy_contract::RawCallBuilder<P, N> {
             alloy_contract::RawCallBuilder::new_raw_deploy(
                 provider,
                 ::core::clone::Clone::clone(&BYTECODE),
@@ -2480,11 +2821,17 @@ the bytecode concatenated with the constructor's ABI-encoded arguments.*/
         }
         /// Sets the address.
         #[inline]
-        pub fn set_address(&mut self, address: alloy_sol_types::private::Address) {
+        pub fn set_address(
+            &mut self,
+            address: alloy_sol_types::private::Address,
+        ) {
             self.address = address;
         }
         /// Sets the address and returns `self`.
-        pub fn at(mut self, address: alloy_sol_types::private::Address) -> Self {
+        pub fn at(
+            mut self,
+            address: alloy_sol_types::private::Address,
+        ) -> Self {
             self.set_address(address);
             self
         }
@@ -2495,7 +2842,8 @@ the bytecode concatenated with the constructor's ABI-encoded arguments.*/
         }
     }
     impl<P: ::core::clone::Clone, N> IERC20Instance<&P, N> {
-        /// Clones the provider and returns a new instance with the cloned provider.
+        /// Clones the provider and returns a new instance with the cloned
+        /// provider.
         #[inline]
         pub fn with_cloned_provider(self) -> IERC20Instance<P, N> {
             IERC20Instance {
@@ -2508,18 +2856,25 @@ the bytecode concatenated with the constructor's ABI-encoded arguments.*/
     /// Function calls.
     #[automatically_derived]
     impl<
-        P: alloy_contract::private::Provider<N>,
-        N: alloy_contract::private::Network,
-    > IERC20Instance<P, N> {
-        /// Creates a new call builder using this contract instance's provider and address.
+            P: alloy_contract::private::Provider<N>,
+            N: alloy_contract::private::Network,
+        > IERC20Instance<P, N>
+    {
+        /// Creates a new call builder using this contract instance's provider
+        /// and address.
         ///
-        /// Note that the call can be any function call, not just those defined in this
-        /// contract. Prefer using the other methods for building type-safe contract calls.
+        /// Note that the call can be any function call, not just those defined
+        /// in this contract. Prefer using the other methods for
+        /// building type-safe contract calls.
         pub fn call_builder<C: alloy_sol_types::SolCall>(
             &self,
             call: &C,
         ) -> alloy_contract::SolCallBuilder<&P, C, N> {
-            alloy_contract::SolCallBuilder::new_sol(&self.provider, &self.address, call)
+            alloy_contract::SolCallBuilder::new_sol(
+                &self.provider,
+                &self.address,
+                call,
+            )
         }
         ///Creates a new call builder for the [`allowance`] function.
         pub fn allowance(
@@ -2545,7 +2900,9 @@ the bytecode concatenated with the constructor's ABI-encoded arguments.*/
             self.call_builder(&balanceOfCall { account })
         }
         ///Creates a new call builder for the [`decimals`] function.
-        pub fn decimals(&self) -> alloy_contract::SolCallBuilder<&P, decimalsCall, N> {
+        pub fn decimals(
+            &self,
+        ) -> alloy_contract::SolCallBuilder<&P, decimalsCall, N> {
             self.call_builder(&decimalsCall)
         }
         ///Creates a new call builder for the [`name`] function.
@@ -2553,7 +2910,9 @@ the bytecode concatenated with the constructor's ABI-encoded arguments.*/
             self.call_builder(&nameCall)
         }
         ///Creates a new call builder for the [`symbol`] function.
-        pub fn symbol(&self) -> alloy_contract::SolCallBuilder<&P, symbolCall, N> {
+        pub fn symbol(
+            &self,
+        ) -> alloy_contract::SolCallBuilder<&P, symbolCall, N> {
             self.call_builder(&symbolCall)
         }
         ///Creates a new call builder for the [`totalSupply`] function.
@@ -2577,36 +2936,37 @@ the bytecode concatenated with the constructor's ABI-encoded arguments.*/
             to: alloy::sol_types::private::Address,
             amount: alloy::sol_types::private::primitives::aliases::U256,
         ) -> alloy_contract::SolCallBuilder<&P, transferFromCall, N> {
-            self.call_builder(
-                &transferFromCall {
-                    from,
-                    to,
-                    amount,
-                },
-            )
+            self.call_builder(&transferFromCall { from, to, amount })
         }
     }
     /// Event filters.
     #[automatically_derived]
     impl<
-        P: alloy_contract::private::Provider<N>,
-        N: alloy_contract::private::Network,
-    > IERC20Instance<P, N> {
-        /// Creates a new event filter using this contract instance's provider and address.
+            P: alloy_contract::private::Provider<N>,
+            N: alloy_contract::private::Network,
+        > IERC20Instance<P, N>
+    {
+        /// Creates a new event filter using this contract instance's provider
+        /// and address.
         ///
-        /// Note that the type can be any event, not just those defined in this contract.
-        /// Prefer using the other methods for building type-safe event filters.
+        /// Note that the type can be any event, not just those defined in this
+        /// contract. Prefer using the other methods for building
+        /// type-safe event filters.
         pub fn event_filter<E: alloy_sol_types::SolEvent>(
             &self,
         ) -> alloy_contract::Event<&P, E, N> {
             alloy_contract::Event::new_sol(&self.provider, &self.address)
         }
         ///Creates a new event filter for the [`Approval`] event.
-        pub fn Approval_filter(&self) -> alloy_contract::Event<&P, Approval, N> {
+        pub fn Approval_filter(
+            &self,
+        ) -> alloy_contract::Event<&P, Approval, N> {
             self.event_filter::<Approval>()
         }
         ///Creates a new event filter for the [`Transfer`] event.
-        pub fn Transfer_filter(&self) -> alloy_contract::Event<&P, Transfer, N> {
+        pub fn Transfer_filter(
+            &self,
+        ) -> alloy_contract::Event<&P, Transfer, N> {
             self.event_filter::<Transfer>()
         }
     }

@@ -92,8 +92,9 @@ interface ISwapRouter {
     clippy::empty_structs_with_brackets
 )]
 pub mod ISwapRouter {
-    use super::*;
     use alloy::sol_types as alloy_sol_types;
+
+    use super::*;
     /// The creation / init bytecode of the contract.
     ///
     /// ```text
@@ -114,12 +115,23 @@ pub mod ISwapRouter {
     pub static DEPLOYED_BYTECODE: alloy_sol_types::private::Bytes = alloy_sol_types::private::Bytes::from_static(
         b"",
     );
-    #[derive(serde::Serialize, serde::Deserialize)]
-    #[derive(Default, Debug, PartialEq, Eq, Hash)]
+    #[derive(
+        serde::Serialize,
+        serde::Deserialize,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
     /**```solidity
-struct ExactInputSingleParams { address tokenIn; address tokenOut; uint24 fee; address recipient; uint256 deadline; uint256 amountIn; uint256 amountOutMinimum; uint160 sqrtPriceLimitX96; }
-```*/
-    #[allow(non_camel_case_types, non_snake_case, clippy::pub_underscore_fields)]
+    struct ExactInputSingleParams { address tokenIn; address tokenOut; uint24 fee; address recipient; uint256 deadline; uint256 amountIn; uint256 amountOutMinimum; uint160 sqrtPriceLimitX96; }
+    ```*/
+    #[allow(
+        non_camel_case_types,
+        non_snake_case,
+        clippy::pub_underscore_fields
+    )]
     #[derive(Clone)]
     pub struct ExactInputSingleParams {
         #[allow(missing_docs)]
@@ -135,9 +147,11 @@ struct ExactInputSingleParams { address tokenIn; address tokenOut; uint24 fee; a
         #[allow(missing_docs)]
         pub amountIn: alloy::sol_types::private::primitives::aliases::U256,
         #[allow(missing_docs)]
-        pub amountOutMinimum: alloy::sol_types::private::primitives::aliases::U256,
+        pub amountOutMinimum:
+            alloy::sol_types::private::primitives::aliases::U256,
         #[allow(missing_docs)]
-        pub sqrtPriceLimitX96: alloy::sol_types::private::primitives::aliases::U160,
+        pub sqrtPriceLimitX96:
+            alloy::sol_types::private::primitives::aliases::U160,
     }
     #[allow(
         non_camel_case_types,
@@ -219,7 +233,9 @@ struct ExactInputSingleParams { address tokenIn; address tokenOut; uint24 fee; a
         #[automatically_derived]
         impl alloy_sol_types::private::SolTypeValue<Self> for ExactInputSingleParams {
             #[inline]
-            fn stv_to_tokens(&self) -> <Self as alloy_sol_types::SolType>::Token<'_> {
+            fn stv_to_tokens(
+                &self,
+            ) -> <Self as alloy_sol_types::SolType>::Token<'_> {
                 (
                     <alloy::sol_types::sol_data::Address as alloy_sol_types::SolType>::tokenize(
                         &self.tokenIn,
@@ -249,7 +265,9 @@ struct ExactInputSingleParams { address tokenIn; address tokenOut; uint24 fee; a
             }
             #[inline]
             fn stv_abi_encoded_size(&self) -> usize {
-                if let Some(size) = <Self as alloy_sol_types::SolType>::ENCODED_SIZE {
+                if let Some(size) =
+                    <Self as alloy_sol_types::SolType>::ENCODED_SIZE
+                {
                     return size;
                 }
                 let tuple = <UnderlyingRustTuple<
@@ -277,7 +295,9 @@ struct ExactInputSingleParams { address tokenIn; address tokenOut; uint24 fee; a
             }
             #[inline]
             fn stv_abi_packed_encoded_size(&self) -> usize {
-                if let Some(size) = <Self as alloy_sol_types::SolType>::PACKED_ENCODED_SIZE {
+                if let Some(size) =
+                    <Self as alloy_sol_types::SolType>::PACKED_ENCODED_SIZE
+                {
                     return size;
                 }
                 let tuple = <UnderlyingRustTuple<
@@ -291,10 +311,10 @@ struct ExactInputSingleParams { address tokenIn; address tokenOut; uint24 fee; a
         #[automatically_derived]
         impl alloy_sol_types::SolType for ExactInputSingleParams {
             type RustType = Self;
-            type Token<'a> = <UnderlyingSolTuple<
-                'a,
-            > as alloy_sol_types::SolType>::Token<'a>;
-            const SOL_NAME: &'static str = <Self as alloy_sol_types::SolStruct>::NAME;
+            type Token<'a> =
+                <UnderlyingSolTuple<'a> as alloy_sol_types::SolType>::Token<'a>;
+            const SOL_NAME: &'static str =
+                <Self as alloy_sol_types::SolStruct>::NAME;
             const ENCODED_SIZE: Option<usize> = <UnderlyingSolTuple<
                 '_,
             > as alloy_sol_types::SolType>::ENCODED_SIZE;
@@ -310,14 +330,17 @@ struct ExactInputSingleParams { address tokenIn; address tokenOut; uint24 fee; a
                 let tuple = <UnderlyingSolTuple<
                     '_,
                 > as alloy_sol_types::SolType>::detokenize(token);
-                <Self as ::core::convert::From<UnderlyingRustTuple<'_>>>::from(tuple)
+                <Self as ::core::convert::From<UnderlyingRustTuple<'_>>>::from(
+                    tuple,
+                )
             }
         }
         #[automatically_derived]
         impl alloy_sol_types::SolStruct for ExactInputSingleParams {
             const NAME: &'static str = "ExactInputSingleParams";
             #[inline]
-            fn eip712_root_type() -> alloy_sol_types::private::Cow<'static, str> {
+            fn eip712_root_type() -> alloy_sol_types::private::Cow<'static, str>
+            {
                 alloy_sol_types::private::Cow::Borrowed(
                     "ExactInputSingleParams(address tokenIn,address tokenOut,uint24 fee,address recipient,uint256 deadline,uint256 amountIn,uint256 amountOutMinimum,uint160 sqrtPriceLimitX96)",
                 )
@@ -329,7 +352,8 @@ struct ExactInputSingleParams { address tokenIn; address tokenOut; uint24 fee; a
                 alloy_sol_types::private::Vec::new()
             }
             #[inline]
-            fn eip712_encode_type() -> alloy_sol_types::private::Cow<'static, str> {
+            fn eip712_encode_type(
+            ) -> alloy_sol_types::private::Cow<'static, str> {
                 <Self as alloy_sol_types::SolStruct>::eip712_root_type()
             }
             #[inline]
@@ -467,8 +491,7 @@ struct ExactInputSingleParams { address tokenIn; address tokenOut; uint24 fee; a
             ) -> alloy_sol_types::abi::token::WordToken {
                 let mut out = alloy_sol_types::private::Vec::new();
                 <Self as alloy_sol_types::EventTopic>::encode_topic_preimage(
-                    rust,
-                    &mut out,
+                    rust, &mut out,
                 );
                 alloy_sol_types::abi::token::WordToken(
                     alloy_sol_types::private::keccak256(out),
@@ -476,22 +499,47 @@ struct ExactInputSingleParams { address tokenIn; address tokenOut; uint24 fee; a
             }
         }
     };
-    #[derive(serde::Serialize, serde::Deserialize)]
-    #[derive(Default, Debug, PartialEq, Eq, Hash)]
+    #[derive(
+        serde::Serialize,
+        serde::Deserialize,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
     /**Function with signature `exactInputSingle((address,address,uint24,address,uint256,uint256,uint256,uint160))` and selector `0x414bf389`.
-```solidity
-function exactInputSingle(ExactInputSingleParams memory params) external payable returns (uint256 amountOut);
-```*/
-    #[allow(non_camel_case_types, non_snake_case, clippy::pub_underscore_fields)]
+    ```solidity
+    function exactInputSingle(ExactInputSingleParams memory params) external payable returns (uint256 amountOut);
+    ```*/
+    #[allow(
+        non_camel_case_types,
+        non_snake_case,
+        clippy::pub_underscore_fields
+    )]
     #[derive(Clone)]
     pub struct exactInputSingleCall {
         #[allow(missing_docs)]
-        pub params: <ExactInputSingleParams as alloy::sol_types::SolType>::RustType,
+        pub params:
+            <ExactInputSingleParams as alloy::sol_types::SolType>::RustType,
     }
-    #[derive(serde::Serialize, serde::Deserialize)]
-    #[derive(Default, Debug, PartialEq, Eq, Hash)]
-    ///Container type for the return parameters of the [`exactInputSingle((address,address,uint24,address,uint256,uint256,uint256,uint160))`](exactInputSingleCall) function.
-    #[allow(non_camel_case_types, non_snake_case, clippy::pub_underscore_fields)]
+    #[derive(
+        serde::Serialize,
+        serde::Deserialize,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
+    ///Container type for the return parameters of the
+    /// [`exactInputSingle((address,address,uint24,address,uint256,uint256,
+    /// uint256,uint160))`](exactInputSingleCall) function.
+    #[allow(
+        non_camel_case_types,
+        non_snake_case,
+        clippy::pub_underscore_fields
+    )]
     #[derive(Clone)]
     pub struct exactInputSingleReturn {
         #[allow(missing_docs)]
@@ -525,16 +573,14 @@ function exactInputSingle(ExactInputSingleParams memory params) external payable
             }
             #[automatically_derived]
             #[doc(hidden)]
-            impl ::core::convert::From<exactInputSingleCall>
-            for UnderlyingRustTuple<'_> {
+            impl ::core::convert::From<exactInputSingleCall> for UnderlyingRustTuple<'_> {
                 fn from(value: exactInputSingleCall) -> Self {
                     (value.params,)
                 }
             }
             #[automatically_derived]
             #[doc(hidden)]
-            impl ::core::convert::From<UnderlyingRustTuple<'_>>
-            for exactInputSingleCall {
+            impl ::core::convert::From<UnderlyingRustTuple<'_>> for exactInputSingleCall {
                 fn from(tuple: UnderlyingRustTuple<'_>) -> Self {
                     Self { params: tuple.0 }
                 }
@@ -542,11 +588,11 @@ function exactInputSingle(ExactInputSingleParams memory params) external payable
         }
         {
             #[doc(hidden)]
-            type UnderlyingSolTuple<'a> = (alloy::sol_types::sol_data::Uint<256>,);
+            type UnderlyingSolTuple<'a> =
+                (alloy::sol_types::sol_data::Uint<256>,);
             #[doc(hidden)]
-            type UnderlyingRustTuple<'a> = (
-                alloy::sol_types::private::primitives::aliases::U256,
-            );
+            type UnderlyingRustTuple<'a> =
+                (alloy::sol_types::private::primitives::aliases::U256,);
             #[cfg(test)]
             #[allow(dead_code, unreachable_patterns)]
             fn _type_assertion(
@@ -560,16 +606,14 @@ function exactInputSingle(ExactInputSingleParams memory params) external payable
             }
             #[automatically_derived]
             #[doc(hidden)]
-            impl ::core::convert::From<exactInputSingleReturn>
-            for UnderlyingRustTuple<'_> {
+            impl ::core::convert::From<exactInputSingleReturn> for UnderlyingRustTuple<'_> {
                 fn from(value: exactInputSingleReturn) -> Self {
                     (value.amountOut,)
                 }
             }
             #[automatically_derived]
             #[doc(hidden)]
-            impl ::core::convert::From<UnderlyingRustTuple<'_>>
-            for exactInputSingleReturn {
+            impl ::core::convert::From<UnderlyingRustTuple<'_>> for exactInputSingleReturn {
                 fn from(tuple: UnderlyingRustTuple<'_>) -> Self {
                     Self { amountOut: tuple.0 }
                 }
@@ -578,14 +622,12 @@ function exactInputSingle(ExactInputSingleParams memory params) external payable
         #[automatically_derived]
         impl alloy_sol_types::SolCall for exactInputSingleCall {
             type Parameters<'a> = (ExactInputSingleParams,);
-            type Token<'a> = <Self::Parameters<
-                'a,
-            > as alloy_sol_types::SolType>::Token<'a>;
+            type Token<'a> =
+                <Self::Parameters<'a> as alloy_sol_types::SolType>::Token<'a>;
             type Return = alloy::sol_types::private::primitives::aliases::U256;
             type ReturnTuple<'a> = (alloy::sol_types::sol_data::Uint<256>,);
-            type ReturnToken<'a> = <Self::ReturnTuple<
-                'a,
-            > as alloy_sol_types::SolType>::Token<'a>;
+            type ReturnToken<'a> =
+                <Self::ReturnTuple<'a> as alloy_sol_types::SolType>::Token<'a>;
             const SIGNATURE: &'static str = "exactInputSingle((address,address,uint24,address,uint256,uint256,uint256,uint160))";
             const SELECTOR: [u8; 4] = [65u8, 75u8, 243u8, 137u8];
             #[inline]
@@ -611,7 +653,9 @@ function exactInputSingle(ExactInputSingleParams memory params) external payable
                 )
             }
             #[inline]
-            fn abi_decode_returns(data: &[u8]) -> alloy_sol_types::Result<Self::Return> {
+            fn abi_decode_returns(
+                data: &[u8],
+            ) -> alloy_sol_types::Result<Self::Return> {
                 <Self::ReturnTuple<
                     '_,
                 > as alloy_sol_types::SolType>::abi_decode_sequence(data)
@@ -636,7 +680,6 @@ function exactInputSingle(ExactInputSingleParams memory params) external payable
     };
     ///Container for all the [`ISwapRouter`](self) function calls.
     #[derive(serde::Serialize, serde::Deserialize)]
-    #[derive()]
     pub enum ISwapRouterCalls {
         #[allow(missing_docs)]
         exactInputSingle(exactInputSingleCall),
@@ -645,11 +688,13 @@ function exactInputSingle(ExactInputSingleParams memory params) external payable
     impl ISwapRouterCalls {
         /// All the selectors of this enum.
         ///
-        /// Note that the selectors might not be in the same order as the variants.
-        /// No guarantees are made about the order of the selectors.
+        /// Note that the selectors might not be in the same order as the
+        /// variants. No guarantees are made about the order of the
+        /// selectors.
         ///
         /// Prefer using `SolInterface` methods instead.
-        pub const SELECTORS: &'static [[u8; 4usize]] = &[[65u8, 75u8, 243u8, 137u8]];
+        pub const SELECTORS: &'static [[u8; 4usize]] =
+            &[[65u8, 75u8, 243u8, 137u8]];
     }
     #[automatically_derived]
     impl alloy_sol_types::SolInterface for ISwapRouterCalls {
@@ -680,19 +725,20 @@ function exactInputSingle(ExactInputSingleParams memory params) external payable
         ) -> alloy_sol_types::Result<Self> {
             static DECODE_SHIMS: &[fn(
                 &[u8],
-            ) -> alloy_sol_types::Result<ISwapRouterCalls>] = &[
-                {
-                    fn exactInputSingle(
-                        data: &[u8],
-                    ) -> alloy_sol_types::Result<ISwapRouterCalls> {
-                        <exactInputSingleCall as alloy_sol_types::SolCall>::abi_decode_raw(
+            )
+                -> alloy_sol_types::Result<
+                ISwapRouterCalls,
+            >] = &[{
+                fn exactInputSingle(
+                    data: &[u8],
+                ) -> alloy_sol_types::Result<ISwapRouterCalls> {
+                    <exactInputSingleCall as alloy_sol_types::SolCall>::abi_decode_raw(
                                 data,
                             )
                             .map(ISwapRouterCalls::exactInputSingle)
-                    }
-                    exactInputSingle
-                },
-            ];
+                }
+                exactInputSingle
+            }];
             let Ok(idx) = Self::SELECTORS.binary_search(&selector) else {
                 return Err(
                     alloy_sol_types::Error::unknown_selector(
@@ -711,19 +757,20 @@ function exactInputSingle(ExactInputSingleParams memory params) external payable
         ) -> alloy_sol_types::Result<Self> {
             static DECODE_VALIDATE_SHIMS: &[fn(
                 &[u8],
-            ) -> alloy_sol_types::Result<ISwapRouterCalls>] = &[
-                {
-                    fn exactInputSingle(
-                        data: &[u8],
-                    ) -> alloy_sol_types::Result<ISwapRouterCalls> {
-                        <exactInputSingleCall as alloy_sol_types::SolCall>::abi_decode_raw_validate(
+            )
+                -> alloy_sol_types::Result<
+                ISwapRouterCalls,
+            >] = &[{
+                fn exactInputSingle(
+                    data: &[u8],
+                ) -> alloy_sol_types::Result<ISwapRouterCalls> {
+                    <exactInputSingleCall as alloy_sol_types::SolCall>::abi_decode_raw_validate(
                                 data,
                             )
                             .map(ISwapRouterCalls::exactInputSingle)
-                    }
-                    exactInputSingle
-                },
-            ];
+                }
+                exactInputSingle
+            }];
             let Ok(idx) = Self::SELECTORS.binary_search(&selector) else {
                 return Err(
                     alloy_sol_types::Error::unknown_selector(
@@ -759,7 +806,7 @@ function exactInputSingle(ExactInputSingleParams memory params) external payable
     use alloy::contract as alloy_contract;
     /**Creates a new wrapper around an on-chain [`ISwapRouter`](self) contract instance.
 
-See the [wrapper's documentation](`ISwapRouterInstance`) for more details.*/
+    See the [wrapper's documentation](`ISwapRouterInstance`) for more details.*/
     #[inline]
     pub const fn new<
         P: alloy_contract::private::Provider<N>,
@@ -772,9 +819,9 @@ See the [wrapper's documentation](`ISwapRouterInstance`) for more details.*/
     }
     /**Deploys this contract using the given `provider` and constructor arguments, if any.
 
-Returns a new instance of the contract, if the deployment was successful.
+    Returns a new instance of the contract, if the deployment was successful.
 
-For more fine-grained control over the deployment process, use [`deploy_builder`] instead.*/
+    For more fine-grained control over the deployment process, use [`deploy_builder`] instead.*/
     #[inline]
     pub fn deploy<
         P: alloy_contract::private::Provider<N>,
@@ -787,28 +834,30 @@ For more fine-grained control over the deployment process, use [`deploy_builder`
         ISwapRouterInstance::<P, N>::deploy(provider)
     }
     /**Creates a `RawCallBuilder` for deploying this contract using the given `provider`
-and constructor arguments, if any.
+    and constructor arguments, if any.
 
-This is a simple wrapper around creating a `RawCallBuilder` with the data set to
-the bytecode concatenated with the constructor's ABI-encoded arguments.*/
+    This is a simple wrapper around creating a `RawCallBuilder` with the data set to
+    the bytecode concatenated with the constructor's ABI-encoded arguments.*/
     #[inline]
     pub fn deploy_builder<
         P: alloy_contract::private::Provider<N>,
         N: alloy_contract::private::Network,
-    >(provider: P) -> alloy_contract::RawCallBuilder<P, N> {
+    >(
+        provider: P,
+    ) -> alloy_contract::RawCallBuilder<P, N> {
         ISwapRouterInstance::<P, N>::deploy_builder(provider)
     }
     /**A [`ISwapRouter`](self) instance.
 
-Contains type-safe methods for interacting with an on-chain instance of the
-[`ISwapRouter`](self) contract located at a given `address`, using a given
-provider `P`.
+    Contains type-safe methods for interacting with an on-chain instance of the
+    [`ISwapRouter`](self) contract located at a given `address`, using a given
+    provider `P`.
 
-If the contract bytecode is available (see the [`sol!`](alloy_sol_types::sol!)
-documentation on how to provide it), the `deploy` and `deploy_builder` methods can
-be used to deploy a new instance of the contract.
+    If the contract bytecode is available (see the [`sol!`](alloy_sol_types::sol!)
+    documentation on how to provide it), the `deploy` and `deploy_builder` methods can
+    be used to deploy a new instance of the contract.
 
-See the [module-level documentation](self) for all the available methods.*/
+    See the [module-level documentation](self) for all the available methods.*/
     #[derive(Clone)]
     pub struct ISwapRouterInstance<P, N = alloy_contract::private::Ethereum> {
         address: alloy_sol_types::private::Address,
@@ -818,19 +867,25 @@ See the [module-level documentation](self) for all the available methods.*/
     #[automatically_derived]
     impl<P, N> ::core::fmt::Debug for ISwapRouterInstance<P, N> {
         #[inline]
-        fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
-            f.debug_tuple("ISwapRouterInstance").field(&self.address).finish()
+        fn fmt(
+            &self,
+            f: &mut ::core::fmt::Formatter<'_>,
+        ) -> ::core::fmt::Result {
+            f.debug_tuple("ISwapRouterInstance")
+                .field(&self.address)
+                .finish()
         }
     }
     /// Instantiation and getters/setters.
     #[automatically_derived]
     impl<
-        P: alloy_contract::private::Provider<N>,
-        N: alloy_contract::private::Network,
-    > ISwapRouterInstance<P, N> {
+            P: alloy_contract::private::Provider<N>,
+            N: alloy_contract::private::Network,
+        > ISwapRouterInstance<P, N>
+    {
         /**Creates a new wrapper around an on-chain [`ISwapRouter`](self) contract instance.
 
-See the [wrapper's documentation](`ISwapRouterInstance`) for more details.*/
+        See the [wrapper's documentation](`ISwapRouterInstance`) for more details.*/
         #[inline]
         pub const fn new(
             address: alloy_sol_types::private::Address,
@@ -844,24 +899,29 @@ See the [wrapper's documentation](`ISwapRouterInstance`) for more details.*/
         }
         /**Deploys this contract using the given `provider` and constructor arguments, if any.
 
-Returns a new instance of the contract, if the deployment was successful.
+        Returns a new instance of the contract, if the deployment was successful.
 
-For more fine-grained control over the deployment process, use [`deploy_builder`] instead.*/
+        For more fine-grained control over the deployment process, use [`deploy_builder`] instead.*/
         #[inline]
         pub async fn deploy(
             provider: P,
         ) -> alloy_contract::Result<ISwapRouterInstance<P, N>> {
             let call_builder = Self::deploy_builder(provider);
             let contract_address = call_builder.deploy().await?;
-            Ok(Self::new(contract_address, call_builder.provider))
+            Ok(Self::new(
+                contract_address,
+                call_builder.provider,
+            ))
         }
         /**Creates a `RawCallBuilder` for deploying this contract using the given `provider`
-and constructor arguments, if any.
+        and constructor arguments, if any.
 
-This is a simple wrapper around creating a `RawCallBuilder` with the data set to
-the bytecode concatenated with the constructor's ABI-encoded arguments.*/
+        This is a simple wrapper around creating a `RawCallBuilder` with the data set to
+        the bytecode concatenated with the constructor's ABI-encoded arguments.*/
         #[inline]
-        pub fn deploy_builder(provider: P) -> alloy_contract::RawCallBuilder<P, N> {
+        pub fn deploy_builder(
+            provider: P,
+        ) -> alloy_contract::RawCallBuilder<P, N> {
             alloy_contract::RawCallBuilder::new_raw_deploy(
                 provider,
                 ::core::clone::Clone::clone(&BYTECODE),
@@ -874,11 +934,17 @@ the bytecode concatenated with the constructor's ABI-encoded arguments.*/
         }
         /// Sets the address.
         #[inline]
-        pub fn set_address(&mut self, address: alloy_sol_types::private::Address) {
+        pub fn set_address(
+            &mut self,
+            address: alloy_sol_types::private::Address,
+        ) {
             self.address = address;
         }
         /// Sets the address and returns `self`.
-        pub fn at(mut self, address: alloy_sol_types::private::Address) -> Self {
+        pub fn at(
+            mut self,
+            address: alloy_sol_types::private::Address,
+        ) -> Self {
             self.set_address(address);
             self
         }
@@ -889,7 +955,8 @@ the bytecode concatenated with the constructor's ABI-encoded arguments.*/
         }
     }
     impl<P: ::core::clone::Clone, N> ISwapRouterInstance<&P, N> {
-        /// Clones the provider and returns a new instance with the cloned provider.
+        /// Clones the provider and returns a new instance with the cloned
+        /// provider.
         #[inline]
         pub fn with_cloned_provider(self) -> ISwapRouterInstance<P, N> {
             ISwapRouterInstance {
@@ -902,37 +969,48 @@ the bytecode concatenated with the constructor's ABI-encoded arguments.*/
     /// Function calls.
     #[automatically_derived]
     impl<
-        P: alloy_contract::private::Provider<N>,
-        N: alloy_contract::private::Network,
-    > ISwapRouterInstance<P, N> {
-        /// Creates a new call builder using this contract instance's provider and address.
+            P: alloy_contract::private::Provider<N>,
+            N: alloy_contract::private::Network,
+        > ISwapRouterInstance<P, N>
+    {
+        /// Creates a new call builder using this contract instance's provider
+        /// and address.
         ///
-        /// Note that the call can be any function call, not just those defined in this
-        /// contract. Prefer using the other methods for building type-safe contract calls.
+        /// Note that the call can be any function call, not just those defined
+        /// in this contract. Prefer using the other methods for
+        /// building type-safe contract calls.
         pub fn call_builder<C: alloy_sol_types::SolCall>(
             &self,
             call: &C,
         ) -> alloy_contract::SolCallBuilder<&P, C, N> {
-            alloy_contract::SolCallBuilder::new_sol(&self.provider, &self.address, call)
+            alloy_contract::SolCallBuilder::new_sol(
+                &self.provider,
+                &self.address,
+                call,
+            )
         }
         ///Creates a new call builder for the [`exactInputSingle`] function.
         pub fn exactInputSingle(
             &self,
             params: <ExactInputSingleParams as alloy::sol_types::SolType>::RustType,
-        ) -> alloy_contract::SolCallBuilder<&P, exactInputSingleCall, N> {
+        ) -> alloy_contract::SolCallBuilder<&P, exactInputSingleCall, N>
+        {
             self.call_builder(&exactInputSingleCall { params })
         }
     }
     /// Event filters.
     #[automatically_derived]
     impl<
-        P: alloy_contract::private::Provider<N>,
-        N: alloy_contract::private::Network,
-    > ISwapRouterInstance<P, N> {
-        /// Creates a new event filter using this contract instance's provider and address.
+            P: alloy_contract::private::Provider<N>,
+            N: alloy_contract::private::Network,
+        > ISwapRouterInstance<P, N>
+    {
+        /// Creates a new event filter using this contract instance's provider
+        /// and address.
         ///
-        /// Note that the type can be any event, not just those defined in this contract.
-        /// Prefer using the other methods for building type-safe event filters.
+        /// Note that the type can be any event, not just those defined in this
+        /// contract. Prefer using the other methods for building
+        /// type-safe event filters.
         pub fn event_filter<E: alloy_sol_types::SolEvent>(
             &self,
         ) -> alloy_contract::Event<&P, E, N> {

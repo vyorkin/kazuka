@@ -30,6 +30,9 @@ test crate:
 test-all:
   cargo nextest run --all-features --no-fail-fast --workspace --locked
 
+cargo-fmt:
+  cargo fmt --all
+
 lint crate:
   cargo clippy -p {{crate}}
 

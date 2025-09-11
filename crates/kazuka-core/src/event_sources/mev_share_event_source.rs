@@ -10,7 +10,8 @@ use crate::{
 pub type MevShareEvent = kazuka_mev_share::sse::Event;
 
 /// Streams from MEV-Share SSE endpoint and
-/// generates [events](Event), which return tx hash, logs, and bundled txs.
+/// generates [events](MevShareEvent), which return tx hash, logs,
+/// and bundled txs.
 pub struct MevShareEventSource {
     mev_share_sse_url: String,
 }

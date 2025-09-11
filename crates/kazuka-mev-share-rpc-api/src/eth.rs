@@ -1,13 +1,11 @@
 #[cfg(feature = "client")]
 use alloy::rpc::types::mev::{
     EthCallBundle, EthCallBundleTransactionResult, EthCancelBundle,
-    EthSendBundle,
+    EthCancelPrivateTransaction, EthSendBundle, EthSendPrivateTransaction,
 };
 use alloy::{
+    self,
     primitives::{B256, Bytes},
-    rpc::types::mev::{
-        CancelPrivateTransactionRequest, PrivateTransactionRequest,
-    },
 };
 use async_trait::async_trait;
 use jsonrpsee::{core::ClientError, proc_macros::rpc};
@@ -70,7 +68,7 @@ mod rpc {
         #[method(name = "sendPrivateTransaction")]
         async fn send_private_transaction(
             &self,
-            request: PrivateTransactionRequest,
+            request: EthSendPrivateTransaction,
         ) -> RpcResult<B256>;
 
         /// The `eth_sendPrivateRawTransaction` method is used to send private
@@ -93,7 +91,7 @@ mod rpc {
         #[method(name = "cancelPrivateTransaction")]
         async fn cancel_private_transaction(
             &self,
-            request: CancelPrivateTransactionRequest,
+            request: EthCancelPrivateTransaction,
         ) -> RpcResult<bool>;
     }
 }
@@ -136,7 +134,7 @@ pub trait EthBundleApiClient {
     /// See [Private Transactions](https://docs.flashbots.net/flashbots-protect/additional-documentation/eth-sendPrivateTransaction) for more info.
     async fn send_private_transaction(
         &self,
-        request: PrivateTransactionRequest,
+        request: EthSendPrivateTransaction,
     ) -> Result<B256, ClientError>;
 
     /// The `eth_sendPrivateRawTransaction` method is used to send private
@@ -157,7 +155,7 @@ pub trait EthBundleApiClient {
     /// the transaction in first place.
     async fn cancel_private_transaction(
         &self,
-        request: CancelPrivateTransactionRequest,
+        request: EthCancelPrivateTransaction,
     ) -> Result<bool, ClientError>;
 }
 
@@ -194,7 +192,7 @@ where
     #[instrument(skip(self))]
     async fn send_private_transaction(
         &self,
-        request: PrivateTransactionRequest,
+        request: EthSendPrivateTransaction,
     ) -> Result<B256, ClientError> {
         rpc::EthBundleApiClient::send_private_transaction(self, request).await
     }
@@ -210,7 +208,7 @@ where
     #[instrument(skip(self))]
     async fn cancel_private_transaction(
         &self,
-        request: CancelPrivateTransactionRequest,
+        request: EthCancelPrivateTransaction,
     ) -> Result<bool, ClientError> {
         rpc::EthBundleApiClient::cancel_private_transaction(self, request).await
     }
@@ -279,7 +277,7 @@ mod tests {
         #[method(name = "sendPrivateTransaction")]
         async fn send_private_transaction(
             &self,
-            request: PrivateTransactionRequest,
+            request: EthSendPrivateTransaction,
         ) -> RpcResult<B256>;
 
         #[method(name = "sendPrivateRawTransaction")]
@@ -291,7 +289,7 @@ mod tests {
         #[method(name = "cancelPrivateTransaction")]
         async fn cancel_private_transaction(
             &self,
-            request: CancelPrivateTransactionRequest,
+            request: EthCancelPrivateTransaction,
         ) -> RpcResult<bool>;
     }
 
@@ -343,7 +341,7 @@ mod tests {
 
         async fn send_private_transaction(
             &self,
-            _request: PrivateTransactionRequest,
+            _request: EthSendPrivateTransaction,
         ) -> RpcResult<B256> {
             Ok(b256!(
                 "0x1111111111111111111111111111111111111111111111111111111111111111"
@@ -361,7 +359,7 @@ mod tests {
 
         async fn cancel_private_transaction(
             &self,
-            _request: CancelPrivateTransactionRequest,
+            _request: EthCancelPrivateTransaction,
         ) -> RpcResult<bool> {
             Ok(true)
         }

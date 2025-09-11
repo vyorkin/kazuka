@@ -77,28 +77,32 @@ pub struct EventTransaction {
     #[serde(rename = "maxPriorityFeePerGas")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub max_priority_fee_per_gas: Option<U256>,
-    /// Transaction nonce.
-    #[serde(deserialize_with = "hex_to_option_unsigned")]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub nonce: Option<u64>,
-    /// Transaction chain ID.
-    #[serde(rename = "chainId")]
-    #[serde(deserialize_with = "hex_to_option_unsigned")]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub chain_id: Option<u64>,
-    /// Transaction access list.
+
+    ///// Transaction nonce.
+    // #[serde(deserialize_with = "hex_to_option_unsigned")]
+    // #[serde(skip_serializing_if = "Option::is_none")]
+    // pub nonce: Option<u64>,
+
+    ///// Transaction chain ID.
+    // #[serde(rename = "chainId")]
+    // #[serde(deserialize_with = "hex_to_option_unsigned")]
+    // #[serde(skip_serializing_if = "Option::is_none")]
+    // pub chain_id: Option<u64>,
+
+    //// Transaction access list.
     #[serde(rename = "accessList")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub access_list: Option<Vec<AccessListEntry>>,
-    /// Transaction gas limit.
-    #[serde(deserialize_with = "hex_to_option_unsigned")]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub gas: Option<u64>,
-    /// Transaction type.
-    #[serde(rename = "type")]
-    #[serde(deserialize_with = "hex_to_option_unsigned")]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub tx_type: Option<u64>,
+    ///// Transaction gas limit.
+    // #[serde(deserialize_with = "hex_to_option_unsigned")]
+    // #[serde(skip_serializing_if = "Option::is_none")]
+    // pub gas: Option<u64>,
+
+    ///// Transaction type.
+    // #[serde(rename = "type")]
+    // #[serde(deserialize_with = "hex_to_option_unsigned")]
+    // #[serde(skip_serializing_if = "Option::is_none")]
+    // pub tx_type: Option<u64>,
 }
 
 /// Contains address and storage slots accessed by transaction.

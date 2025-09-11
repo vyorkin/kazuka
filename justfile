@@ -3,6 +3,15 @@ set dotenv-load
 mainnet_rpc_url := env_var("ALCHEMY_ETHEREUM_MAINNET_RPC_URL")
 fork_block_number := env_var("FORK_BLOCK_NUMBER")
 
+dry-run:
+  cargo run -p kazuka-simple-arbitrage -- \
+    --wss wss://eth-mainnet.g.alchemy.com/v2/of6EFa23b8xACXtwCtQ4zuYUK7YBdksL \
+    --tx-signer-pk 0x81a3295e998ff7a5a0044966f094a389dc9e8600e88c7a8412f1603b6b78690d \
+    --flashbots-signer-pk 0xdb01911a12111725c00a4966f222b222dc9e86da980c7a8412fa60cb6b78690d \
+    --signer-pk=0x \
+    --arb-contract-address 0xdAC17F958D2ee523a2206206994597C13D831ec7 \
+    --dry-run
+
 contracts:
   just forge kazuka-mev-share-arbitrage
 

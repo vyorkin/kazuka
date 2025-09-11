@@ -1,7 +1,7 @@
 use std::{collections::HashMap, ops::Add, path::PathBuf, sync::Arc};
 
 use alloy::{
-    primitives::{Address, B256, U256},
+    primitives::{Address, B256, Bytes, U256},
     providers::Provider,
     rpc::types::mev::{BundleItem, Inclusion, MevSendBundle, ProtocolVersion},
 };
@@ -21,10 +21,17 @@ pub struct MevShareUniswapV2V3Arbitrage<P: Provider> {
     v3_address_to_v2_pool_info: HashMap<Address, UniswapV2PoolInfo>,
     /// Arbitrage contract.
     contract: ArbitrageContract<Arc<P>>,
+    /// Whether to want to interact with a real arbitrage contract or just
+    /// synthesize sample txs and log traces.
+    dry_run: bool,
 }
 
 impl<P: Provider> MevShareUniswapV2V3Arbitrage<P> {
-    pub fn new(provider: Arc<P>, arbitrage_contract_address: Address) -> Self {
+    pub fn new(
+        provider: Arc<P>,
+        arbitrage_contract_address: Address,
+        dry_run: bool,
+    ) -> Self {
         let instance = BlindArbInstance::new(
             arbitrage_contract_address,
             provider.clone(),
@@ -34,6 +41,7 @@ impl<P: Provider> MevShareUniswapV2V3Arbitrage<P> {
             provider: provider.clone(),
             v3_address_to_v2_pool_info: HashMap::new(),
             contract,
+            dry_run,
         }
     }
 
@@ -69,13 +77,22 @@ impl<P: Provider> MevShareUniswapV2V3Arbitrage<P> {
             .get(&v3_address)
             .expect("Failed to get V3 pool info");
 
+        tracing::info!(
+            "Generating bundles to exploit arbitrage opportunity on Uniswap V3 pool at {:?} versus Uniswap V2 pool at {:?}",
+            v3_address,
+            v2_pool_info.v2_pool
+        );
+
         let block_num = self.provider.get_block_number().await?;
 
         for size in sizes {
-            let tx_bytes = self
-                .contract
-                .generate_arbitrage_tx(v3_address, v2_pool_info, size)
-                .await?;
+            let tx_bytes = if self.dry_run {
+                Bytes::from_static(b"sample-tx")
+            } else {
+                self.contract
+                    .generate_arbitrage_tx(v3_address, v2_pool_info, size)
+                    .await?
+            };
 
             let bundle_body = vec![
                 BundleItem::Hash { hash: tx_hash },
@@ -113,14 +130,18 @@ impl<P: Provider> Strategy<Event, Action> for MevShareUniswapV2V3Arbitrage<P> {
     /// This is called once at startup, and loads pool information into memory.
     async fn sync_state(&mut self) -> Result<(), KazukaError> {
         let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
-        path.push("data/uniswap_v2_uniswap_v3_weth_pools.csv");
+        let file_name =
+            String::from("data/uniswap_v2_uniswap_v3_weth_pools.csv");
+        path.push(file_name.clone());
 
-        let mut reader = csv::Reader::from_path(path)
-            .map_err(|e| KazukaError::CsvError(e.to_string()))?;
+        let mut reader = csv::Reader::from_path(path.clone()).map_err(|e| {
+            KazukaError::CsvError(file_name.clone(), e.to_string())
+        })?;
 
         for record in reader.deserialize() {
-            let record: V2V3PoolRecord =
-                record.map_err(|e| KazukaError::CsvError(e.to_string()))?;
+            let record: V2V3PoolRecord = record.map_err(|e| {
+                KazukaError::CsvError(file_name.clone(), e.to_string())
+            })?;
             self.v3_address_to_v2_pool_info.insert(
                 record.v3_pool,
                 UniswapV2PoolInfo {
@@ -137,7 +158,7 @@ impl<P: Provider> Strategy<Event, Action> for MevShareUniswapV2V3Arbitrage<P> {
     async fn process_event(&mut self, event: Event) -> Vec<Action> {
         match event {
             Event::MevShareEvent(event) => {
-                tracing::info!("Received MEV-share event: {:?}", event);
+                tracing::trace!("Received MEV-share event: {:?}", event);
                 // Skip if event has no logs.
                 if event.logs.is_empty() {
                     return vec![];

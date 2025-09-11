@@ -35,27 +35,33 @@ struct Args {
     /// Address of the arbitrage contract.
     #[arg(long)]
     pub arb_contract_address: String,
+    /// Whether to actually submit bundles or just log them.
+    #[arg(long, action)]
+    pub dry_run: bool,
 }
 
 #[tokio::main]
 async fn main() -> Result<()> {
     let target_filter = tracing_subscriber::filter::Targets::new()
-        .with_target("kazuka_core", Level::TRACE)
-        .with_target("kazuka_mev_share_backend", Level::TRACE)
-        .with_target("kazuka_mev_share_sse", Level::TRACE)
+        .with_target("kazuka_simple_arbitrage", Level::INFO)
+        .with_target("kazuka_core", Level::INFO)
+        .with_target("kazuka_mev_share_backend", Level::INFO)
+        .with_target("kazuka_mev_share_sse", Level::INFO)
         .with_target(
             "kazuka_mev_share_arbitrage",
             Level::INFO,
         );
 
     tracing_subscriber::registry()
-        .with(tracing_subscriber::fmt::layer())
+        .with(tracing_subscriber::fmt::layer().with_ansi(true).pretty())
         .with(target_filter)
         .init();
 
     let args = Args::parse();
 
     let ws = WsConnect::new(args.wss);
+
+    tracing::info!("Strating probablistic blind arbitrage strategy...");
 
     let tx_signer: PrivateKeySigner = args.tx_signer_pk.parse()?;
     let provider = ProviderBuilder::new()
@@ -77,11 +83,15 @@ async fn main() -> Result<()> {
 
     let arbitrage_contract_address =
         Address::parse_checksummed(args.arb_contract_address, None)?;
-    let strategy =
-        MevShareUniswapV2V3Arbitrage::new(provider, arbitrage_contract_address);
+    let strategy = MevShareUniswapV2V3Arbitrage::new(
+        provider,
+        arbitrage_contract_address,
+        args.dry_run,
+    );
 
     let mev_share_executor = MevShareExecutor::new(
         "https://relay.flashbots.net:443".to_string(),
+        args.dry_run,
         flashbots_signer,
     );
     let mev_share_executor = ExecutorMap::new(
@@ -96,11 +106,20 @@ async fn main() -> Result<()> {
         .add_strategy(Box::new(strategy))
         .add_executor(Box::new(mev_share_executor));
 
-    if let Ok(mut set) = engine.run().await {
-        while let Some(result) = set.join_next().await {
-            tracing::info!("result: {:?}", result);
+    let result = match engine.run().await {
+        Ok(mut set) => {
+            while let Some(result) = set.join_next().await {
+                tracing::info!("result: {:?}", result);
+            }
+            Ok(())
         }
-    }
+        Err(err) => {
+            tracing::error!("Error running engine: {:?}", err);
+            Err(err.into())
+        }
+    };
 
-    Ok(())
+    tracing::info!("All done! Exiting...");
+
+    result
 }

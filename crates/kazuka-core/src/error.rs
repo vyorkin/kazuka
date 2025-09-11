@@ -5,6 +5,6 @@ use thiserror::Error;
 pub enum KazukaError {
     #[error("RPC error")]
     RpcError(#[from] RpcError<TransportErrorKind>),
-    #[error("CSV error: `{0}`")]
-    CsvError(String),
+    #[error("CSV error in file {0}:\n\t{1}")]
+    CsvError(String, String),
 }
